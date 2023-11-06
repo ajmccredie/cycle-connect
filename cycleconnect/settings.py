@@ -29,8 +29,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-gzes1z06nab.ws-eu105.gitpod.io']
-ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-q98j8p1pau6.ws-eu105.gitpod.io']
+# ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'django_summernote'
     'userprofile',
 ]
 
