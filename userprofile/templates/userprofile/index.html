@@ -1,14 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'userprofile/base.html' %}
 
 {% block title %}Welcome to Cyclist Connect{% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
         <h2>Welcome, {{ user.username }}!</h2>
-        <p>Head over to the <a href="{% url 'forum' %}">Forum Page</a>.</p>
+        <p>Head over to the <a href="#">Forum Page</a>.</p>
     {% else %}
         <h2>Please Sign In</h2>
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="#">
             {% csrf_token %}
             <label for="username">Username:</label>
             <input type="text" id="username" name="username">
@@ -16,6 +16,6 @@
             <input type="password" id="password" name="password">
             <button type="submit">Sign In</button>
         </form>
-        <p>Or <a href="{% url 'signup' %}">create an account</a>.</p>
+        <p>Or <a href="#">create an account</a>.</p>
     {% endif %}
 {% endblock %}
