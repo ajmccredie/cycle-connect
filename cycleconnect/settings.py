@@ -41,12 +41,24 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
-    'django_summernote'
+    'django_summernote',
+    'crispy_forms',
     'userprofile',
 ]
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -91,6 +104,10 @@ WSGI_APPLICATION = 'cycleconnect.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
+
+ACCOUNT_FORMS = {
+    'signup': 'yourapp.forms.CustomSignupForm',
 }
 
 
