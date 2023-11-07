@@ -1,14 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cycle Connect Profile</title>
 </head>
+
 <body>
-    Test page
-    {% block content %}
-    {% endblock content %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Logo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Check if user is logged in to determine the nav view -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Market</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services and Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Group Rides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="background-image">
+    </div>
+    <div class="container mt-5">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <footer class="bg-light text-center py-3">
+        <div class="container">
+            <a href="https://www.facebook.com" target="_blank" aria-label="Find us on Facebook. Opens in a new page"><i
+                    class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.twitter.com" target="_blank" aria-label="Follow us on Twitter. Opens in a new page"><i
+                    class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.tiktok.com" target="_blank" aria-label="Find us on TicTok. Opens in a new page"><i
+                    class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.linkedin.com" target="_blank"
+                aria-label="Collaborate with us on LinkedIn. Opens in a new page"><i
+                    class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.instagram.com" target="_blank"
+                aria-label="Follow us on Instagram. Opens in a new page"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/8c6dac4a35.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
