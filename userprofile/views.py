@@ -6,3 +6,4 @@ from allauth.account.views import SignupView
 
 class CustomSignupView(SignupView):
     form_class = CustomSignupForm
+
