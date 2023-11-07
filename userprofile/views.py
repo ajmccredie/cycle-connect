@@ -5,6 +5,7 @@ from .forms import CustomSignupForm
 from allauth.account.views import SignupView
 
 class CustomSignupView(SignupView):
+    template_name = 'userprofile/signup.html'
     form_class = CustomSignupForm
 
 

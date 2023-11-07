@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -109,6 +110,8 @@ DATABASES = {
 ACCOUNT_FORMS = {
     'signup': 'yourapp.forms.CustomSignupForm',
 }
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 # Password validation
