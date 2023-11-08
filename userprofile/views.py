@@ -20,6 +20,10 @@ def index(request):
 
 
 def signup(request):
+    return render(request, 'account/signup.html')
+
+
+def signup_full_profile(request):  
     if request.method == 'POST':
         form = CustomSignUpForm(request.POST, request.FILES)
         if form.is_valid():
@@ -28,4 +32,7 @@ def signup(request):
             return redirect('index')
     else:
         form = CustomSignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'userprofile/signup_full_profile.html', {'form': form})
+
+def logout(request):
+    return render(request, 'account/logout.html')

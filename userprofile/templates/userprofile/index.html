@@ -16,6 +16,6 @@
             <input type="password" id="password" name="password">
             <button type="submit">Sign In</button>
         </form>
-        <p>Or <a href="#">create an account</a>.</p>
+        <p>Or <a href="{% url 'account_signup' %}">create an account</a>.</p>
     {% endif %}
 {% endblock %}
