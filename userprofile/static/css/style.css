@@ -44,7 +44,7 @@ label {
 .sign-up-link {
     font-weight: bold;
     font-size: x-large;
-    align-items: right;
+    text-align: right;
 }
 
 .sign-up-link a {

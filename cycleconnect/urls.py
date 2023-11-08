@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from userprofile.views import CustomSignupView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('userprofile.urls')),
     path('userprofile/', include('userprofile.urls')),
     path('accounts/', include('allauth.urls')),
+    path('account/', include('userprofile.urls')),
 ]
