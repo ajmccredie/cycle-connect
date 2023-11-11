@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Kanit&display=swap');
+    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Cycle Connect Profile</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img id="logo" src="/static/images/cc-logo-white-text-01.png"
+                    aria-label="Cyclist Connect Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Check if user is logged in to determine the nav view -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Market</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services and Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Group Rides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="centralise-container">
+        <div class="container mt-5 align-center semi-opaque-box">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+    <footer class="bg-dark text-center py-3 fixed-bottom">
+        <div class="container align-content-stretch">
+            <a href="https://www.facebook.com" target="_blank" aria-label="Find us on Facebook. Opens in a new page"><i
+                    class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.twitter.com" target="_blank" aria-label="Follow us on Twitter. Opens in a new page"><i
+                    class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.tiktok.com" target="_blank" aria-label="Find us on TicTok. Opens in a new page"><i
+                    class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.linkedin.com" target="_blank"
+                aria-label="Collaborate with us on LinkedIn. Opens in a new page"><i
+                    class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.instagram.com" target="_blank"
+                aria-label="Follow us on Instagram. Opens in a new page"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/8c6dac4a35.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

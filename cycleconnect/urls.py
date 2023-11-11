@@ -20,8 +20,9 @@ from userprofile.views import CustomSignupView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('account/', include('userprofile.urls')),
     path('', include('userprofile.urls')),
     path('userprofile/', include('userprofile.urls')),
+    path('forum/', include('forum.urls')),
     path('accounts/', include('allauth.urls')),
-    path('account/', include('userprofile.urls')),
 ]
