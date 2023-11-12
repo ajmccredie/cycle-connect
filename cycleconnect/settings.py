@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-8ljcmijl9oe.ws-eu106.gitpod.io']
+ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-sy9l4jxupgt.ws-eu106.gitpod.io']
 # ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
 
 

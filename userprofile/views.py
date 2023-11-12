@@ -13,14 +13,14 @@ def index(request):
     # If user is authenticated, render the forum page, otherwise the sign-in page
     if request.user.is_authenticated:
         # If you have a separate forum page
-        return render(request, 'userprofile/forum.html')
+        return render(request, 'forum/userforum.html')
     else:
         # If index is your sign-in page
         return render(request, 'userprofile/index.html')
 
 
-def signup(request):
-    return render(request, 'account/signup.html')
+def sign_up(request):
+    return render(request, 'account/sign_up.html')
 
 
 def signup_full_profile(request):  
@@ -34,5 +34,5 @@ def signup_full_profile(request):
         form = CustomSignUpForm()
     return render(request, 'userprofile/signup_full_profile.html', {'form': form})
 
-def logout(request):
-    return render(request, 'account/logout.html')
+def log_out(request):
+    return render(request, 'account/log_out.html')
