@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-sy9l4jxupgt.ws-eu106.gitpod.io']
+ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-s7fj6cp0crx.ws-eu106.gitpod.io']
 # ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
 
 
@@ -76,7 +76,7 @@ ROOT_URLCONF = 'cycleconnect.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

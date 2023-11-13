@@ -5,7 +5,7 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h2>Welcome, {{ user.username }}!</h2>
-        <p>Head over to the <a href="#">Forum Page</a>.</p>
+        <p>Head over to the <a href="{% url 'userforum' %}">Forum Page</a>.</p>
     {% else %}
         <h2>Welcome to CYCLIST CONNECT!</h2> 
         <h3>Please Sign In</h3>
@@ -20,7 +20,7 @@
             </div>
         </form>
         <div class="sign-up-link">
-            <p>or <a href="{% url 'account_signup' %}">create an account</a>.</p>
+            <p>or <a href="{% url 'sign_up' %}">create an account</a>.</p>
         </div>
     {% endif %}
 {% endblock %}
