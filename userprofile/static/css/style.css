@@ -7,6 +7,10 @@ body {
     font-family: 'Dosis', sans-serif;
 }
 
+.body1 {
+    background-image: url('/static/images/blue-road-mountain.jpg');
+}
+
 .centralise-container {
     display: flex;
     width: 100%;
@@ -99,3 +103,4 @@ footer a:hover {
     color: rgba(255, 221, 85);
     padding: 2rem;
 }
+

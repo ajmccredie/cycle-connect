@@ -11,3 +11,7 @@ class ProfileDetails(models.Model):
     preferred_ride_type = models.CharField(max_length=100, blank=True)
     maintenance_skills = models.CharField(max_length=100, blank=True)
 
+
+def __str__(self):
+    return self.user
+
