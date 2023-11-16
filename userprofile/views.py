@@ -14,11 +14,17 @@ class CustomSignupView(SignupView):
 
 def index(request):
     # If user is authenticated, render the forum page, otherwise the sign-in page
-    if request.user.is_authenticated:
-        # If you have a separate forum page
-        return render(request, 'userforum.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('userforum.html')
+        else:
+            # Return an 'invalid login' error message.
+            return render(request, 'index.html', {'error': 'Invalid username or password.'})
     else:
-        # If index is your sign-in page
         return render(request, 'index.html')
 
 
