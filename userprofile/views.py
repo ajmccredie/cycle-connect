@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic, View
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 from .models import ProfileDetails
 from .forms import CustomSignupForm
 from allauth.account.views import SignupView
@@ -20,7 +22,15 @@ def index(request):
 
 
 def sign_up(request):
-    return render(request, 'sign_up.html')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('userforum')
+    else:
+        form = UserCreationForm()
+    return render(request, 'sign_up.html', {'form': form})
 
 
 def signup_full_profile(request):  
