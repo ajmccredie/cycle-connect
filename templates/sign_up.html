@@ -22,7 +22,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="btn btn-signup right" type="submit">{% trans "Sign Up" %} &raquo;</button>
-                <input type="hidden" name="next" value="{% url 'userforum' %}">
+                <input type="hidden" name="next" value="{% url 'signup_full_profile' %}">
             </form>
         </div>
     </div>

@@ -8,7 +8,7 @@ choice = 0
 class ForumPost(models.Model):
     UserId = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, unique=False)
-    Content = models.TextField()
+    content = models.TextField()
     created_on = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image', default='placeholder')
     #status = models.IntegerField(choice=STATUS, default=0)

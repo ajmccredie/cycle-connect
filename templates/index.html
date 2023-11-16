@@ -1,4 +1,4 @@
-{% extends 'userprofile/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}Welcome to Cyclist Connect{% endblock %}
 
@@ -9,7 +9,7 @@
     {% else %}
         <h2>Welcome to CYCLIST CONNECT!</h2> 
         <h3>Please Sign In</h3>
-        <form method="post" action="#">
+        <form method="post" action="{% url 'userforum' %}">
             {% csrf_token %}
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Username">

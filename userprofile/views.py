@@ -46,9 +46,9 @@ def signup_full_profile(request):
         form = ProfileDetailsForm()
     return render(request, 'signup_full_profile.html', {'form': form})
 
-def view_profile(request):
-    profile_details = ProfileDetails.objects.get(user=request.user)
-    return render(request, 'view_profile.html', {'profile': profile_details})
+def profile_view(request):
+    profile_details, created = ProfileDetails.objects.get(user=request.user)
+    return render(request, 'profile_view.html', {'profile': profile_details})
 
 
 @login_required

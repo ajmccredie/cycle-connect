@@ -25,6 +25,8 @@ urlpatterns = [
     path('sign_up/', include('userprofile.urls')),
     path('log_out/', include('userprofile.urls')),
     path('signup_full_profile/', include('userprofile.urls')),
+    path('profile_view/', include('userprofile.urls')),
     path('userforum/', include('forum.urls')),
     path('accounts/', include('allauth.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
