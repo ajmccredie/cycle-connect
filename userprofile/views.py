@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic, View
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from .models import ProfileDetails
 from .forms import CustomSignupForm
 from allauth.account.views import SignupView
@@ -44,5 +45,10 @@ def signup_full_profile(request):
         form = CustomSignUpForm()
     return render(request, 'signup_full_profile.html', {'form': form})
 
-def log_out(request):
-    return render(request, 'log_out.html')
+
+@login_required
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('index') 
+    return render(request, 'logout_confirmation.html')

@@ -9,6 +9,7 @@ from django import forms
 class CustomSignupForm(SignupForm):
     username = forms.CharField(max_length=30, label='First Name', required=True)
 
+    
 
     def __init__(self, *args, **kwargs):
             super(CustomSignupForm, self).__init__(*args, **kwargs)

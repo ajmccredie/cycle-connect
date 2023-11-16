@@ -1,0 +1,14 @@
+{% extends "base1.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <h2>{% trans "Logout Confirmation" %}</h2>
+    <p>{% trans "Please confirm you want to logout." %}</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="{% trans "Yes, please logout" %}">
+    </form>
+    <a href="{% url 'userforum' %}">{% trans "Cancel (return to the Forum)" %}</a>
+</div>
+{% endblock %}
