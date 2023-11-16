@@ -7,9 +7,9 @@ from django import forms
 
 
 class CustomSignupForm(SignupForm):
-    username = forms.CharField(max_length=30, label='First Name', required=True)
-
-    
+    class Meta:
+        model = ProfileDetails
+        fields = ['biography', 'profile_picture', 'cycling_skills', 'preferred_ride_type', 'maintenance_skills']
 
     def __init__(self, *args, **kwargs):
             super(CustomSignupForm, self).__init__(*args, **kwargs)

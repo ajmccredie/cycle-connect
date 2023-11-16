@@ -36,14 +36,19 @@ def sign_up(request):
 
 def signup_full_profile(request):  
     if request.method == 'POST':
-        form = CustomSignUpForm(request.POST, request.FILES)
+        form = ProfileDetailsForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
-            # You might want to log the user in and redirect to the index page
-            return redirect('index')
+            profile_details = form.save(commit=False)
+            profile_details.user = request.user
+            profile_details.save()
+            return redirect('userforum')  # Redirect to a preferred page
     else:
-        form = CustomSignUpForm()
+        form = ProfileDetailsForm()
     return render(request, 'signup_full_profile.html', {'form': form})
+
+def view_profile(request):
+    profile_details = ProfileDetails.objects.get(user=request.user)
+    return render(request, 'view_profile.html', {'profile': profile_details})
 
 
 @login_required
