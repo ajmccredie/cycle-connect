@@ -1,0 +1,15 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Profile Details</h2>
+    <p><strong>Biography:</strong> {{ profile.biography }}</p>
+    <p><strong>Cycling Skills:</strong> {{ profile.cycling_skills }}</p>
+    <p><strong>Preferred Ride Type:</strong> {{ profile.preferred_ride_type }}</p>
+    <p><strong>Maintenance Skills:</strong> {{ profile.maintenance_skills }}</p>
+    {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+    {% endif %}
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+</div>
+{% endblock %}
