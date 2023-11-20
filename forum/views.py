@@ -25,6 +25,7 @@ class UserPost(LoginRequiredMixin, View):
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.user = request.user
+            new_post.UserId_id = request.user.id
             new_post.save()
             return redirect('userforum') 
         else:
