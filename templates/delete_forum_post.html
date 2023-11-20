@@ -1,0 +1,12 @@
+{% extends 'base1.html' %}
+
+{% load static %}
+{% block content %}
+    <h2>Delete Post</h2>
+    <p>Are you sure you want to delete the post "{{ post.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Delete">
+        <a href="{% url 'userforum' %}">Cancel</a>
+    </form>
+{% endblock %}

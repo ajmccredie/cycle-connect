@@ -32,6 +32,53 @@ class UserPost(LoginRequiredMixin, View):
             posts = ForumPost.objects.all()
             return render(request, self.forum_view, {'posts': posts, 'form': form})
 
+
+class EditPost(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        post_id = kwargs.get('post_id')
+        post = get_object_or_404(ForumPost, id=post_id)
+
+        if post.UserId != request.user:
+            return redirect('userforum') # to catch any instances where the buttons displayed by mistake
+
+        form = PostForm(instance=post)
+        return render(request, 'edit_forum_post.html', {'form': form, 'post': post})
+
+    def post(self, request, *args, **kwargs):
+        post_id = kwargs.get('post_id')
+        post = get_object_or_404(ForumPost, id=post_id)
+
+        if post.UserId != request.user:
+            return redirect('userforum') # to catch any instances where the buttons displayed by mistake
+
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('userforum')
+        else:
+            return render(request, 'edit_forum_post.html', {'form': form, 'post': post})
+
+
+class DeletePost(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        post_id = kwargs.get('post_id')
+        post = get_object_or_404(ForumPost, id=post_id)
+
+        if post.UserId != request.user:
+            return redirect('userforum')
+        
+        return render(request, 'delete_forum_post.html', {'post': post})
+
+    def post(self, request, *args, **kwargs):
+        post_id = kwargs.get('post_id')
+        post = get_object_or_404(ForumPost, id=post_id)
+
+        if post.UserId == request.user:
+            post.delete()
+            return redirect('userforum')
+        else:
+            return redirect('userforum')
+
 # def userforum(request):
 #     return render(request, 'userforum.html')
 

@@ -172,6 +172,12 @@ SUMMERNOTE_CONFIG = {
         # Change editor size
         'width': '100%',
         'height': '280',
+
+        'toolbar': [
+            ['font', ['bold', 'underline']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture']],
+        ],
     }
 }
 
