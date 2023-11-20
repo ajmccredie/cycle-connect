@@ -1,21 +1,35 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic, View
 from django.core.paginator import Paginator
 from .models import ForumPost #Comment
-# from .forms import CommentForm
+from .forms import PostForm #CommentForm
 
 # Create your views here.
 
-class UserPost(View):
+class UserPost(LoginRequiredMixin, View):
     forum_view = 'userforum.html'
 
     def get(self, request, *args, **kwargs):
-        post_list = ForumPost.objects.order_by('-created_on')
-        paginator = Paginator(post_list, 8)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        # post_list = ForumPost.objects.order_by('-created_on')
+        # paginator = Paginator(post_list, 8)
+        # page_number = request.GET.get('page')
+        # page_obj = paginator.get_page(page_number)
+        posts = ForumPost.objects.all()
+        form = PostForm()
 
-        return render(request, self.forum_view, {"page_obj": page_obj})
+        return render(request, self.forum_view, {"posts": posts, "form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.user = request.user
+            new_post.save()
+            return redirect('userforum') 
+        else:
+            posts = ForumPost.objects.all()
+            return render(request, self.forum_view, {'posts': posts, 'form': form})
 
 # def userforum(request):
 #     return render(request, 'userforum.html')

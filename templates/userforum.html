@@ -1,17 +1,29 @@
 {% extends 'base1.html' %}
 
+{% load static %}
+<link href="{% static 'summernote/summernote-bs4.css' %}" rel="stylesheet">
+<script src="{% static 'summernote/summernote-bs4.js' %}"></script>
+
 {% block content %}
 <h1>Welcome to the forum {{ user }}</h1>
 
-<h2>Look at all the lovely posts...</h2>
-{% for post in page_obj %}
+<h2>Join the community discussion</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.title }}
+    {{ form.content }}
+    <button type="submit">Post</button>
+</form>
+
+
+{% for post in posts %}
     <div class="post">
         <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
+        <p>{{ post.content|safe }}</p>
     </div>
 {% endfor %}
 
-<div class="pagination">
+<!-- <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -25,6 +37,14 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-</div>
+</div> -->
+
+<script>
+    $(document).ready(function() {
+        $('#id_content_iframe').summernote({
+            placeholder: 'Write your community forum contribution here...',
+        });
+    });
+    </script>
 
 {% endblock %}
