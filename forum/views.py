@@ -1,15 +1,26 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic, View
-# from .models import Comment, ForumPost
+from django.core.paginator import Paginator
+from .models import ForumPost #Comment
 # from .forms import CommentForm
 
 # Create your views here.
 
-# class UserPost(View):
-#     def userforum(self, request, *args, **kwargs):
-#         queryset = ForumPost.objects
-#         post = get_object_or_404(queryset)
-#         comments = post.comments.filter(approved=True).order_by('created_on')
+class UserPost(View):
+    forum_view = 'userforum.html'
+
+    def get(self, request, *args, **kwargs):
+        post_list = ForumPost.objects.order_by('-created_on')
+        paginator = Paginator(post_list, 8)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, self.forum_view, {"page_obj": page_obj})
+
+# def userforum(request):
+#     return render(request, 'userforum.html')
+
+
 #         liked = False
 #         if post.likes.filter(id=self.request.user.id).exists():
 #             liked = True
@@ -36,9 +47,3 @@ from django.views import generic, View
 #                 "comment_form": CommentForm()
 #             },
 #         )
-
-def userforum(request):
-    return render(request, 'userforum.html')
-
-
-

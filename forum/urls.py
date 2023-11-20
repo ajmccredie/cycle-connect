@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import UserPost
 
 urlpatterns = [
-    path('userforum/', views.userforum, name="userforum")
+    path('userforum/', UserPost.as_view(), name="userforum"),
 ]
