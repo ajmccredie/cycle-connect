@@ -9,12 +9,18 @@
     {% else %}
         <h2>Welcome to CYCLIST CONNECT!</h2> 
         <h3>Please Sign In</h3>
-        <form method="post" action="{% url 'userforum' %}">
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% if form.errors %}
+                <div class="error">
+                    <p>Invalid username or password. Please try again.</p>
+                </div>
+            {% endif %}
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Username">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="********">
+            <input type="password" id="password" name="password" placeholder="Please enter your password">
             <div class="centralise-button">
                 <button type="submit">Sign In</button>
             </div>
