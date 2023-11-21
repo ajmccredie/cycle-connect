@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from userprofile.views import CustomSignupView, index, sign_up, logout_view
+from userprofile.views import CustomSignupView, index, sign_up, logout_view, account_login
 
 
 urlpatterns = [
@@ -27,5 +27,6 @@ urlpatterns = [
     path('profile_view/', include('userprofile.urls')),
     path('userforum/', include('forum.urls')),
     path('accounts/', include('allauth.urls')),
+    path('accounts/login', account_login, name='account_login'),
     path('summernote/', include('django_summernote.urls')),
 ]
