@@ -111,6 +111,12 @@ button:hover, input[type="submit"]:hover {
     font-weight: bolder;
 }
 
+#profile_view img {
+    max-height: 100px;
+    border: 2px solid rgb(245, 245, 245);
+    border-radius: 2px;
+}
+
 .post {
     margin-top: 50px;
     margin-bottom: 50px;
