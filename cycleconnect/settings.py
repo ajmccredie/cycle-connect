@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = ['userprofile.backends.UserIdAuthBackend']
+# AUTHENTICATION_BACKENDS = ['userprofile.backends.UserIdAuthBackend']
 
 
 # Internationalization
