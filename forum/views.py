@@ -17,7 +17,6 @@ class UserPost(LoginRequiredMixin, View):
         # page_obj = paginator.get_page(page_number)
         posts = ForumPost.objects.all()
         form = PostForm()
-
         return render(request, self.forum_view, {"posts": posts, "form": form})
 
     def post(self, request, *args, **kwargs):

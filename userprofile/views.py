@@ -22,8 +22,24 @@ def index(request):
             login(request, user)
             return redirect('userforum.html')
         else:
-            # Return an 'invalid login' error message.
             return render(request, 'index.html', {'error': 'Invalid username or password.'})
+    else:
+        return render(request, 'index.html')
+
+
+def account_login(request):
+    if request.method == 'POST':
+        # Retrieve username and password from POST request
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('userforum')
+        else:
+            return render(request, 'index.html', {
+                'error': 'Invalid username or password. Please try again.'
+            })
     else:
         return render(request, 'index.html')
 

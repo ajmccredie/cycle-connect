@@ -9,7 +9,7 @@
     {% else %}
         <h2>Welcome to CYCLIST CONNECT!</h2> 
         <h3>Please Sign In</h3>
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'account_login' %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.GET.next }}">
             {% if form.errors %}
@@ -25,8 +25,16 @@
                 <button type="submit">Sign In</button>
             </div>
         </form>
+        <!-- <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button class="btn btn-signup right" type="submit">Sign In</button>
+        </form>  --> 
         <div class="sign-up-link">
             <p>or <a href="{% url 'sign_up' %}">create an account</a>.</p>
-        </div>
+        </div> 
     {% endif %}
 {% endblock %}

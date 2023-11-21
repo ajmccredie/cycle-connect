@@ -25,6 +25,8 @@
         {% endif %}        
         <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
         <p>{{ post.content|safe }}</p>
+        
+        <strong class="text-secondary"><i class="far fa-regular fa-star"></i> {{ post.number_of_likes }} </strong>
 
     </div>
 {% endfor %}
