@@ -12,7 +12,7 @@ class ForumPost(models.Model):
     created_on = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image', default='placeholder')
     #status = models.IntegerField(choice=STATUS, default=0)
-    likes = models.ManyToManyField(User, related_name="post_likes", blank=True)
+    likes = models.ManyToManyField(User, related_name="likes", blank=True)
 
     class Meta:
         ordering=['-created_on']

@@ -1,6 +1,6 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
-from .models import ForumPost
+from .models import ForumPost, Comment
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -14,7 +14,7 @@ class PostForm(forms.ModelForm):
         self.fields['title'].widget.attrs['placeholder'] = 'please_name_your_post'
 
 
-# class CommentForm(forms.ModelForm):
-#     class Meta:
-#         model = Comment
-#         fields = ('body',)
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)

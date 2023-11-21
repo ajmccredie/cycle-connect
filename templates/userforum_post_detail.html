@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Post Details" %}{% endblock %}
+
+{% block content %}
+
+<h2>{{ post.title }}</h2>
+<p>{{ post.body }}</p>
+<h3>Comments:</h3>
+{% for comment in comments %}
+    <p>{{ comment.body }} - {{ comment.author }}</p>
+    {% empty %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+<h3>Add a comment:</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p | crispy }}
+    <button type="submit">Submit</button>
+</form>
+
+
+{% endblock %}
