@@ -4,6 +4,7 @@ from django.views import generic, View
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import JsonResponse
 from .models import ForumPost, Comment
 from .forms import PostForm, CommentForm
 
@@ -34,13 +35,16 @@ class UserPost(LoginRequiredMixin, View):
             return render(request, self.forum_view, {'posts': posts, 'form': form})
 
 
-def like_post(request, post_id):
-    post = get_object_or_404(ForumPost, id=post_id)
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
-    else:
-        post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('post', args=[post_id]))
+class PostLike(LoginRequiredMixin, View):
+    def post(self, request, post_id):
+        post = get_object_or_404(ForumPost, id=post_id)
+        liked = False
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+            liked = True
+        return JsonResponse({'likes_count': post.likes.count(), 'liked': liked})
 
 class EditPost(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):

@@ -96,6 +96,39 @@ button:hover, input[type="submit"]:hover {
     font-weight: bolder;
 }
 
+.btn-like {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(255, 221, 85, 0);
+    border: none;
+    border-radius: none;
+    color: rgba(255, 221, 85);
+}
+
+.btn-like:hover {
+    color:rgb(111, 111, 188);
+    background-color: rgb(111, 111, 188, 0);
+    text-shadow: 2px 2px 2px rgb(255, 255, 255);
+    font-weight: bolder;
+}
+
+.btn-comment {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(255, 221, 85, 0);
+    border: none;
+    border-radius: none;
+    color: rgb(255, 255, 255);
+    font-size: x-large;
+}
+
+.btn-comment:hover {
+    color:rgb(111, 111, 188);
+    background-color: rgb(111, 111, 188, 0);
+    text-shadow: 2px 2px 2px rgb(255, 255, 255);
+    font-weight: bolder;
+}
+
 .btn.btn-edit, .btn.btn-delete {
     padding: 5px;
     margin: 5px 0;
