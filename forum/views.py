@@ -44,7 +44,8 @@ class PostLike(LoginRequiredMixin, View):
         else:
             post.likes.add(request.user)
             liked = True
-        return JsonResponse({'likes_count': post.likes.count(), 'liked': liked})
+        return HttpResponseRedirect(reverse('userforum'))
+
 
 class EditPost(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -104,6 +105,6 @@ def userforum_post_detail(request, post_id):
             new_comment.save()
         else:
             comment_form = CommentForm()
-        return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment, "comment_form": comment_form}),
+        return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment, "comment_form": comment_form})
 
         
