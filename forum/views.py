@@ -103,8 +103,8 @@ def userforum_post_detail(request, post_id):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-        else:
-            comment_form = CommentForm()
-        return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment, "comment_form": comment_form})
+    else:
+        comment_form = CommentForm()
+        return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment})
 
         
