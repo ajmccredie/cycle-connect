@@ -11,8 +11,8 @@
 <p>{{ post.content | safe }}</p>
 <h3>Comments:</h3>
 {% for comment in comments %}
-    {% if request.user.id == post.UserId_id %}
-        <a href="{% url 'edit_forum_comment' comment.id %}" class="btn btn-edit">Edit</a>
+    {% if request.user.id == comment.name_id %}
+        <a href="{% url 'edit_forum_comment' post_id=post.id comment_id=comment.id %}" class="btn btn-edit">Edit</a>
         <!-- <a href="{% url 'delete_forum_comment' comment.id %}" class="btn btn-delete">Delete</a> -->
     {% endif %}  
     <p>{{ comment.body | linebreaks }} - {{ comment.name }}, {{ comment.created_on|date:"d-m-Y" }}</p>
