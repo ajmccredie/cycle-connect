@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit Profile</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-edit">Update Profile</button>
+    <a href="{% url 'profile_view' %}" class="btn btn-edit">Return to profile with no changes</a>
+    </form>
+</div>
+{% endblock %}

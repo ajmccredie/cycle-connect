@@ -48,3 +48,21 @@ class CustomSignupForm(SignupForm):
         profile_details.save()
         return user
 
+
+class ProfileDetailsForm(forms.ModelForm):
+    class Meta:
+        model = ProfileDetails
+        fields = ['biography', 'profile_picture', 'cycling_skills', 'preferred_ride_type', 'maintenance_skills']
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileDetailsForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'biography',
+            'profile_picture',
+            'cycling_skills',
+            'preferred_ride_type',
+            'maintenance_skills',
+            Submit('submit', 'Save Changes', css_class='btn btn-submit')
+        )
+

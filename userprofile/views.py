@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .models import ProfileDetails
-from .forms import CustomSignupForm
+from .forms import CustomSignupForm, ProfileDetailsForm
 from allauth.account.views import SignupView
 
 class CustomSignupView(SignupView):
@@ -50,23 +50,35 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('userforum')
+            return redirect('signup_full_profile')
     else:
         form = UserCreationForm()
     return render(request, 'sign_up.html', {'form': form})
 
 
-def signup_full_profile(request):  
+def signup_full_profile(request):
+    user = request.user
+    defaults = {
+        'biography': 'Please tell us a little about yourself and your cycling background',
+        'cycling_skills': 'How would you describe your level of cycling expertise?',
+        'preferred_ride_type': 'What type of bikes do you prefer to ride', 
+        'maintenance_skills': 'Tell us a little about your maintenance experience',
+    }
+    profile_details, created = ProfileDetails.objects.get_or_create(user=user)  
     if request.method == 'POST':
         form = ProfileDetailsForm(request.POST, request.FILES)
         if form.is_valid():
             profile_details = form.save(commit=False)
             profile_details.user = request.user
             profile_details.save()
-            return redirect('userforum')  # Redirect to a preferred page
+            return redirect('userforum')
     else:
-        form = ProfileDetailsForm()
-    return render(request, 'signup_full_profile.html', {'form': form})
+        try:
+            profile_details = ProfileDetails.objects.get(user=request.user)
+            form = ProfileDetailsForm(instance=profile_details)
+        except ProfileDetails.DoesNotExist:
+            form = ProfileDetailsForm()
+    return render(request, 'profile_details.html', {'form': form})
 
 def profile_view(request):
     defaults = {
