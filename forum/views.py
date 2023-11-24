@@ -122,3 +122,9 @@ def edit_forum_comment(request, comment_id):
         form = CommentForm(instance=comment)
     return render(request, 'edit_forum_comment.html', {'form': form})    
     
+
+def delete_forum_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    post_id = comment.post.id
+    comment.delete()
+    return redirect('userforum_post_detail', post_id=post_id)
