@@ -131,5 +131,13 @@ def edit_forum_comment(request, post_id, comment_id):
 def delete_forum_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     post_id = comment.post.id
-    comment.delete()
-    return redirect('userforum_post_detail', post_id=post_id)
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('userforum_post_detail', post_id=post_id)
+    else:
+        context = {
+            'comment': comment,
+            'post_id': post_id,
+            'comment_id': comment_id
+        }
+        return render(request, 'delete_forum_comment.html', context)
