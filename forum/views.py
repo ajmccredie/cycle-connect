@@ -97,14 +97,18 @@ def userforum_post_detail(request, post_id):
     post = get_object_or_404(ForumPost, id=post_id)
     comments = post.comments.all()
     new_comment = None
+    comment_form = CommentForm()
     if request.method == 'POST': 
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
+            new_comment.name = request.user
+            new_comment.UserId_id = request.user.id
             new_comment.save()
+            return redirect('userforum_post_detail', post_id=post_id)
     else:
         comment_form = CommentForm()
-        return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment})
+    return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment, "comment_form": comment_form})
 
         
