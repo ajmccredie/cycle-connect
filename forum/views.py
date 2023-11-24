@@ -111,4 +111,14 @@ def userforum_post_detail(request, post_id):
         comment_form = CommentForm()
     return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment, "comment_form": comment_form})
 
-        
+def edit_forum_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method =='POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save
+            return redirect('userforum_post_detail', post_id=comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, 'edit_forum_comment.html', {'form': form})    
+    

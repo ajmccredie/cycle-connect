@@ -1,0 +1,12 @@
+{% extends 'base1.html' %}
+
+{% load static %}
+{% block content %}
+    <h2>Delete Comment</h2>
+    <p>Are you sure you want to delete this comment?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Delete">
+        <a href="{% url 'userforum_post_detail' %}">Cancel</a>
+    </form>
+{% endblock %}
