@@ -78,7 +78,7 @@ def signup_full_profile(request):
             form = ProfileDetailsForm(instance=profile_details)
         except ProfileDetails.DoesNotExist:
             form = ProfileDetailsForm()
-    return render(request, 'profile_details.html', {'form': form})
+    return render(request, 'signup_full_profile.html', {'form': form})
 
 def profile_view(request):
     defaults = {
