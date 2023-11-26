@@ -64,7 +64,7 @@ def signup_full_profile(request):
         'preferred_ride_type': 'What type of bikes do you prefer to ride', 
         'maintenance_skills': 'Tell us a little about your maintenance experience',
     }
-    profile_details, created = ProfileDetails.objects.get_or_create(user=user)  
+    profile_details, created = ProfileDetails.objects.get_or_create(user=user, defaults=defaults)  
     if request.method == 'POST':
         form = ProfileDetailsForm(request.POST, request.FILES)
         if form.is_valid():
