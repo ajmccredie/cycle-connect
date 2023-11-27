@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
@@ -19,8 +19,9 @@ class UserPost(LoginRequiredMixin, View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         posts = ForumPost.objects.all()
+        liked_post_ids = set(request.user.likes.values_list('id', flat=True)) #Trying an idea from Stack Overflow
         form = PostForm()
-        return render(request, self.forum_view, {"posts": posts, "form": form})
+        return render(request, self.forum_view, {"posts": posts, "form": form, "liked_post_ids": liked_post_ids})
 
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST)
@@ -44,7 +45,7 @@ class PostLike(LoginRequiredMixin, View):
         else:
             post.likes.add(request.user)
             liked = True
-        return HttpResponseRedirect(reverse('userforum'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('userforum'))) # from a suggestion from Stack Overflow
 
 
 class EditPost(LoginRequiredMixin, View):

@@ -30,8 +30,8 @@
             {% if user.is_authenticated %}
             <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
                 {% csrf_token %}
-                {% if liked %}
-                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="fas fa-solid fa-star"></i></button>
+                {% if post.id in liked_post_ids %}
+                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="fas fa-star"></i></button>
                 {% else %}
                     <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="far fa-regular fa-star"></i></button>
                 {% endif %}
@@ -44,7 +44,7 @@
     </div>
 {% endfor %}
 
-<!-- <div class="pagination">
+<div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -58,7 +58,7 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-</div> -->
+</div>
 
 <script>
     $(document).ready(function() {
