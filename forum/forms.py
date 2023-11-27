@@ -11,7 +11,7 @@ class PostForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs['placeholder'] = 'please_name_your_post'
+        self.fields['title'].widget.attrs['placeholder'] = 'Please name your post'
 
 
 class CommentForm(forms.ModelForm):

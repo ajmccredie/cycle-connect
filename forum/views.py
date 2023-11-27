@@ -14,10 +14,10 @@ class UserPost(LoginRequiredMixin, View):
     forum_view = 'userforum.html'
 
     def get(self, request, *args, **kwargs):
-        # post_list = ForumPost.objects.order_by('-created_on')
-        # paginator = Paginator(post_list, 8)
-        # page_number = request.GET.get('page')
-        # page_obj = paginator.get_page(page_number)
+        post_list = ForumPost.objects.order_by('-created_on')
+        paginator = Paginator(post_list, 8)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         posts = ForumPost.objects.all()
         form = PostForm()
         return render(request, self.forum_view, {"posts": posts, "form": form})
@@ -56,6 +56,7 @@ class EditPost(LoginRequiredMixin, View):
             return redirect('userforum') # to catch any instances where the buttons displayed by mistake
 
         form = PostForm(instance=post)
+        form.fields.pop('likes', None) # attempt to use 'pop' to remove the rogue likes list
         return render(request, 'edit_forum_post.html', {'form': form, 'post': post})
 
     def post(self, request, *args, **kwargs):
@@ -66,6 +67,7 @@ class EditPost(LoginRequiredMixin, View):
             return redirect('userforum') # to catch any instances where the buttons displayed by mistake
 
         form = PostForm(request.POST, instance=post)
+        form.fields.pop('likes', None)
         if form.is_valid():
             form.save()
             return redirect('userforum')
