@@ -38,8 +38,8 @@
             </form>
             {% endif %}
         </strong>
-        <strong class="text-secondary"> {{ post.number_of_likes }} </strong>
-        <strong class="text-secondary"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
+        <strong class="text-second"> {{ post.number_of_likes }} </strong>
+        <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
 
     </div>
 {% endfor %}
@@ -60,12 +60,12 @@
     </span>
 </div>
 
-<script>
+<!-- <script>
     $(document).ready(function() {
         $('#id_content_iframe').summernote({
             placeholder: 'Write your community forum contribution here...',
         });
     });
-    </script>
+    </script> -->
 
 {% endblock %}

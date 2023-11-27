@@ -11,7 +11,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Update Post</button>
-    <a href="{% url 'userforum' %}">Return to forum with no changes</a>
+    <a href="{% url 'userforum' %}" class="btn btn-edit">Return to forum with no changes</a>
 </form>
 
 {% endblock %}

@@ -7,6 +7,6 @@
     <form method="post">
         {% csrf_token %}
         <input type="submit" value="Confirm Delete">
-        <a href="{% url 'userforum_post_detail' post_id=post_id %}">Cancel</a>
+        <a class="back-up" href="{% url 'userforum_post_detail' post_id=post_id %}">Cancel</a>
     </form>
 {% endblock %}

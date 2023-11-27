@@ -8,6 +8,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-edit">Submit</button>
-        <a href="{% url 'userforum' %}" class="btn btn-secondary">Skip for Now</a>
+        <a href="{% url 'userforum' %}" class="btn btn-edit">Skip for Now</a>
     </form>
 {% endblock %}
