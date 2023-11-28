@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
+#ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
 ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-auwp16d75qb.ws-eu106.gitpod.io']
 
 # Application definition
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'userprofile',
     'forum',
+    'bookable_services',
 ]
 
 SITE_ID = 1
@@ -104,7 +105,11 @@ WSGI_APPLICATION = 'cycleconnect.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
 }
 
 ACCOUNT_FORMS = {
