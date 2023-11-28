@@ -7,6 +7,24 @@ body {
     font-family: 'Dosis', sans-serif;
 }
 
+body1 {
+    background-color: rgb(111, 111, 188);
+    background-image: url('/static/images/blue-road-mountain.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Dosis', sans-serif;
+}
+
+body2 {
+    background-color: rgb(111, 111, 188);
+    background-image: url('/static/images/blue-wheel-and-chain.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Dosis', sans-serif;
+}
+
 .centralise-container {
     display: flex;
     width: 100%;
