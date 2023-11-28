@@ -1,0 +1,50 @@
+{% extends 'base1.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>Welcome to services and bookings, {{ user }}</h1>
+
+<h2>Please have a look at the services we offer</h2>
+<ul>
+    {% for service in services %}
+        <li>
+            <h3>{{ service.name }}</h3>
+            <h3>{{ service.price }} </h3>
+            <p> {{ service.description }} </p>
+        </li>
+    {% empty %}
+        <p>No services available.</p>
+    {% endfor %}
+</ul>
+
+
+{% for post in posts %}
+    <div class="post">
+        <h2>{{ post.title }}</h2>
+        {% if request.user.id == post.UserId_id %}
+            <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
+        {% endif %}        
+        <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
+        <p>{{ post.content|safe }}</p>
+        
+        <strong>
+            {% if user.is_authenticated %}
+            <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
+                {% csrf_token %}
+                {% if post.id in liked_post_ids %}
+                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="fas fa-star"></i></button>
+                {% else %}
+                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="far fa-regular fa-star"></i></button>
+                {% endif %}
+            </form>
+            {% endif %}
+        </strong>
+        <strong class="text-second"> {{ post.number_of_likes }} </strong>
+        <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
+
+    </div>
+{% endfor %}
+
+{% endblock %}

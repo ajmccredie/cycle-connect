@@ -27,8 +27,8 @@ class Slot(models.Model):
 #Set up the admin side to add the details to the services available
 class Service(models.Model):
     name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10)
-    regions = models.ManyToManyFields(Place)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
+    regions = models.ManyToManyField(Place)
     description = models.TextField()
 
     def __str__(self):
@@ -38,11 +38,12 @@ class Service(models.Model):
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     booking_date = models.DateTimeField
     status = models.CharField(max_length=10)
 
-    class Meta:
-        full_booking = ('user', 'slot')
+    # class Meta:
+    #     full_booking = ('user', 'slot')
     
     def __str__(self):
         return f"Booking {self.id} by {self.user}"
