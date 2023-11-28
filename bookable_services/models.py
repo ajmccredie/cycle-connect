@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 #Geographical placement for the bookings matters
 class Place(models.Model):
     name = models.CharField(max_length=25)
-    further_description = models.Textfield()
+    further_description = models.TextField()
 
     def __str__(self):
         return self.name
@@ -22,6 +22,17 @@ class Slot(models.Model):
 
     def __str__(self):
         return f"{self.place.name} {self.start_time} - {self.end_time}"
+
+
+#Set up the admin side to add the details to the services available
+class Service(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10)
+    regions = models.ManyToManyFields(Place)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 
 class Booking(models.Model):

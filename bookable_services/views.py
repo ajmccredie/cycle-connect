@@ -4,5 +4,7 @@ from .forms import BookingInquiryForm
 
 # Create your views here.
 
-def book_service(request):
-    
+class BookService(request):
+    model = Booking
+    form = BookingInquiryForm
+    service_booking_page = 'services/book_service.html'
