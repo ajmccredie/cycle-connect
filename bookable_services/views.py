@@ -19,3 +19,7 @@ class BookService(LoginRequiredMixin, View):
     model = Booking
     form = BookingInquiryForm
     service_booking_page = 'book_service.html'
+
+    # def get(self, request, *args, **kwargs):
+    #     context = ()
+    #     if 'event'
