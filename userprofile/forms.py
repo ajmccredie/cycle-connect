@@ -15,8 +15,8 @@ class CustomSignupForm(SignupForm):
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
+        profile_details, created = ProfileDetails.objects.get_or_create(user=user)
         profile_details = ProfileDetails(
-            user=user,
             biography=self.cleaned_data['biography'],
             profile_picture=self.cleaned_data['profile_picture'],
             cycling_skills=self.cleaned_data['cycling_skills'],

@@ -55,7 +55,7 @@ def sign_up(request):
         form = UserCreationForm()
     return render(request, 'sign_up.html', {'form': form})
 
-
+@login_required
 def signup_full_profile(request):
     user = request.user
     defaults = {
@@ -65,21 +65,26 @@ def signup_full_profile(request):
         'maintenance_skills': 'Tell us a little about your maintenance experience',
     }
     profile_details, created = ProfileDetails.objects.get_or_create(user=user, defaults=defaults)  
+    
+    try:
+        profile_details = ProfileDetails.objects.get(user=request.user)
+    except ProfileDetails.DoesNotExist:
+        profile_details = None
+    
     if request.method == 'POST':
-        form = ProfileDetailsForm(request.POST, request.FILES)
+        form = ProfileDetailsForm(request.POST, request.FILES, instance=profile_details)
         if form.is_valid():
             profile_details = form.save(commit=False)
             profile_details.user = request.user
             profile_details.save()
             return redirect('userforum')
     else:
-        try:
-            profile_details = ProfileDetails.objects.get(user=request.user)
-            form = ProfileDetailsForm(instance=profile_details)
-        except ProfileDetails.DoesNotExist:
-            form = ProfileDetailsForm()
+         form = ProfileDetailsForm(instance=profile_details if profile_details else None)
+
     return render(request, 'signup_full_profile.html', {'form': form})
 
+
+@login_required
 def profile_view(request):
     defaults = {
         'biography': 'Please tell us a little about yourself and your cycling background',
@@ -90,24 +95,22 @@ def profile_view(request):
     profile_details, created = ProfileDetails.objects.get_or_create(user=request.user, defaults=defaults)
     return render(request, 'profile_view.html', {'profile': profile_details})
 
+
 def profile_edit(request):
+    try:
+        profile_details = request.user.profiledetails
+    except ProfileDetails.DoesNotExist:
+        profile_details = None
+
     if request.method == 'POST':
-        form = ProfileDetailsForm(request.POST, instance=request.user.profiledetails)
+        form = ProfileDetailsForm(request.POST, request.FILES, instance=profile_details)
         if form.is_valid():
-            form.save()
+            profile_details = form.save(commit=False)
+            profile_details.user = request.user
+            profile_details.save()
             return redirect('profile_view')
     else:
-        try:
-            profile_details = ProfileDetails.objects.get(user=request.user)
-            form = ProfileDetailsForm(instance=profile_details)
-        except ProfileDetails.DoesNotExist:
-            defaults = {
-                'biography': 'Please tell us a little about yourself and your cycling background',
-                'cycling_skills': 'How would you describe your level of cycling expertise?',
-                'preferred_ride_type': 'What type of bikes do you prefer to ride', 
-                'maintenance_skills': 'Tell us a little about your maintenance experience',
-            }
-            form = ProfileDetailsForm(initial=defaults)
+        form = ProfileDetailsForm(instance=profile_details if profile_details else None)
     return render(request, 'profile_edit.html', {'form': form})
 
 @login_required
