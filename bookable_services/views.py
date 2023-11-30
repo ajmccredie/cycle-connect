@@ -17,9 +17,20 @@ class ServiceList(View):
 
 class BookService(LoginRequiredMixin, View):
     model = Booking
-    form = BookingInquiryForm
     service_booking_page = 'book_service.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     context = ()
-    #     if 'event'
+    def get(self, request, *args, **kwargs):
+        form = BookingInquiryForm()
+        return render(request, self.service_booking_page, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = BookingInquiryForm(request.POST)
+        if form.is_valid():
+            new_booking = Booking(
+                user=request.user,
+                slot=form.cleaned_data['slot'],
+                status='pending'
+            )
+            new_booking.save()
+            
+        return render(request, self.service_booking_page, {'form': form})
