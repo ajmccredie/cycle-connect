@@ -20,17 +20,22 @@ class BookService(LoginRequiredMixin, View):
     service_booking_page = 'book_service.html'
 
     def get(self, request, *args, **kwargs):
-        form = BookingInquiryForm()
-        return render(request, self.service_booking_page, {'form': form})
+        service_id = kwargs.get('service_id')
+        service = get_object_or_404(Service, id=service_id)
+        form = BookingInquiryForm(initial={'service': service})
+        return render(request, self.service_booking_page, {'form': form, 'service': service})
 
     def post(self, request, *args, **kwargs):
         form = BookingInquiryForm(request.POST)
         if form.is_valid():
+            service_id = kwargs.get('service_id')
+            service = get_object_or_404(Service, id=service_id)
             new_booking = Booking(
                 user=request.user,
                 slot=form.cleaned_data['slot'],
                 status='pending'
             )
             new_booking.save()
+            return redirect('service_list')
             
         return render(request, self.service_booking_page, {'form': form})

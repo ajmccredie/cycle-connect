@@ -2,6 +2,10 @@ from django import forms
 from .models import Slot, Booking, Place
 
 class BookingInquiryForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['slot', 'service']
+
     place = forms.ModelChoiceField(
         queryset=Place.objects.all(), label="Select Place"
     )
