@@ -97,21 +97,25 @@ def profile_view(request):
 
 
 def profile_edit(request):
+    user = request.user
     try:
-        profile_details = request.user.profiledetails
+        profile_details = ProfileDetails.objects.get(user=user)
     except ProfileDetails.DoesNotExist:
         profile_details = None
 
     if request.method == 'POST':
         form = ProfileDetailsForm(request.POST, request.FILES, instance=profile_details)
         if form.is_valid():
-            profile_details = form.save(commit=False)
-            profile_details.user = request.user
-            profile_details.save()
+            preferred_ride_type_values = form.cleaned_data.get('preferred_ride_type')
+            print("Preferred Ride Type values submitted:", preferred_ride_type_values)
+            form.save()
             return redirect('profile_view')
+        else:
+            print("Form errors", form.errors)
     else:
-        form = ProfileDetailsForm(instance=profile_details if profile_details else None)
+        form = ProfileDetailsForm(instance=profile_details)
     return render(request, 'profile_edit.html', {'form': form})
+
 
 @login_required
 def logout_view(request):

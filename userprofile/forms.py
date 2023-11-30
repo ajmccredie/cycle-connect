@@ -7,11 +7,18 @@ from django import forms
 
 
 class CustomSignupForm(SignupForm):
-    biography = forms.CharField(required=False)
-    profile_picture = forms.ImageField(required=False)
-    cycling_skills = forms.CharField(required=False)
-    preferred_ride_type = forms.CharField(required=False)
-    maintenance_skills = forms.CharField(required=False)
+    PREFERRED_RIDE_TYPE_CHOICES = [
+    ("road", "Road"),
+    ("electric", "Electric"),
+    ("bmx", "BMX"),
+    ("mountain", "Mountain"),
+    ("hybrid", "Hybrid"),
+    ]
+    biography = forms.CharField(required=False, widget=forms.Textarea)
+    profile_picture = forms.ImageField(required=False, widget=forms.FileInput)
+    cycling_skills = forms.ChoiceField(required=False, choices=[("beginner", "Beginner"), ("casual", "Casual"), ("intermediate", "Intermediate"), ("advanced", "Advanced")], widget=forms.RadioSelect)
+    preferred_ride_type = forms.ChoiceField(required=False, choices=PREFERRED_RIDE_TYPE_CHOICES, widget=forms.RadioSelect)
+    maintenance_skills = forms.ChoiceField(required=False, choices=[("none", "None"), ("casual", "Casual"), ("basic", "Basic"), ("advanced", "Advanced"), ("youtube_is_my_hero", "YouTube is my hero!")], widget=forms.RadioSelect)
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
@@ -28,12 +35,28 @@ class CustomSignupForm(SignupForm):
 
 
 class ProfileDetailsForm(forms.ModelForm):
+    PREFERRED_RIDE_TYPE_CHOICES = [
+    ("road", "Road"),
+    ("electric", "Electric"),
+    ("bmx", "BMX"),
+    ("mountain", "Mountain"),
+    ("hybrid", "Hybrid"),
+    ]
+
+    biography = forms.CharField(required=False, widget=forms.Textarea)
+    profile_picture = forms.ImageField(required=False, widget=forms.FileInput)
+    cycling_skills = forms.ChoiceField(required=False, choices=[("beginner", "Beginner"), ("casual", "Casual"), ("intermediate", "Intermediate"), ("advanced", "Advanced")], widget=forms.RadioSelect)
+    preferred_ride_type = forms.ChoiceField(required=False, choices=PREFERRED_RIDE_TYPE_CHOICES, widget=forms.RadioSelect)
+    maintenance_skills = forms.ChoiceField(required=False, choices=[("none", "None"), ("casual", "Casual"), ("basic", "Basic"), ("advanced", "Advanced"), ("youtube_is_my_hero", "YouTube is my hero!")], widget=forms.RadioSelect)
+    
     class Meta:
         model = ProfileDetails
         fields = ['biography', 'profile_picture', 'cycling_skills', 'preferred_ride_type', 'maintenance_skills']
 
     def __init__(self, *args, **kwargs):
         super(ProfileDetailsForm, self).__init__(*args, **kwargs)
+        # self.fields['preferred_ride_type'].widget = forms.CheckboxSelectMultiple()
+        # self.fields['preferred_ride_type'].choices = self.fields['preferred_ride_type'].choices[1:]
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'biography',
