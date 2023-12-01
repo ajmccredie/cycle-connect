@@ -22,7 +22,7 @@ class BookService(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         service_id = kwargs.get('service_id')
         service = get_object_or_404(Service, id=service_id)
-        form = BookingInquiryForm(initial={'service': service})
+        form = BookingInquiryForm(initial={'service': service}, service=service)
         return render(request, self.service_booking_page, {'form': form, 'service': service})
 
     def post(self, request, *args, **kwargs):

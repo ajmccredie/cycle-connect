@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<h1>You will be booking a service as: "{{ user }}"</h1>
+<h1>You will be booking a {{ service.name }} as "{{ user }}"</h1>
 
 <form method="post">
     {% csrf_token %}
