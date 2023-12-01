@@ -1,0 +1,15 @@
+{% extends 'base2.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>{{ user }} here is your booking:</h1>
+
+<p>Service: {{ booking.slot.service.name }}</p>
+<p>Place: {{ booking.slot.place.name }}</p>
+<p>Date: {{ booking.slot.date }}</p>
+<p>Time: {{ booking.slot.time }}</p>
+
+<p>It is currently: {{ booking.slot.status }}</p>
+
+{% endblock %}

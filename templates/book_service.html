@@ -5,11 +5,24 @@
 {% block content %}
 <h1>You will be booking a {{ service.name }} as "{{ user }}"</h1>
 
-<form method="post">
+<h2>Available Slots for {{ service.name }}</h2>
+
+{% for slot in slots %}
+  <div class="slot">
+    <p>Date: {{ slot.start_time|date:"D, d M Y" }}</p>
+    <p>Time: {{ slot.start_time|time:"H:i" }} - {{ slot.end_time|time:"H:i" }}</p>
+    <form method="post" action="{% url 'book_service_confirmation' slot.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Request Booking">
+    </form>
+  </div>
+{% endfor %}
+
+<!-- <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Request Booking</button>
-</form>
+</form> -->
 
 
 {% endblock %}
