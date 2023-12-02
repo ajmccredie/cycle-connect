@@ -16,6 +16,15 @@ class ServiceList(View):
         return render(request, self.template_name, {'services': services})
 
 
+class SelectPlace(View):
+    select_place_page = 'book_service_place.html'
+
+    def get(self, request, service_id):
+        service = get_object_or_404(Service, id=service_id)
+        places = Place.objects.filter(slot__service=service).distinct()
+        return render(request, self.select_place_page, {'service': service, 'places': places}) 
+
+
 class BookService(LoginRequiredMixin, View):
     model = Booking
     service_booking_page = 'book_service.html'

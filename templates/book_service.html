@@ -5,7 +5,7 @@
 {% block content %}
 <h1>You will be booking a {{ service.name }} as "{{ user }}"</h1>
 
-<h2>Available Slots for {{ service.name }}</h2>
+<h2>Available Slots for {{ service.name }} in</h2>
 
 {% for slot in slots %}
   <div class="slot">
@@ -17,12 +17,5 @@
     </form>
   </div>
 {% endfor %}
-
-<!-- <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Request Booking</button>
-</form> -->
-
 
 {% endblock %}

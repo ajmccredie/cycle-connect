@@ -15,7 +15,7 @@
             <ul>
                 {{ service.description_detail_bullets }}
             </ul>
-            <a href="{% url 'book_service' service.id %}">Book this service</a>
+            <a href="{% url 'select_place' service.id %}">Book {{ service.name }}</a>
         </li>
     {% empty %}
         <p>No services available.</p>
