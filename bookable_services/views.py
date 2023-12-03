@@ -27,24 +27,22 @@ class SelectPlace(View):
     def post(self, request, *args, **kwargs):
         service_id = request.POST.get('service_id')
         place_id = request.POST.get('place_id')
-        return redirect('service_booking_page', service_id=service_id, place_id=place_id)
+        return redirect('book_service', service_id=service_id, place_id=place_id)
 
 
 class BookService(LoginRequiredMixin, View):
     model = Booking
     service_booking_page = 'book_service.html'
 
-    def get(self, request, *args, **kwargs):
-        service_id = kwargs.get('service_id')
-        place_id = kwargs.get('place_id')
+    def get(self, request, service_id, place_id):
         service = get_object_or_404(Service, id=service_id)
+        place = get_object_or_404(Place, id=place_id)
         slots = Slot.objects.filter(service=service, place=place).order_by('start_time')
         form = BookingInquiryForm(initial={'service': service}, service=service)
-        return render(request, self.service_booking_page, {'form': form, 'slots': slots, 'service': service})
+        return render(request, self.service_booking_page, {'form': form, 'slots': slots, 'service': service, 'place': place})
 
-    def post(self, request, *args, **kwargs):
-        service_id = kwargs.get('pk')
-        service = get_object_or_404(Service, pk=service_id)
+    def post(self, request, service_id, place_id):
+        service = get_object_or_404(Service, id=service_id)
         place = get_object_or_404(Place, id=place_id)
         form = BookingInquiryForm(request.POST, service=service)
         if form.is_valid():
@@ -55,8 +53,9 @@ class BookService(LoginRequiredMixin, View):
             )
             new_booking.save()
             return redirect('service_list')
-            
-        return render(request, self.service_booking_page, {'form': form})
+        else:
+            slots = Slot.objects.filter(service=service, place=place).order_by('start_time')
+            return render(request, self.service_booking_page, {'form': form, 'slots': slots, 'service': service, 'place': place})
 
 
 def get_available_slots(request, service_id, location_id):
