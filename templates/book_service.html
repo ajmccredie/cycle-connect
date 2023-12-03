@@ -11,7 +11,7 @@
   <div class="slot">
     <p>Date: {{ slot.start_time|date:"D, d M Y" }}</p>
     <p>Time: {{ slot.start_time|time:"H:i" }} - {{ slot.end_time|time:"H:i" }}</p>
-    <form method="post" action="{% url 'book_service_confirmation' slot.id %}">
+    <form method="post" action="{% url 'booking_status' slot.id %}">
       {% csrf_token %}
       <input type="submit" value="Request Booking">
     </form>

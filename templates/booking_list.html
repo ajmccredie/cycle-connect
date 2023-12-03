@@ -3,13 +3,19 @@
 {% load static %}
 
 {% block content %}
-<h1>Booking confirmation</h1>
+<h1>{{ user }} here are your bookings:</h1>
 
+{% for booking in bookings %}
 <div class="booking">
     <p>Service: {{ booking.service.name }}</p>
     <p>Date: {{ booking.slot.start_time|date:"D, d M Y" }}</p>
     <p>Time: {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
     <p>Status: {{ booking.status }}</p>
 </div>
+{% empty %}
+    <p>You have no bookings.</p>
+{% endfor %}
+
+<!-- Need to add something so that bookings can be cancelled and it changes the status -->
 
 {% endblock %}
