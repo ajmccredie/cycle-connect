@@ -24,6 +24,11 @@ class SelectPlace(View):
         places = Place.objects.filter(slot__service=service).distinct()
         return render(request, self.select_place_page, {'service': service, 'places': places}) 
 
+    def post(self, request, *args, **kwargs):
+        service_id = request.POST.get('service_id')
+        place_id = request.POST.get('place_id')
+        return redirect('service_booking_page', service_id=service_id, place_id=place_id)
+
 
 class BookService(LoginRequiredMixin, View):
     model = Booking
@@ -31,14 +36,16 @@ class BookService(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         service_id = kwargs.get('service_id')
+        place_id = kwargs.get('place_id')
         service = get_object_or_404(Service, id=service_id)
-        slots = Slot.objects.filter(service=service).order_by('start_time')
+        slots = Slot.objects.filter(service=service, place=place).order_by('start_time')
         form = BookingInquiryForm(initial={'service': service}, service=service)
         return render(request, self.service_booking_page, {'form': form, 'slots': slots, 'service': service})
 
     def post(self, request, *args, **kwargs):
         service_id = kwargs.get('pk')
         service = get_object_or_404(Service, pk=service_id)
+        place = get_object_or_404(Place, id=place_id)
         form = BookingInquiryForm(request.POST, service=service)
         if form.is_valid():
             new_booking = Booking(

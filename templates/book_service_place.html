@@ -10,7 +10,10 @@
 <ul>
     {% for place in places %}
         <li>
-            <a href="{% url 'book_service' service.id place.id %}">{{ place.name }}</a>
+            <form method="post" action="{% url 'book_service' service.id place.id %}">
+                {% csrf_token %}
+                <button type="submit">{{ place.name }}</button>
+            </form>
         </li>
     {% empty %}
         <p>No locations available for this service.</p>
