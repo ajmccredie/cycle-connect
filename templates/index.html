@@ -5,7 +5,7 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h2>Welcome, {{ user.username }}!</h2>
-        <p>Head over to the <a href="{% url 'userforum' %}">Forum Page</a>.</p>
+        <p>Head over to the <a class="btn btn-a" href="{% url 'userforum' %}">Forum Page</a>.</p>
     {% else %}
         <h2>Welcome to CYCLIST CONNECT!</h2> 
         <h3>Please Sign In</h3>
@@ -25,14 +25,7 @@
                 <button type="submit">Sign In</button>
             </div>
         </form>
-        <!-- <form class="login" method="POST" action="{% url 'account_login' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
-            <button class="btn btn-signup right" type="submit">Sign In</button>
-        </form>  --> 
+
         <div class="sign-up-link">
             <p>or <a href="{% url 'sign_up' %}">create an account</a>.</p>
         </div> 

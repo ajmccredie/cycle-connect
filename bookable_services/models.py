@@ -50,9 +50,6 @@ class Booking(models.Model):
         ('cancelled', 'Cancelled'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-
-    # class Meta:
-    #     full_booking = ('user', 'slot')
     
     def __str__(self):
         return f"Booking {self.id} by {self.user}"

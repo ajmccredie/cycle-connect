@@ -16,7 +16,7 @@
             <h3>{{ service.name }}</h3>
             <h3>£{{ service.price }} </h3>
             <p> {{ service.description_summary }} </p>
-            <ul>
+            <ul class="service_description fa-ul">
                 {{ service.description_detail_bullets }}
             </ul>
         </div>
@@ -29,5 +29,6 @@
     {% endfor %}
 </ul>
 
+<script src="{% static 'script/script.js' %}"></script>
 
 {% endblock %}
