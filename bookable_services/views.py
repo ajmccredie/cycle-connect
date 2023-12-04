@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.utils import timezone
 from .models import Place, Slot, Booking, Service
 from .forms import BookingInquiryForm
 
@@ -38,25 +39,40 @@ class BookService(LoginRequiredMixin, View):
     def get(self, request, service_id, place_id):
         service = get_object_or_404(Service, id=service_id)
         place = get_object_or_404(Place, id=place_id)
-        slots = Slot.objects.filter(service=service, place=place).order_by('start_time')
+        current_time = timezone.now()
+        slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).order_by('start_time')
         form = BookingInquiryForm(initial={'service': service}, service=service)
         return render(request, self.service_booking_page, {'form': form, 'slots': slots, 'service': service, 'place': place})
 
     def post(self, request, service_id, place_id):
+        slot_id = request.POST.get('slot_id')
         service = get_object_or_404(Service, id=service_id)
         place = get_object_or_404(Place, id=place_id)
         form = BookingInquiryForm(request.POST, service=service)
-        if form.is_valid():
-            new_booking = Booking(
-            user=request.user,
-            slot=form.cleaned_data['slot'],
-            service=service,
-            status='pending'
+        
+        if slot_id:
+            slot = get_object_or_404(Slot, id=slot_id)
+            service = get_object_or_404(Service, id=service_id)
+            new_booking = Booking.objects.create(
+                user=request.user,
+                slot=slot,
+                service=service,
+                status='pending'
             )
-            new_booking.save()
-            return redirect('book_service_confirmation')
+        # if form.is_valid():
+        #     slot = get_object_or_404(Slot, id=slot_id)
+        #     new_booking = Booking(
+        #         user=request.user,
+        #         slot=slot,
+        #         service=service,
+        #         status='pending'
+        #     )
+        #     new_booking.save()
+            return redirect('book_service_confirmation', booking_id=new_booking.id)
         else:
-            slots = Slot.objects.filter(service=service, place=place).order_by('start_time')
+            current_time = timezone.now()
+            print('Form invalid')
+            slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).order_by('start_time')
             return render(request, self.service_booking_page, {'form': form, 'slots': slots, 'service': service, 'place': place})
 
 
@@ -71,11 +87,11 @@ def get_available_slots(request, service_id, location_id):
 
 
 @login_required
-def book_service_confirmation(request):
-    latest_booking = Booking.objects.filter(user=request.user).latest('booking_date')
+def book_service_confirmation(request, booking_id):
+    latest_booking = get_object_or_404(Booking, id=booking_id, user=request.user)
     return render(request, 'book_service_confirmation.html', {'booking': latest_booking})
 
 @login_required
 def booking_status(request):
-    bookings = Booking.objects.filter(user=request.user).order_by('-start_date')
+    bookings = Booking.objects.filter(user=request.user).order_by('-booking_date')
     return render(request, 'booking_list.html', {'bookings': bookings})
