@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Welcome to services and bookings, {{ user }}</h1>
 <div>
-    <a class="btn-a" href="{% url 'booking_status' %}">View my current bookings</a>
+    <a class="btn btn-a" href="{% url 'booking_status' %}">View my current bookings</a>
 </div>
 
 <h2>Please have a look at the services we offer</h2>
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div>
-            <a class="btn-a" href="{% url 'select_place' service.id %}">Book {{ service.name }}</a>
+            <a class="btn btn-a" href="{% url 'select_place' service.id %}">Book {{ service.name }}</a>
         </div>
     </li>
     {% empty %}
