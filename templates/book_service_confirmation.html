@@ -10,7 +10,7 @@
     <p>Date: {{ booking.slot.start_time|date:"D, d M Y" }}</p>
     <p>Time: {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
     <p>Status: {{ booking.status }}</p>
-    <a href="{% url 'booking_status' %}">View My Bookings</a>
+    <a class="btn-a" href="{% url 'booking_status' %}">View My Bookings</a>
 </div>
 
 {% endblock %}

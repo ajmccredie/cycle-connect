@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import BookService, ServiceList, SelectPlace, book_service_confirmation, booking_status
+from .views import BookService, ServiceList, SelectPlace, book_service_confirmation, booking_status, cancel_booking
 from . import views
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('bookings/<int:service_id>/<int:place_id>/', BookService.as_view(), name='book_service'),
     path('bookings/confirmation/<int:booking_id>/', views.book_service_confirmation, name='book_service_confirmation'),
     path('bookings/status/', booking_status, name='booking_status'),
+    path('bookings/cancel/<int:booking_id>/', cancel_booking, name='cancel_booking'),
 ]

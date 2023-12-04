@@ -11,12 +11,17 @@
     <p>Date: {{ booking.slot.start_time|date:"D, d M Y" }}</p>
     <p>Time: {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
     <p>Status: {{ booking.status }}</p>
+    {% if booking.status == 'pending' or booking.status == 'confirmed' %}
+      <form method="post" action="{% url 'cancel_booking' booking.id %}">
+        {% csrf_token %}
+        <button type="submit">Cancel Booking</button>
+      </form>
+    {% endif %}
 </div>
 {% empty %}
     <p>You have no bookings.</p>
 {% endfor %}
 
 <a class="btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>
-<!-- Need to add something so that bookings can be cancelled and it changes the status -->
 
 {% endblock %}

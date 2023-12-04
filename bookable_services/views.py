@@ -59,15 +59,6 @@ class BookService(LoginRequiredMixin, View):
                 service=service,
                 status='pending'
             )
-        # if form.is_valid():
-        #     slot = get_object_or_404(Slot, id=slot_id)
-        #     new_booking = Booking(
-        #         user=request.user,
-        #         slot=slot,
-        #         service=service,
-        #         status='pending'
-        #     )
-        #     new_booking.save()
             return redirect('book_service_confirmation', booking_id=new_booking.id)
         else:
             current_time = timezone.now()
@@ -95,3 +86,13 @@ def book_service_confirmation(request, booking_id):
 def booking_status(request):
     bookings = Booking.objects.filter(user=request.user).order_by('-booking_date')
     return render(request, 'booking_list.html', {'bookings': bookings})
+
+@login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    if booking.status not in ['cancelled']:
+        booking.status = 'cancelled'
+        booking.save()
+    else:
+        messages.error(request, 'Booking cannot be cancelled.')
+    return redirect('booking_status')

@@ -16,7 +16,8 @@
             </form>
         </li>
     {% empty %}
-        <p>No locations available for this service.</p>
+        <p>There are no active bookings available for this service at this time.</p>
+        <a class="btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>
     {% endfor %}
 </ul>
 
