@@ -4,21 +4,28 @@
 
 {% block content %}
 <h1>Welcome to services and bookings, {{ user }}</h1>
+<div>
+    <a class="btn-a" href="{% url 'booking_status' %}">View my current bookings</a>
+</div>
 
 <h2>Please have a look at the services we offer</h2>
 <ul>
     {% for service in services %}
-        <li>
+    <li>
+        <div>
             <h3>{{ service.name }}</h3>
             <h3>£{{ service.price }} </h3>
             <p> {{ service.description_summary }} </p>
             <ul>
                 {{ service.description_detail_bullets }}
             </ul>
-            <a href="{% url 'select_place' service.id %}">Book {{ service.name }}</a>
-        </li>
+        </div>
+        <div>
+            <a class="btn-a" href="{% url 'select_place' service.id %}">Book {{ service.name }}</a>
+        </div>
+    </li>
     {% empty %}
-        <p>No services available.</p>
+    <p>No services available.</p>
     {% endfor %}
 </ul>
 
