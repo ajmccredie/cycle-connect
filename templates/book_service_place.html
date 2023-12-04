@@ -13,12 +13,14 @@
             <form method="post" action="{% url 'book_service' service.id place.id %}">
                 {% csrf_token %}
                 <button type="submit">{{ place.name }}</button>
+                <p>Available Slots: {{ place.available_slots }}</p>
             </form>
         </li>
     {% empty %}
         <p>There are no active bookings available for this service at this time.</p>
-        <a class="btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>
     {% endfor %}
 </ul>
+
+<a class="btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>
 
 {% endblock %}

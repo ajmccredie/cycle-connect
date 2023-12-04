@@ -24,6 +24,14 @@ class SelectPlace(View):
     def get(self, request, service_id):
         service = get_object_or_404(Service, id=service_id)
         places = Place.objects.filter(slot__service=service).distinct()
+        for place in places:
+            slots = Slot.objects.filter(service=service, place=place)
+            available_slots = 0
+            for slot in slots:
+                bookings_count = Booking.objects.filter(slot=slot).count()
+                if bookings_count < slot.max_people:
+                    available_slots += slot.max_people - bookings_count
+            place.available_slots = available_slots
         return render(request, self.select_place_page, {'service': service, 'places': places}) 
 
     def post(self, request, *args, **kwargs):
