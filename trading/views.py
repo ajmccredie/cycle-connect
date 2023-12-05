@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from .models import TradingPost
+from .form import TradingPostForm
 
 # Create your views here.
 
@@ -26,3 +27,5 @@ class TradingPostView(ListView):
         context['categories'] = TradingPost.CATEGORY_CHOICES
         context['conditions'] = TradingPost.CONDITION_CHOICES
         return context
+
+

@@ -1,0 +1,10 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+<h2>Create new trading post</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Submit</button>
+</form>
+{% endblock %}

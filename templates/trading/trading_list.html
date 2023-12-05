@@ -1,6 +1,9 @@
 {% extends 'base3.html' %}
 
 {% block content %}
+<div class="trading-post-sort">
+    <a href="{% url 'trading_new' %}" class="btn btn-edit">Create New Post</a>
+</div>
 
 <div class="posts">
     {% for post in posts %}
