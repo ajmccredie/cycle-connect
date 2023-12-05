@@ -1,0 +1,22 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+
+<div class="posts">
+    {% for post in posts %}
+    <div class="post">
+        <h2>{{ post.title }} - {{ post.get_status_display }} </h2>
+        <!-- {% if post.user == request.user %}
+        <a href="{% url 'edit_post' post.id %}">Edit</a>
+        <a href="{% url 'delete_post' post.id %}">Delete</a>
+        {% endif %} -->
+        <p>Condition: {{ post.get_condition_display }} - Category: {{ post.get_category_display }}</p>
+        <img src="{{ post.image.url }}" alt="Image of {{ post.title }}">
+        <p>{{ post.description }}</p>
+    </div>
+    {% empty %}
+    <p>No posts available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

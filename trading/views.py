@@ -6,7 +6,7 @@ from .models import TradingPost
 
 class TradingPostView(ListView):
     model = TradingPost
-    template_name = 'trading/listings.html'
+    template_name = 'trading/trading_list.html'
     paginate_by = 6
 
     def get_queryset(self):

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'userprofile',
     'forum',
     'bookable_services',
+    'trading',
 ]
 
 SITE_ID = 1
