@@ -9,6 +9,14 @@ class TradingPostForm(forms.ModelForm):
     class Meta:
         model = TradingPost
         fields = ['title', 'description', 'image', 'category', 'condition', 'status']
+        widgets = {
+            'category': forms.RadioSelect,
+            'condition': forms.RadioSelect,
+            'status': forms.RadioSelect,
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(TradingPostForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = Layout(

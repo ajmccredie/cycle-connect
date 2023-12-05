@@ -9,7 +9,7 @@ from .models import Place, Slot, Booking, Service
 from .forms import BookingInquiryForm
 
 # Create your views here.
-class ServiceList(View):
+class ServiceList(View, LoginRequiredMixin):
     model = Service
     template_name = 'service_list.html'
 
