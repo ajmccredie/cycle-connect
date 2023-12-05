@@ -7,10 +7,11 @@ choice = 0
 
 class TradingPost(models.Model):
     CATEGORY_CHOICES = [
-        ('clothing', 'Clothing'),
-        ('bike_part', 'Bike Part'),
-        ('bike_accessory', 'Bike Accessory'),
-        ('other', 'Other'),
+        ("clothing", "Clothing"),
+        ("bike_part", "Bike Part"),
+        ("bike_accessory", "Bike Accessory"),
+        ("other", "Other"),
+        ("all", "All"),
     ]
 
     CONDITION_CHOICES = [
@@ -18,6 +19,7 @@ class TradingPost(models.Model):
     ("tired", "Tired"),
     ("like_new", "Like New"),
     ("used", "Used"),
+    ("all", "All"),
     ]
 
     STATUS_CHOICES = [

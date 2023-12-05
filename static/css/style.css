@@ -25,6 +25,15 @@ body {
     font-family: 'Dosis', sans-serif;
 }
 
+.body3 {
+    background-color: rgb(111, 111, 188);
+    background-image: url('/static/images/blue-sunrise-cyclist.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Dosis', sans-serif;
+}
+
 .centralise-container {
     display: flex;
     width: 100%;
