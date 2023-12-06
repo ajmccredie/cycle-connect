@@ -1,12 +1,29 @@
 {% extends 'base3.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="trading-post-sort">
     <a href="{% url 'trading_new' %}" class="btn btn-edit">Create New Post</a>
 </div>
 
+<form method="get" action="{% url 'trading_list' %}">
+    <select name="category">
+        <option value="">All Categories</option>
+        {% for value, name in categories %}
+        <option value="{{ value }}">{{ name }}</option>
+        {% endfor %}
+    </select>
+    <select name="condition">
+        <option value="">All Conditions</option>
+        {% for value, name in conditions %}
+        <option value="{{ value }}">{{ name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
 <div class="posts">
-    {% for post in posts %}
+    {% for post in trading_posts %}
     <div class="post">
         <h2>{{ post.title }} - {{ post.get_status_display }} </h2>
         <!-- {% if post.user == request.user %}
@@ -16,6 +33,9 @@
         <p>Condition: {{ post.get_condition_display }} - Category: {{ post.get_category_display }}</p>
         <img src="{{ post.image.url }}" alt="Image of {{ post.title }}">
         <p>{{ post.description }}</p>
+        {% if not post.approved %}
+            <span class="label label-warning">Pending Approval</span>
+        {% endif %}
     </div>
     {% empty %}
     <p>No posts available.</p>

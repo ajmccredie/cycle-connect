@@ -55,8 +55,6 @@ class ProfileDetailsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProfileDetailsForm, self).__init__(*args, **kwargs)
-        # self.fields['preferred_ride_type'].widget = forms.CheckboxSelectMultiple()
-        # self.fields['preferred_ride_type'].choices = self.fields['preferred_ride_type'].choices[1:]
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'biography',

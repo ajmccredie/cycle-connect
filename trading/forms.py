@@ -18,7 +18,7 @@ class TradingPostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TradingPostForm, self).__init__(*args, **kwargs)
 
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.layout = Layout(
             'title', 
             'description', 
@@ -28,7 +28,6 @@ class TradingPostForm(forms.ModelForm):
             'status',
             Submit('submit', 'Create Post', css_class='btn btn-edit')
         )
-
-        self.fields['category'].widget = forms.RadioSelect()
-        self.fields['condition'].widget = forms.RadioSelect()
-        self.fields['status'].widget = forms.RadioSelect()
+        self.label_suffix = ""
+        for field in self.fields:
+            self.fields[field].label_suffix = ""
