@@ -1,0 +1,11 @@
+{% extends 'base3.html' %}
+{% block content %}
+<h2>Are you sure you want to delete this post?</h2>
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+    </form>
+    <a class="btn btn-edit" href="{% url 'trading_list' %}">Cancel Delete</a>
+</div>
+{% endblock %}

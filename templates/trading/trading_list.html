@@ -26,15 +26,27 @@
     {% for post in trading_posts %}
     <div class="post">
         <h2>{{ post.title }} - {{ post.get_status_display }} </h2>
-        <!-- {% if post.user == request.user %}
-        <a href="{% url 'edit_post' post.id %}">Edit</a>
-        <a href="{% url 'delete_post' post.id %}">Delete</a>
-        {% endif %} -->
+        {% if user.is_authenticated and post.seller == user %}
+        <a class="btn btn-edit" href="{% url 'trading_edit' post.id %}">Edit</a>
+        <a class="btn btn-edit" href="{% url 'trading_delete' post.id %}">Delete</a>
+        {% endif %}
         <p>Condition: {{ post.get_condition_display }} - Category: {{ post.get_category_display }}</p>
         <img src="{{ post.image.url }}" alt="Image of {{ post.title }}">
         <p>{{ post.description }}</p>
         {% if not post.approved %}
-            <span class="label label-warning">Pending Approval</span>
+        <span class="label label-warning">Pending Approval</span>
+        {% endif %}
+        {% if user.is_authenticated and post.seller == user %}
+        <form action="{% url 'toggle_post_status' post.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-toggle-status">
+                {% if post.status == 'available' %}
+                    Mark as Sold
+                {% else %}
+                    Mark as Available
+                {% endif %}
+            </button>
+        </form>
         {% endif %}
     </div>
     {% empty %}

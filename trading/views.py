@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.db.models import Q
 from django.views import generic, View
@@ -37,6 +38,14 @@ class TradingPostView(ListView, LoginRequiredMixin):
         return context
 
 
+@require_POST
+def toggle_post_status(request, post_id):
+    post = get_object_or_404(TradingPost, id=post_id, seller=request.user)
+    post.status = 'sold' if post.status == 'available' else 'available'
+    post.save()
+    return redirect('trading_list')
+
+
 class TradingPostNewView(View, LoginRequiredMixin):
     form_class = TradingPostForm
     template_name = 'trading/trading_new.html'
@@ -60,3 +69,40 @@ class TradingPostNewView(View, LoginRequiredMixin):
             return redirect('trading_list')
         return render(request, self.template_name, {'form': form}) 
 
+
+class TradingPostEditView(View, LoginRequiredMixin):
+    template_name = 'trading/trading_edit.html'
+    
+    def get(self, request, pk):
+        post = get_object_or_404(TradingPost, pk=pk, seller=request.user)
+        form = TradingPostForm(instance=post)
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, pk):
+        post = get_object_or_404(TradingPost, pk=pk, seller=request.user)
+        form = TradingPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('trading_list')
+        return render(request, self.template_name, {'form': form})
+    
+    def test_func(self):
+        post = get_object_or_404(TradingPost, pk=self.kwargs['pk'])
+        return self.request.user == post.seller
+
+
+class TradingPostDeleteView(View, LoginRequiredMixin):
+    template_name = 'trading/trading_delete.html'
+
+    def get(self, request, pk):
+        post = get_object_or_404(TradingPost, pk=pk, seller=request.user)
+        return render(request, self.template_name, {'post': post})
+    
+    def post(self, request, pk):
+        post = get_object_or_404(TradingPost, pk=pk, seller=request.user)
+        post.delete()
+        return redirect('trading_list')
+    
+    def test_func(self):
+        post = get_object_or_404(TradingPost, pk=self.kwargs['pk'])
+        return self.request.user == post.seller
