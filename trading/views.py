@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.db.models import Q
 from django.views import generic, View
 from django.views.generic import ListView
-from .models import TradingPost
+from .models import TradingPost, TradingConversation
 from .forms import TradingPostForm
 from django.contrib import messages
 
@@ -105,3 +105,15 @@ class TradingPostDeleteView(View, LoginRequiredMixin):
     def test_func(self):
         post = get_object_or_404(TradingPost, pk=self.kwargs['pk'])
         return self.request.user == post.seller
+
+
+class TradingConversationView(View, LoginRequiredMixin):
+    def post(self, request, post_id):
+        post = get_object_or_404(TradingPost, pk=post_id)
+        if request.user != post.seller:
+            TradingConversation.objects.get_or_create(
+                post=post,
+                seller=post.seller,
+                buyer=request.user
+            )
+        return redirect('trading_list')

@@ -49,6 +49,12 @@
             </button>
         </form>
         {% endif %}
+        {% if user.is_authenticated and user != post.seller %}
+        <form action="{% url 'trading_conversation' post.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Start Conversation</button>
+    </form>
+    {% endif %}
     </div>
     {% empty %}
     <p>No posts available.</p>

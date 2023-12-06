@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from trading.views import TradingPostView, TradingPostNewView, TradingPostEditView, TradingPostDeleteView
+from trading.views import TradingPostView, TradingPostNewView, TradingPostEditView, TradingPostDeleteView, TradingConversationView
 from .views import toggle_post_status
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('toggle-status/<int:post_id>/', toggle_post_status, name='toggle_post_status'),
     path('edit/<int:pk>/', TradingPostEditView.as_view(), name='trading_edit'),
     path('delete/<int:pk>/', TradingPostDeleteView.as_view(), name='trading_delete'),
+    path('conversation/<int:post_id>/', TradingConversationView.as_view(), name='trading_conversation'),
 ]
