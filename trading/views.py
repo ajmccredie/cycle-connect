@@ -28,7 +28,6 @@ class TradingPostView(ListView, LoginRequiredMixin):
             queryset = queryset.filter(category=category)
         if condition:
             queryset = queryset.filter(condition=condition)
-        print(queryset.query)
         return queryset.order_by('-created_on')
 
     def get_context_data(self, **kwargs):

@@ -43,3 +43,12 @@ class TradingPost(models.Model):
     # def number_of_interests(self):
     #     return self.interests.count()
 
+
+class TradingConversation(models.Model):
+    post = models.ForeignKey(TradingPost, on_delete=models.CASCADE)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Conversation about {self.post.title} between {self.seller} and {self.buyer}'
