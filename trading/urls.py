@@ -9,5 +9,6 @@ urlpatterns = [
     path('toggle-status/<int:post_id>/', toggle_post_status, name='toggle_post_status'),
     path('edit/<int:pk>/', TradingPostEditView.as_view(), name='trading_edit'),
     path('delete/<int:pk>/', TradingPostDeleteView.as_view(), name='trading_delete'),
-    path('conversation/<int:post_id>/', TradingConversationView.as_view(), name='trading_conversation'),
+    path('conversation/start/<int:post_id>/', TradingConversationView.as_view(), name='start_conversation'),
+    path('conversation/view/<int:conversation_id>/', TradingConversationView.as_view(), name='view_conversation'),
 ]

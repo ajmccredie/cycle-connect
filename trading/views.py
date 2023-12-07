@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.db.models import Q
 from django.views import generic, View
 from django.views.generic import ListView
-from .models import TradingPost, TradingConversation
+from .models import TradingPost, TradingConversation, Message
 from .forms import TradingPostForm
 from django.contrib import messages
 
@@ -28,6 +28,12 @@ class TradingPostView(ListView, LoginRequiredMixin):
             queryset = queryset.filter(category=category)
         if condition:
             queryset = queryset.filter(condition=condition)
+        
+        for post in queryset:
+            post.has_conversation = TradingConversation.objects.filter(post=post, buyer=user).exists()
+            conversation = TradingConversation.objects.filter(post=post, buyer=user).first()
+            post.conversation_id = conversation.id if conversation else None
+
         return queryset.order_by('-created_on')
 
     def get_context_data(self, **kwargs):
@@ -109,6 +115,36 @@ class TradingPostDeleteView(View, LoginRequiredMixin):
 
 class TradingConversationView(View, LoginRequiredMixin):
     model = TradingConversation
+    template_name = 'trading/trading_conversation.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = super().get_queryset()
+        for post in queryset:
+            post.has_conversation = TradingConversation.objects.filter(post=post, buyer=user).exists()
+        return queryset
+
+    def get(self, request, post_id=None, conversation_id=None):
+        conversation = None
+        messages = None
+        if conversation_id:
+            conversation = get_object_or_404(TradingConversation, id=conversation_id, buyer=request.user)
+            messages = Message.objects.filter(conversation=conversation).order_by('created_at')
+        elif post_id:
+            post = get_object_or_404(TradingPost, pk=post_id)
+            if request.user != post.seller:
+                conversation, created = TradingConversation.objects.get_or_create(
+                    post=post,
+                    seller=post.seller,
+                    buyer=request.user
+                )
+                messages = Message.objects.filter(conversation=conversation).order_by('created_at')
+        return render(request, self.template_name, {
+            'conversation': conversation,
+            'messages': messages,
+            'post_id': post_id
+        })
+
     def post(self, request, post_id):
         post = get_object_or_404(TradingPost, pk=post_id)
         if request.user != post.seller:
@@ -117,5 +153,5 @@ class TradingConversationView(View, LoginRequiredMixin):
                 seller=post.seller,
                 buyer=request.user
             )
-            return redirect('trading_conversation', conversation_id=conversation.id)
+            return redirect('view_conversation', conversation_id=conversation.id)
         return redirect('trading_list')
