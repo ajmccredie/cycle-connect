@@ -42,20 +42,31 @@
             {% csrf_token %}
             <button type="submit" class="btn-toggle-status">
                 {% if post.status == 'available' %}
-                    Mark as Sold
+                Mark as Sold
                 {% else %}
-                    Mark as Available
+                Mark as Available
                 {% endif %}
             </button>
         </form>
         {% endif %}
+        <div class="conversation-count">
+            <p><i class="fas fa-comments"></i> {{ post.conversation_count }}</p>
+        </div>
         {% if user.is_authenticated and user != post.seller %}
         {% if post.has_conversation %}
-            <a class="btn btn-edit" href="{% url 'view_conversation' conversation_id=post.conversation_id %}">Continue Conversation</a>
+        <a class="btn btn-edit" href="{% url 'view_conversation' conversation_id=post.conversation_id %}">Continue
+            Conversation</a>
         {% else %}
-            <a class="btn btn-edit" href="{% url 'start_conversation' post_id=post.id %}">Start Conversation</a>
+        <a class="btn btn-edit" href="{% url 'start_conversation' post_id=post.id %}">Start Conversation</a>
         {% endif %}
-    {% endif %}
+        {% endif %}
+        {% if user == post.seller %}
+        {% for conversation in post.conversations.all %}
+        <a href="{% url 'view_conversation' conversation_id=conversation.id %}">
+            Chat with {{ conversation.buyer.username }}
+        </a>
+        {% endfor %}
+        {% endif %}
     </div>
     {% empty %}
     <p>No posts available.</p>

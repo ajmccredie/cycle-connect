@@ -33,7 +33,8 @@ class TradingPostView(ListView, LoginRequiredMixin):
             post.has_conversation = TradingConversation.objects.filter(post=post, buyer=user).exists()
             conversation = TradingConversation.objects.filter(post=post, buyer=user).first()
             post.conversation_id = conversation.id if conversation else None
-
+            post.conversation_count = TradingConversation.objects.filter(post=post).count()
+            print(post.conversation_count)
         return queryset.order_by('-created_on')
 
     def get_context_data(self, **kwargs):
