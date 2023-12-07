@@ -40,15 +40,23 @@ class TradingPost(models.Model):
     def __str__(self):
         return self.title
 
-    # def number_of_interests(self):
-    #     return self.interests.count()
-
 
 class TradingConversation(models.Model):
-    post = models.ForeignKey(TradingPost, on_delete=models.CASCADE)
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(TradingPost, on_delete=models.CASCADE, related_name='conversations')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='selling_conversations')
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buying_conversations')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Conversation about {self.post.title} between {self.seller} and {self.buyer}'
+
+
+class Message(models.Model):
+    conversation = models.ForeignKey(TradingConversation, on_delete=models.CASCADE, related_name='messages')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Message from {self.sender.username} at {self.created_at}'
+

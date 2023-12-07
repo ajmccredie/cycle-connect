@@ -116,4 +116,5 @@ class TradingConversationView(View, LoginRequiredMixin):
                 seller=post.seller,
                 buyer=request.user
             )
+            return redirect('trading_conversation', conversation_id=conversation.id)
         return redirect('trading_list')
