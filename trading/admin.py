@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import TradingPost
+from .models import TradingPost, TradingConversation, Message
+
+admin.site.register(TradingConversation)
+admin.site.register(Message)
 
 class TradingPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'seller', 'created_on', 'approved', 'status')

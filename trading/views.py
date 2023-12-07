@@ -108,6 +108,7 @@ class TradingPostDeleteView(View, LoginRequiredMixin):
 
 
 class TradingConversationView(View, LoginRequiredMixin):
+    model = TradingConversation
     def post(self, request, post_id):
         post = get_object_or_404(TradingPost, pk=post_id)
         if request.user != post.seller:

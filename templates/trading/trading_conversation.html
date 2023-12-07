@@ -1,0 +1,10 @@
+{% extends 'base3.html' %}
+{% load static %}
+
+{% block content %}
+<div class="conversation-header">
+    <h2>Conversation about {{ conversation.post.title }} between {{ conversation.post.seller }} and {{ conversation.post.buyer }}</h2>
+</div>
+
+
+{% endblock %}
