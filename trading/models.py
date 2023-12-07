@@ -47,7 +47,7 @@ class TradingPost(models.Model):
 class TradingConversation(models.Model):
     post = models.ForeignKey(TradingPost, on_delete=models.CASCADE)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
-   # buyer = models.ForeignKey(User, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buying_conversations')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -111,7 +111,7 @@ class TradingConversationView(View, LoginRequiredMixin):
     def post(self, request, post_id):
         post = get_object_or_404(TradingPost, pk=post_id)
         if request.user != post.seller:
-            TradingConversation.objects.get_or_create(
+            conversation, created = TradingConversation.objects.get_or_create(
                 post=post,
                 seller=post.seller,
                 buyer=request.user
