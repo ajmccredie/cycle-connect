@@ -53,6 +53,15 @@
                     {% endif %}
                 </ul>
             </div>
+            {% if user.is_authenticated %}
+            <div class="user-profile">
+                <a href="{% url 'profile_view' %}">
+                    {% if user.profiledetails.profile_picture %}
+                    <img src="{{ user.profiledetails.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+                    {% endif %}
+                </a>
+            </div>
+            {% endif %}
         </div>
     </nav>
     <div class="centralise-container">
