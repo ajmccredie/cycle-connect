@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<h1>Welcome to the CyclistConnect Marketplace</h1>
 <div class="trading-post-sort">
     <a href="{% url 'trading_new' %}" class="btn btn-edit">Create New Post</a>
 </div>
@@ -26,14 +27,17 @@
     {% for post in trading_posts %}
     <div class="post">
         <h2>{{ post.title }} - {{ post.get_status_display }} </h2>
-        <p>Seller: {{ post.seller.username }}</p>
-        {% if user.is_authenticated and post.seller == user %}
-        <a class="btn btn-edit" href="{% url 'trading_edit' post.id %}">Edit</a>
-        <a class="btn btn-edit" href="{% url 'trading_delete' post.id %}">Delete</a>
-        {% endif %}
+        <p>Seller: {{ post.seller.username }}
+            {% if user.is_authenticated and post.seller == user %}
+            <a class="btn btn-edit" href="{% url 'trading_edit' post.id %}">Edit</a>
+            <a class="btn btn-edit" href="{% url 'trading_delete' post.id %}">Delete</a>
+            {% endif %}
+        </p>
         <p>Condition: {{ post.get_condition_display }} - Category: {{ post.get_category_display }}</p>
-        <img src="{{ post.image.url }}" alt="Image of {{ post.title }}">
-        <p>{{ post.description }}</p>
+        <div>
+            <img src="{{ post.image.url }}" alt="Image of {{ post.title }}">
+            <p>{{ post.description }}</p>
+        </div class="post-content">
         {% if not post.approved %}
         <span class="label label-warning">Pending Approval</span>
         {% endif %}
@@ -76,8 +80,8 @@
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -85,8 +89,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>

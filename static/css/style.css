@@ -263,6 +263,20 @@ button:hover, input[type="submit"]:hover {
 }
 
 /* Styling for messages linked to marketplace */
+.warning-label {
+    background-color: orange;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.post-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .message {
     border: 1px solid #ccc;
     background-color: rgba(255, 255, 255, 0.85);
@@ -291,4 +305,11 @@ footer a {
 footer a:hover {
     color: rgba(255, 221, 85);
     padding: 2rem;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .post-content {
+        flex-direction: column;
+    }
 }
