@@ -21,7 +21,7 @@ class UserPost(LoginRequiredMixin, View):
         posts = ForumPost.objects.all()
         liked_post_ids = set(request.user.likes.values_list('id', flat=True)) #Trying an idea from Stack Overflow
         form = PostForm()
-        return render(request, self.forum_view, {"posts": posts, "form": form, "liked_post_ids": liked_post_ids})
+        return render(request, self.forum_view, {"page_obj": page_obj, "posts": posts, "form": form, "liked_post_ids": liked_post_ids})
 
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST)
