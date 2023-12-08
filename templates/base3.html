@@ -18,8 +18,8 @@
 <body class="body3">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'userforum' %}"><img id="logo" src="{% static 'images/cc-logo-white-text-01.png' %}"
-                    aria-label="Cyclist Connect Logo"></a>
+            <a class="navbar-brand" href="{% url 'userforum' %}"><img id="logo"
+                    src="{% static 'images/cc-logo-white-text-01.png' %}" aria-label="Cyclist Connect Logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,6 +45,16 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'log_out' %}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="user-profile">
+                            <a href="{% url 'profile_view' %}">
+                                {% if user.profiledetails.profile_picture %}
+                                <img src="{{ user.profiledetails.profile_picture.url }}" alt="Profile Picture"
+                                    class="profile-pic">
+                                {% endif %}
+                            </a>
+                        </div>
                     </li>
                     {% else %}
                     <li class="nav-item">

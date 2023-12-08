@@ -3,18 +3,19 @@
 
 {% block content %}
 <div class="conversation-header">
-    <h2>Conversation about {{ conversation.post.title }} between 
+    <h2>Conversation about {{ conversation.post.title }} between
         {% if user == conversation.post.seller %}
-            You and {{ conversation.buyer.username }}
+        You and {{ conversation.buyer.username }}
         {% else %}
-            {{ conversation.post.seller.username }} and You
+        {{ conversation.post.seller.username }} and You
         {% endif %}
     </h2>
 </div>
 
 <div class="conversation">
     {% for message in messages %}
-        <div class="message">
+    <div class="message">
+        <div class="message-info">
             <div class="sender">
                 Sent by: {{ message.sender.username }}
             </div>
@@ -25,8 +26,9 @@
                 {{ message.text|safe }}
             </div>
         </div>
+    </div>
     {% empty %}
-        <p>No messages in this conversation yet.</p>
+    <p>No messages in this conversation yet.</p>
     {% endfor %}
 </div>
 
