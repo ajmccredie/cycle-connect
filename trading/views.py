@@ -143,7 +143,9 @@ class TradingConversationView(View, LoginRequiredMixin):
                     buyer=request.user
                 )
                 messages = Message.objects.filter(conversation=conversation).order_by('created_at')
+        form = MessageForm()
         return render(request, self.template_name, {
+            'form': form,
             'conversation': conversation,
             'messages': messages,
             'post_id': post_id

@@ -6,5 +6,31 @@
     <h2>Conversation about {{ conversation.post.title }} between {{ conversation.post.seller }} and {{ user }}</h2>
 </div>
 
+<div class="conversation">
+    {% for message in messages %}
+        <div class="message">
+            <div class="sender">
+                Sent by: {{ message.sender.username }}
+            </div>
+            <div class="timestamp">
+                Sent at: {{ message.created_at }}
+            </div>
+            <div class="text">
+                {{ message.text|safe }}
+            </div>
+        </div>
+    {% empty %}
+        <p>No messages in this conversation yet.</p>
+    {% endfor %}
+</div>
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.text }}
+        <button type="submit">Send</button>
+    </form>
+</div>
+
 <a class="btn btn-edit" href="{% url 'trading_list' %}">Exit chat and return to the marketplace</a>
 {% endblock %}
