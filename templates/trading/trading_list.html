@@ -62,7 +62,7 @@
         {% endif %}
         {% if user == post.seller %}
         {% for conversation in post.conversations.all %}
-        <a href="{% url 'view_conversation' conversation_id=conversation.id %}">
+        <a class="btn btn-edit" href="{% url 'view_conversation' conversation_id=conversation.id %}">
             Chat with {{ conversation.buyer.username }}
         </a>
         {% endfor %}

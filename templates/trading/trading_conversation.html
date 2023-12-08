@@ -3,7 +3,13 @@
 
 {% block content %}
 <div class="conversation-header">
-    <h2>Conversation about {{ conversation.post.title }} between {{ conversation.post.seller }} and {{ user }}</h2>
+    <h2>Conversation about {{ conversation.post.title }} between 
+        {% if user == conversation.post.seller %}
+            You and {{ conversation.buyer.username }}
+        {% else %}
+            {{ conversation.post.seller.username }} and You
+        {% endif %}
+    </h2>
 </div>
 
 <div class="conversation">
@@ -25,7 +31,7 @@
 </div>
 
 <div>
-    <form method="post">
+    <form method="post" action="{% url 'view_conversation' conversation_id=conversation.id %}">
         {% csrf_token %}
         {{ form.text }}
         <button type="submit">Send</button>

@@ -28,7 +28,7 @@ class TradingPost(models.Model):
     title = models.CharField(max_length=200, unique=False)
     description = models.TextField()
     created_on = models.DateTimeField(auto_now=True)
-    image = CloudinaryField('image', default='placeholder')
+    image = CloudinaryField('image', default='trading_placeholder', blank=True, null=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='other')
     condition = models.CharField(max_length=50, choices=CONDITION_CHOICES, default='other')
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='available')

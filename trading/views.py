@@ -132,7 +132,9 @@ class TradingConversationView(View, LoginRequiredMixin):
         conversation = None
         messages = None
         if conversation_id:
-            conversation = get_object_or_404(TradingConversation, id=conversation_id, buyer=request.user)
+            conversation = get_object_or_404(TradingConversation, id=conversation_id)
+            if request.user not in [conversation.buyer, conversation.seller]:
+                return redirect('trading_list') 
             messages = Message.objects.filter(conversation=conversation).order_by('created_at')
         elif post_id:
             post = get_object_or_404(TradingPost, pk=post_id)
@@ -151,13 +153,24 @@ class TradingConversationView(View, LoginRequiredMixin):
             'post_id': post_id
         })
 
-    def post(self, request, post_id):
-        post = get_object_or_404(TradingPost, pk=post_id)
-        if request.user != post.seller:
-            conversation, created = TradingConversation.objects.get_or_create(
-                post=post,
-                seller=post.seller,
-                buyer=request.user
-            )
-            return redirect('view_conversation', conversation_id=conversation.id)
+    def post(self, request, conversation_id=None):
+        if conversation_id:
+            conversation = get_object_or_404(TradingConversation, id=conversation_id)
+            form = MessageForm(request.POST)
+            if form.is_valid():
+                message = form.save(commit=False)
+                message.conversation = conversation
+                message.sender = request.user
+                message.save()
+                return redirect('view_conversation', conversation_id=conversation_id)
+        else:
+            post_id = request.POST.get('post_id')        
+            post = get_object_or_404(TradingPost, pk=post_id)
+            if request.user != post.seller:
+                conversation, created = TradingConversation.objects.get_or_create(
+                    post=post,
+                    seller=post.seller,
+                    buyer=request.user
+                )
+                return redirect('view_conversation', conversation_id=conversation.id)
         return redirect('trading_list')
