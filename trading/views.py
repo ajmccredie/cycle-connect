@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.db.models import Q, Count, Subquery, OuterRef
+from django.db.models import Q, Count, Subquery, OuterRef, Case, When, Value, IntegerField
+from django.db.models.functions import Coalesce
 from django.views import generic, View
 from django.views.generic import ListView
 from .models import TradingPost, TradingConversation, Message
@@ -21,24 +22,32 @@ class TradingPostView(ListView, LoginRequiredMixin):
         user = self.request.user
         queryset = TradingPost.objects.filter(Q(approved=1) | Q(seller=user))
 
+        # Category and condition filtering
         category = self.request.GET.get('category')
         condition = self.request.GET.get('condition')
-
         if category:
             queryset = queryset.filter(category=category)
         if condition:
             queryset = queryset.filter(condition=condition)
         
-        queryset = queryset.annotate(conversation_count=Count('conversations'))
+        # Sold status filtering
+        queryset = queryset.annotate(
+            is_sold=Case(
+                When(status='sold', then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField(),
+            )
+        )
 
+        # Determine and diplay conversation count
+        queryset = queryset.annotate(conversation_count=Count('conversations'))
         user_conversation_subquery = TradingConversation.objects.filter(
             post=OuterRef('pk'), 
             buyer=user
         ).order_by('-created_at').values('id')[:1]
-
         queryset = queryset.annotate(user_conversation_id=Subquery(user_conversation_subquery))
 
-        return queryset.order_by('-created_on')
+        return queryset.order_by('is_sold', '-created_on')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
