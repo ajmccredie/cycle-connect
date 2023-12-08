@@ -1,7 +1,8 @@
-from .models import TradingPost
+from .models import TradingPost, Message
 from crispy_forms.layout import Layout, Submit
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.models import User
+from django_summernote.widgets import SummernoteWidget
 from django import forms
 
 
@@ -31,3 +32,11 @@ class TradingPostForm(forms.ModelForm):
         self.label_suffix = ""
         for field in self.fields:
             self.fields[field].label_suffix = ""
+
+
+class MessageForm(forms.ModelForm):
+    text = forms.CharField(widget=SummernoteWidget())
+
+    class Meta:
+        model = Message
+        fields = ['text']

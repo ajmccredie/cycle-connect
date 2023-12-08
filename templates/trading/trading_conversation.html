@@ -3,8 +3,8 @@
 
 {% block content %}
 <div class="conversation-header">
-    <h2>Conversation about {{ conversation.post.title }} between {{ conversation.post.seller }} and {{ conversation.post.buyer }}</h2>
+    <h2>Conversation about {{ conversation.post.title }} between {{ conversation.post.seller }} and {{ user }}</h2>
 </div>
 
-
+<a class="btn btn-edit" href="{% url 'trading_list' %}">Exit chat and return to the marketplace</a>
 {% endblock %}

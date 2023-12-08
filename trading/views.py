@@ -2,11 +2,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.db.models import Q
+from django.db.models import Q, Count, Subquery, OuterRef
 from django.views import generic, View
 from django.views.generic import ListView
 from .models import TradingPost, TradingConversation, Message
-from .forms import TradingPostForm
+from .forms import TradingPostForm, MessageForm
 from django.contrib import messages
 
 # Create your views here.
@@ -29,12 +29,15 @@ class TradingPostView(ListView, LoginRequiredMixin):
         if condition:
             queryset = queryset.filter(condition=condition)
         
-        for post in queryset:
-            post.has_conversation = TradingConversation.objects.filter(post=post, buyer=user).exists()
-            conversation = TradingConversation.objects.filter(post=post, buyer=user).first()
-            post.conversation_id = conversation.id if conversation else None
-            post.conversation_count = TradingConversation.objects.filter(post=post).count()
-            print(post.conversation_count)
+        queryset = queryset.annotate(conversation_count=Count('conversations'))
+
+        user_conversation_subquery = TradingConversation.objects.filter(
+            post=OuterRef('pk'), 
+            buyer=user
+        ).order_by('-created_at').values('id')[:1]
+
+        queryset = queryset.annotate(user_conversation_id=Subquery(user_conversation_subquery))
+
         return queryset.order_by('-created_on')
 
     def get_context_data(self, **kwargs):

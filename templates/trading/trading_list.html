@@ -53,8 +53,8 @@
             <p><i class="fas fa-comments"></i> {{ post.conversation_count }}</p>
         </div>
         {% if user.is_authenticated and user != post.seller %}
-        {% if post.has_conversation %}
-        <a class="btn btn-edit" href="{% url 'view_conversation' conversation_id=post.conversation_id %}">Continue
+        {% if post.user_conversation_id %}
+        <a class="btn btn-edit" href="{% url 'view_conversation' conversation_id=post.user_conversation_id %}">Continue
             Conversation</a>
         {% else %}
         <a class="btn btn-edit" href="{% url 'start_conversation' post_id=post.id %}">Start Conversation</a>
