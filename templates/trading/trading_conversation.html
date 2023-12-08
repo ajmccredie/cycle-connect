@@ -14,16 +14,20 @@
 
 <div class="conversation">
     {% for message in messages %}
-    <div class="message">
+    <div class="message {% if message.sender == user %}sent{% else %}received{% endif %}">
+        {% if message.sender.profiledetails.profile_picture %}
+        <img src="{{ message.sender.profiledetails.profile_picture.url }}"
+            alt="{{ message.sender.username }}'s Profile Picture" class="profile-pic">
+        {% endif %}
         <div class="message-info">
             <div class="sender">
                 Sent by: {{ message.sender.username }}
             </div>
-            <div class="timestamp">
-                Sent at: {{ message.created_at }}
-            </div>
             <div class="text">
                 {{ message.text|safe }}
+            </div>
+            <div class="timestamp">
+                Sent at: {{ message.created_at }}
             </div>
         </div>
     </div>
