@@ -8,11 +8,13 @@ class TermsAndConditionsView(LoginRequiredMixin, View):
     template_name = 'ts_and_cs/terms.html'
 
     def get(self, request, *args, **kwargs):
-        if request.user.agreed_to_terms:
-            return redirect('index.html')
+        user_verified, created = UserVerified.objects.get_or_create(user=request.user)
+        if user_verified.agreed_to_terms:
+            return redirect('index')
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        request.user.agreed_to_terms = True
-        request.user.save()
-        return redirect('index.html')
+        user_verified, created = UserVerified.objects.get_or_create(user=request.user)
+        user_verified.agreed_to_terms = True
+        user_verified.save()
+        return redirect('index')
