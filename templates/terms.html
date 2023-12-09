@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Terms and Conditions</h2>
+<div class="ts_and_cs">
+    <h2>Last Updated: 9th December 2023</h2>
+
+    <p>Welcome to Cyclist Connect, the dedicated social networking platform for cycling enthusiasts. By accessing or
+        using our website, mobile application, or services (collectively, "Services"), you agree to be bound by the
+        following terms and conditions (the "Terms").</p>
+
+    <h3>1. Acceptable Use Policy</h3>
+    <h4>Language and Content:</h4>
+    <p>Users must refrain from using offensive or inappropriate language in their posts, comments, and interactions. Any
+        form of harassment, hate speech, or derogatory content is strictly prohibited.</p>
+
+    <h4>Images and Media:</h4>
+    <p>Sharing offensive or explicit images is not permitted. Users must ensure that all images and media uploaded
+        adhere to community standards and respect general public decency.</p>
+
+    <h3>2. Content Moderation</h3>
+    <h4>Admin Confirmation:</h4>
+    <p>To maintain community standards, certain posts may require administrative approval before being published on the
+        site. This is to ensure content aligns with our community values and standards.</p>
+
+    <h4>Consequences of Violation:</h4>
+    <p>Violation of these guidelines may result in account suspension or deletion, at the discretion of the Cyclist
+        Connect administrators.</p>
+
+    <h3>3. Children and Young Users</h3>
+    <h4>Supervision on Group Rides:</h4>
+    <p>Children under the age of 18 must be accompanied and supervised by an adult during group rides organized through
+        our Services.</p>
+
+    <h4>Marketplace Use:</h4>
+    <p>Users under the age of 18 are not permitted to engage in transactions within the Cyclist Connect marketplace
+        without the supervision of an adult.</p>
+
+    <h3>4. General Terms</h3>
+    <h4>Changes to Terms:</h4>
+    <p>Cyclist Connect reserves the right to modify these Terms at any time. Users will be notified of any significant
+        changes.</p>
+
+    <h4>Privacy Policy:</h4>
+    <p>Your use of our Services is also governed by our Privacy Policy.</p>
+
+    <h4>Disclaimer of Warranties:</h4>
+    <p>Cyclist Connect provides the Services on an "as is" and "as available" basis without any warranties of any kind.
+    </p>
+
+    <h4>Limitation of Liability:</h4>
+    <p>To the extent permitted by law, Cyclist Connect shall not be liable for any indirect, incidental, special,
+        consequential, or punitive damages arising out of or related to your use of the Services.</p>
+
+    <h3>5. Contact Information</h3>
+    <p>For any queries or concerns regarding these Terms, please contact us at admin@cycleconnect.com.</p>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">I Agree</button>
+</form>
+{% endblock %}
