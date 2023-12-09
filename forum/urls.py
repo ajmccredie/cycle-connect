@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserPost, EditPost, DeletePost, userforum_post_detail, PostLike, edit_forum_comment, delete_forum_comment
+from .views import UserPost, EditPost, DeletePost, userforum_post_detail, PostLike, edit_forum_comment, delete_forum_comment, SearchResultsView
 
 urlpatterns = [
     path('userforum/', UserPost.as_view(), name="userforum"),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('userforum/detail/<int:post_id>/', userforum_post_detail, name='userforum_post_detail'),
     path('userforum/edit_comment/<int:post_id>/<int:comment_id>/', edit_forum_comment, name='edit_forum_comment'),
     path('userforum/delete_comment/<int:post_id>/<int:comment_id>/', delete_forum_comment, name='delete_forum_comment'),
+    path('userforum/search_results/', SearchResultsView.as_view(), name='search_results')
 ]

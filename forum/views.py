@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
 from .models import ForumPost, Comment
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, SearchForm
 
 # Create your views here.
 
@@ -144,3 +144,20 @@ def delete_forum_comment(request, post_id, comment_id):
             'comment_id': comment_id
         }
         return render(request, 'delete_forum_comment.html', context)
+
+
+class SearchResultsView(LoginRequiredMixin, View):
+    model = ForumPost
+    template_name = 'forum_search.html'
+    context_object_name = 'search_results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return ForumPost.objects.filter(content__icontains=query)
+        return ForumPost.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context
