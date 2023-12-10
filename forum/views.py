@@ -157,7 +157,7 @@ class SearchResultsView(LoginRequiredMixin, ListView):
         query = self.request.GET.get('q')
         if query:
             print(query)
-            return ForumPost.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
+            return ForumPost.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(UserId__username__icontains=query))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
