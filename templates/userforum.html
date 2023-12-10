@@ -16,8 +16,8 @@
 </form>
 
 <h2>Seach existing posts</h2>
-<form method="get" action="{% url 'search_results' %}">
-    <input type="text" name="q" value="{{ query }}" placeholder="Search...">
+<form method="get" action="{% url 'forum_search' %}">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search the forum...">
     <button type="submit">Search</button>
 </form>
 
@@ -66,13 +66,5 @@
         {% endif %}
     </span>
 </div>
-
-<!-- <script>
-    $(document).ready(function() {
-        $('#id_content_iframe').summernote({
-            placeholder: 'Write your community forum contribution here...',
-        });
-    });
-    </script> -->
 
 {% endblock %}

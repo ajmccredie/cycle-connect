@@ -4,10 +4,40 @@
 {% block content %}
 <h2>Search Results for "{{ query }}" within the forum</h2>
 <ul>
-    {% for post in results %}
-    <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></li>
+    {% for post in search_results %}
+    <li>
+        <div class="post">
+            <h2>{{ post.title }}</h2>
+            {% if request.user.id == post.UserId_id %}
+            <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
+            {% endif %}
+            <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
+            <p>{{ post.content|safe }}</p>
+
+            <strong>
+                {% if user.is_authenticated %}
+                <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if post.id in liked_post_ids %}
+                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
+                            class="fas fa-star"></i></button>
+                    {% else %}
+                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
+                            class="far fa-regular fa-star"></i></button>
+                    {% endif %}
+                </form>
+                {% endif %}
+            </strong>
+            <strong class="text-second"> {{ post.number_of_likes }} </strong>
+            <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i
+                        class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
+        </div>
+    </li>
     {% empty %}
     <li>No posts found.</li>
     {% endfor %}
 </ul>
+
+<a href="{% url 'userforum' %}" class="btn btn-edit">Return to Forum</a>
 {% endblock %}

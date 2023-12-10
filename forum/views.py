@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
+from django.views.generic import ListView
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
+from django.db.models import Q
 from .models import ForumPost, Comment
 from .forms import PostForm, CommentForm, SearchForm
 
@@ -146,7 +148,7 @@ def delete_forum_comment(request, post_id, comment_id):
         return render(request, 'delete_forum_comment.html', context)
 
 
-class SearchResultsView(LoginRequiredMixin, View):
+class SearchResultsView(LoginRequiredMixin, ListView):
     model = ForumPost
     template_name = 'forum_search.html'
     context_object_name = 'search_results'
@@ -154,8 +156,8 @@ class SearchResultsView(LoginRequiredMixin, View):
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return ForumPost.objects.filter(content__icontains=query)
-        return ForumPost.objects.none()
+            print(query)
+            return ForumPost.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
