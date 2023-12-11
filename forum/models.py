@@ -10,9 +10,9 @@ class ForumPost(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image', default='placeholder')
-    published_status = models.IntegerField(choice=STATUS, default=1)
-    reported_status = models.IntegerField(choice=STATUS, default=0)
-    reported_by = models.Manager(User, related_name='reported_posts', blank=True)
+    published_status = models.IntegerField(choices=STATUS, default=1)
+    reported_status = models.IntegerField(choices=STATUS, default=0)
+    reported_by = models.ManyToManyField(User, related_name='reported_posts', blank=True)
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
 
     class Meta:

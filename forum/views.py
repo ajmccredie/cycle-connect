@@ -34,7 +34,7 @@ class UserPost(LoginRequiredMixin, View):
             new_post.save()
             return redirect('userforum') 
         else:
-            posts = ForumPost.objects.all()
+            posts = ForumPost.objects.filter(published_status=1)
             return render(request, self.forum_view, {'posts': posts, 'form': form})
 
 
@@ -163,3 +163,13 @@ class SearchResultsView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
         return context
+
+
+class ReportPostView(LoginRequiredMixin, View):
+    def post(self, request, post_id):
+        post = get_object_or_404(ForumPost, pk=post_id)
+        post.reported_status = 1
+        post.published_status = 0
+        post.reported_by.add(request.user)
+        post.save()
+        return redirect('userforum')
