@@ -22,38 +22,47 @@
 </form>
 
 {% for post in page_obj %}
-    <div class="post">
-        <h2>{{ post.title }}</h2>
-        {% if request.user.id == post.UserId_id %}
-            <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
-            <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
-        {% endif %}        
-        <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
-        <p>{{ post.content|safe }}</p>
-        
-        <strong>
-            {% if user.is_authenticated %}
-            <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
-                {% csrf_token %}
-                {% if post.id in liked_post_ids %}
-                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="fas fa-star"></i></button>
-                {% else %}
-                    <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i class="far fa-regular fa-star"></i></button>
-                {% endif %}
-            </form>
-            {% endif %}
-        </strong>
-        <strong class="text-second"> {{ post.number_of_likes }} </strong>
-        <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
+<div class="post">
+    <h2>{{ post.title }}</h2>
+    {% if post.user != request.user %}
+    <form action="{% url 'report_post' post.id %}" method="post">
+        {% csrf_token %}
+        <button class="warning" type="submit">Report</button>
+    </form>
+    {% endif %}
+    {% if request.user.id == post.UserId_id %}
+    <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
+    <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
+    {% endif %}
+    <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
+    <p>{{ post.content|safe }}</p>
 
-    </div>
+    <strong>
+        {% if user.is_authenticated %}
+        <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
+            {% csrf_token %}
+            {% if post.id in liked_post_ids %}
+            <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
+                    class="fas fa-star"></i></button>
+            {% else %}
+            <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
+                    class="far fa-regular fa-star"></i></button>
+            {% endif %}
+        </form>
+        {% endif %}
+    </strong>
+    <strong class="text-second"> {{ post.number_of_likes }} </strong>
+    <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i
+                class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
+
+</div>
 {% endfor %}
 
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -61,8 +70,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
