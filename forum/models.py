@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 STATUS = ((0, "Draft"), (1, "Published"))
-choice = 0
 
 class ForumPost(models.Model):
     UserId = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -11,7 +10,9 @@ class ForumPost(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image', default='placeholder')
-    #status = models.IntegerField(choice=STATUS, default=0)
+    published_status = models.IntegerField(choice=STATUS, default=1)
+    reported_status = models.IntegerField(choice=STATUS, default=0)
+    reported_by = models.Manager(User, related_name='reported_posts', blank=True)
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
 
     class Meta:
