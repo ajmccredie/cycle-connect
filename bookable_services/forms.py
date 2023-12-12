@@ -1,15 +1,21 @@
 from django import forms
-from .models import Slot, Booking, Place
+from .models import Slot, Booking, Place, IndividualSlot
 
 class BookingInquiryForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['service', 'place', 'date']
+        fields = ['service', 'place', 'individual_slot']
 
     place = forms.ModelChoiceField(
-        queryset=Place.objects.all(), label="Select Place"
+        queryset=Place.objects.none(), 
+        label="Select Place",
+        required=False
     )
-    date = forms.DateField(widget=forms.SelectDateWidget(), required=False)
+    individual_slot = forms.ModelChoiceField(
+        queryset=IndividualSlot.objects.none(), 
+        label="Select Time Slot",
+        required=False
+    )
 
     def __init__(self, *args, **kwargs):
         self.service = kwargs.pop('service', None)
@@ -17,5 +23,4 @@ class BookingInquiryForm(forms.ModelForm):
         if self.service:
             self.fields['service'].initial = self.service
             self.fields['service'].disabled = True
-            self.fields['date'].queryset = self.service.slot_set.values_list('start_time__date', flat=True).distinct()
-
+            self.fields['place'].queryset = self.service.regions.all()

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Place, Booking, Slot, Service
+from .models import Place, Booking, Slot, Service, IndividualSlot
 
 # Register your models here.
 admin.site.register(Place)
@@ -14,8 +14,9 @@ class ServiceAdmin(admin.ModelAdmin):
 class BookingAdmin(admin.ModelAdmin):
     list_display = ['user', 'slot', 'status']
     list_filter = ['status']
-    actions = ['verify_booking']
+    actions = ['confirm_booking']
 
-    def verify_booking(self, request, queryset):
+    def confirm_booking(self, request, queryset):
         queryset.update(status='confirmed')
-    verify_booking.admin_note = "Mark selected bookings as confirmed"
+    confirm_booking.admin_note = "Mark selected bookings as confirmed"
+    

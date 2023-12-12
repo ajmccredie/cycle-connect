@@ -34,15 +34,30 @@ class Slot(models.Model):
     end_time = models.DateTimeField()
     max_people = models.IntegerField(default=1)
 
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            for _ in range(self.max_people):
+                new_individual_slot = IndividualSlot.objects.create(slot=self)
+
     def __str__(self):
         return f"{self.service.name} at { self.place.name } ({self.start_time} - {self.end_time})"
 
+
+class IndividualSlot(models.Model):
+    slot = models.ForeignKey(Slot, related_name='individual_slots', on_delete=models.CASCADE)
+    is_booked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Place in {self.slot} - {'Booked' if self.is_booked else 'Available'}"
 
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
+    individual_slot = models.ForeignKey(IndividualSlot, on_delete=models.CASCADE, null=True)
     booking_date = models.DateTimeField(default=timezone.now)
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -52,4 +67,4 @@ class Booking(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     
     def __str__(self):
-        return f"Booking {self.id} by {self.user}"
+        return f"Booking {self.id} by {self.user} for {self.individual_place}"
