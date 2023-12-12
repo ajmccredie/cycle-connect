@@ -14,7 +14,7 @@ class PostAdmin(SummernoteModelAdmin):
     actions = ['make_published']
 
     def make_published(self, request, queryset):
-        queryset.update(reported_status=False, published_status=1)
+        queryset.update(reported_status=0, published_status=1)
     make_published.short_description = "Mark selected posts as published"
     readonly_fields = ('reported_by_list',)
 

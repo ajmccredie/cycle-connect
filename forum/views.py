@@ -16,13 +16,14 @@ class UserPost(LoginRequiredMixin, View):
     forum_view = 'userforum.html'
 
     def get(self, request, *args, **kwargs):
-        post_list = ForumPost.objects.order_by('-created_on')
+        post_list = ForumPost.objects.filter(published_status=1).order_by('-created_on')
         paginator = Paginator(post_list, 8)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        posts = ForumPost.objects.all()
+        #posts = ForumPost.objects.all()
         liked_post_ids = set(request.user.likes.values_list('id', flat=True)) #Trying an idea from Stack Overflow
         form = PostForm()
+        posts = ForumPost.objects.filter(published_status=1)
         return render(request, self.forum_view, {"page_obj": page_obj, "posts": posts, "form": form, "liked_post_ids": liked_post_ids})
 
     def post(self, request, *args, **kwargs):
@@ -34,7 +35,7 @@ class UserPost(LoginRequiredMixin, View):
             new_post.save()
             return redirect('userforum') 
         else:
-            posts = ForumPost.objects.filter(published_status=1)
+            posts = ForumPost.objects.filter(published_status=1).order_by('-created_on')
             return render(request, self.forum_view, {'posts': posts, 'form': form})
 
 
