@@ -17,5 +17,5 @@ class BookingAdmin(admin.ModelAdmin):
     actions = ['verify_booking']
 
     def verify_booking(self, request, queryset):
-        queryset.update(status='verified')
-    verify_booking.admin_note = "Mark selected bookings as verified"
+        queryset.update(status='confirmed')
+    verify_booking.admin_note = "Mark selected bookings as confirmed"

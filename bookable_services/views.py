@@ -26,12 +26,12 @@ class SelectPlace(View):
         places = Place.objects.filter(slot__service=service).distinct()
         for place in places:
             slots = Slot.objects.filter(service=service, place=place)
-            available_slots = 0
+            place.total_available_slots = 0 
             for slot in slots:
                 bookings_count = Booking.objects.filter(slot=slot).count()
-                if bookings_count < slot.max_people:
-                    available_slots += slot.max_people - bookings_count
-            place.available_slots = available_slots
+                available_slots_in_this_slot = max(0, slot.max_people - bookings_count)
+                if available_slots_in_this_slot > 0:
+                    place.total_available_slots += available_slots_in_this_slot
         return render(request, self.select_place_page, {'service': service, 'places': places}) 
 
     def post(self, request, *args, **kwargs):
@@ -48,9 +48,14 @@ class BookService(LoginRequiredMixin, View):
         service = get_object_or_404(Service, id=service_id)
         place = get_object_or_404(Place, id=place_id)
         current_time = timezone.now()
-        slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).order_by('start_time')
-        booked_slots_ids = Booking.objects.filter(status='confirmed').values_list('slot_id', flat=True)
-        available_slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).exclude(id__in=booked_slots_ids).order_by('start_time')
+        slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time)
+        booked_slots_ids = Booking.objects.filter(status='available').values_list('slot_id', flat=True)
+#        available_slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).exclude(id__in=booked_slots_ids).order_by('start_time')
+        available_slots = []
+        for slot in slots:
+            bookings_count = Booking.objects.filter(slot=slot, status='confirmed').count()
+            if bookings_count < slot.max_people:
+                available_slots.append(slot)
         form = BookingInquiryForm(initial={'service': service}, service=service)
         return render(request, self.service_booking_page, {'form': form, 'slots': available_slots, 'service': service, 'place': place})
 
