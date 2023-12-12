@@ -39,7 +39,7 @@
             <p>{{ post.description }}</p>
         </div class="post-content">
         {% if not post.approved %}
-        <span class="label label-warning">Pending Approval</span>
+        <span class="label warning-label">Pending Approval</span>
         {% endif %}
         {% if user.is_authenticated and post.seller == user %}
         <form action="{% url 'toggle_post_status' post.id %}" method="POST">

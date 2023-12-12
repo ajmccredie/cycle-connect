@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .models import ProfileDetails
+from ts_and_cs.models import UserVerified
 from .forms import CustomSignupForm, ProfileDetailsForm
 from allauth.account.views import SignupView
 
@@ -77,6 +78,11 @@ def signup_full_profile(request):
             profile_details = form.save(commit=False)
             profile_details.user = request.user
             profile_details.save()
+
+            user_verified = UserVerified.objects.get(user=request.user)
+            user_verified.profile_completed = True
+            user_verified.save()
+
             return redirect('userforum')
     else:
          form = ProfileDetailsForm(instance=profile_details if profile_details else None)

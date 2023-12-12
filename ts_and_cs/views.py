@@ -10,6 +10,8 @@ class TermsAndConditionsView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user_verified, created = UserVerified.objects.get_or_create(user=request.user)
         if user_verified.agreed_to_terms:
+            if not user_verified.profile_completed:
+                return redirect('signup_full_profile')  # Redirect to complete profile
             return redirect('index')
         return render(request, self.template_name)
 
@@ -17,4 +19,6 @@ class TermsAndConditionsView(LoginRequiredMixin, View):
         user_verified, created = UserVerified.objects.get_or_create(user=request.user)
         user_verified.agreed_to_terms = True
         user_verified.save()
+        if not user_verified.profile_completed:
+            return redirect('signup_full_profile')  # Redirect to complete profile
         return redirect('index')
