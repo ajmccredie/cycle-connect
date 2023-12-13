@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Ride
+from .forms import RideForm
 
 # Create your views here.
 class RidesOverview(ListView):
@@ -12,10 +13,15 @@ class RidesOverview(ListView):
 
 class AddRideView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'social_rides/add_rides.html')
+        form = RideForm()
+        return render(request, 'social_rides/add_rides.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        return redirect('social_rides/rides.html')
+        form = RideForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('social_rides/rides.html')
+        return render(request, 'social_rides/add_rides.html', {'form': form})
 
 
 class RideDetailView(DetailView):

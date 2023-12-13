@@ -306,6 +306,17 @@ button:hover, input[type="submit"]:hover {
     object-fit: cover;
 }
 
+.ride a {
+    font-weight: bold;
+    font-size: x-large;
+    text-decoration: underline;
+    color: black;
+}
+
+.ride a:hover {
+    color:rgba(255, 221, 85);
+}
+
 footer a {
     color: white;
     padding: 2rem;
