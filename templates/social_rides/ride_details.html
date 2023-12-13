@@ -1,15 +1,37 @@
 {% extends 'base4.html' %}
 
 {% block content %}
-    <h1>{{ ride.title }}</h1>
-    <p><strong>Date:</strong> {{ ride.date }} <strong>Time:</strong> {{ ride.start_time }} </p>
-    <p><strong>Start Place:</strong> {{ ride.start_place }}</p>
-    <p><strong>End Place:</strong> {{ ride.end_place }}</p>
-    <p><strong>Distance:</strong> {{ ride.distance }} km</p>
-    <p><strong>Difficulty:</strong> {{ ride.get_difficulty_display }}</p>
-    <div class="display_block">
-        <p><strong>Description:</strong> {{ ride.route_description }}</p>
-        <img src="{{ ride.image.url }}" alt="{{ ride.title }}" />
-    </div>
-
+<h1>{{ ride.title }}</h1>
+<p><strong>Date:</strong> {{ ride.date }} <strong>Time:</strong> {{ ride.start_time }} </p>
+<p><strong>Start Place:</strong> {{ ride.start_place }}</p>
+<p><strong>End Place:</strong> {{ ride.end_place }}</p>
+<p><strong>Distance:</strong> {{ ride.distance }} km</p>
+<p><strong>Difficulty:</strong> {{ ride.get_difficulty_display }}</p>
+<div class="display_block">
+    <p><strong>Description:</strong> {{ ride.route_description }}</p>
+    <img src="{{ ride.image.url }}" alt="{{ ride.title }}" />
+</div>
+{% if user.is_authenticated %}
+        {% if ride.id in registered_ride_ids %}
+            <p>You are already signed up for this ride.</p>
+            <form action="{% url 'register_for_ride' ride.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Cancel Registration</button>
+            </form>
+        {% else %}
+            <form action="{% url 'register_for_ride' ride.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Sign Up for This Ride</button>
+            </form>
+        {% endif %}
+    {% endif %}
+<h3>Other people on this ride with you:</h3>
+<ul>
+    {% for attendance in registered_users %}
+    <li>{{ attendance.participant.username }}</li>
+    {% empty %}
+    <li>No attendees yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'rides' %}" class="btn btn-edit">Return to Rides</a>
 {% endblock %}
