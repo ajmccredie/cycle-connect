@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'bookable_services',
     'trading',
     'ts_and_cs',
+    'social_rides',
 ]
 
 SITE_ID = 1
