@@ -42,8 +42,10 @@ class RideDetailView(DetailView, LoginRequiredMixin):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        ride = context['ride']
-        context['registered_users'] = RideAttendance.objects.filter(ride=ride)
+        ride = self.get_object()
+        if self.request.user.is_authenticated:
+            context['is_user_registered'] = RideAttendance.objects.filter(ride=ride, participant=self.request.user).exists()
+            context['registered_users'] = RideAttendance.objects.filter(ride=ride)
         return context
 
 
@@ -55,4 +57,5 @@ class RegisterForRide(LoginRequiredMixin, View):
         if not created and not attendance.is_verified: 
             attendance.delete()
 
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('ride_details', kwargs={'pk': ride_id})))
+        #return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('ride_details', kwargs={'pk': ride_id})))
+        return redirect('ride_details', pk=ride_id)

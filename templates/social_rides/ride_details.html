@@ -12,18 +12,14 @@
     <img src="{{ ride.image.url }}" alt="{{ ride.title }}" />
 </div>
 {% if user.is_authenticated %}
-        {% if ride.id in registered_ride_ids %}
-            <p>You are already signed up for this ride.</p>
-            <form action="{% url 'register_for_ride' ride.id %}" method="post">
+        <form action="{% url 'register_for_ride' ride.id %}" method="post">
             {% csrf_token %}
-            <button type="submit">Cancel Registration</button>
-            </form>
-        {% else %}
-            <form action="{% url 'register_for_ride' ride.id %}" method="post">
-                {% csrf_token %}
+            {% if is_user_registered %}
+                <button type="submit">Cancel Registration</button>
+            {% else %}
                 <button type="submit">Sign Up for This Ride</button>
-            </form>
-        {% endif %}
+            {% endif %}
+        </form>
     {% endif %}
 <h3>Other people on this ride with you:</h3>
 <ul>
