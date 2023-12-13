@@ -6,7 +6,11 @@
 <div class="rides-list">
     {% for ride in rides %}
     <div class="ride">
-        <h2><a href="{% url 'ride_details' pk=ride.pk %}">{{ ride.title }}</a></h2>
+        <h2><a href="{% url 'ride_details' pk=ride.pk %}">{{ ride.title }}</a>
+            {% if ride.id in registered_ride_ids %}
+            <i class="fas fa-bicycle"></i>
+            {% endif %}
+        </h2>
         <!-- {% if request.user.id == post.UserId_id %}
                 <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
                 <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
