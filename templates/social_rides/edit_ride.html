@@ -1,0 +1,16 @@
+{% extends 'base4.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<h1>Please edit your ride</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Ride</button>
+    <a href="{% url 'rides' %}" class="btn btn-edit">Return to group rides with no changes</a>
+</form>
+
+{% endblock %}

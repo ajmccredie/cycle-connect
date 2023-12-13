@@ -15,6 +15,9 @@ class RidesOverview(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        for ride in context['rides']:
+            spaces_left = max(ride.max_participants - ride.attendees.count(), 0)
+            ride.spaces_left = 'Full' if spaces_left == 0 else spaces_left
         if self.request.user.is_authenticated:
             registered_ride_ids = set(self.request.user.participated_rides.values_list('ride_id', flat=True))
             context['registered_ride_ids'] = registered_ride_ids
@@ -43,6 +46,9 @@ class RideDetailView(DetailView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ride = self.get_object()
+        registered_count = ride.attendees.count()
+        context['available_spaces'] = ride.max_participants - registered_count
+        context['is_full'] = context['available_spaces'] <= 0
         if self.request.user.is_authenticated:
             context['is_user_registered'] = RideAttendance.objects.filter(ride=ride, participant=self.request.user).exists()
             context['registered_users'] = RideAttendance.objects.filter(ride=ride)

@@ -11,10 +11,11 @@
             <i class="fas fa-bicycle"></i>
             {% endif %}
         </h2>
-        <!-- {% if request.user.id == post.UserId_id %}
-                <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
-                <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
-                {% endif %} -->
+        <p>Spaces Left: {{ ride.spaces_left }}</p>
+        {% if request.user.id == post.UserId_id %}
+                <a href="{% url 'edit_ride' post.id %}" class="btn btn-edit">Edit</a>
+                <!-- <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a> -->
+                {% endif %}
         <p>Date: {{ ride.date }} Time: {{ ride.start_time }}</p>
         <p>Length: {{ ride.distance }} km </p>
         {% if ride.image %}
