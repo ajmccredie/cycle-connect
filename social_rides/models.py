@@ -8,6 +8,7 @@ class Ride(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='ride_images/', blank=True, null=True)
     route_description = models.TextField()
+   # date = models.DateField(default=datetime.date.today)
     start_place = models.CharField(max_length=200)
     end_place = models.CharField(max_length=200)
     distance = models.DecimalField(max_digits=5, decimal_places=2)
