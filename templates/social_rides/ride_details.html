@@ -2,6 +2,18 @@
 
 {% block content %}
 <h1>{{ ride.title }}</h1>
+{% if request.user == ride.organiser %}
+{% if not ride.is_cancelled %}
+{% if ride.attendees.count == 0 and not ride.is_verified %}
+    <a href="{% url 'edit_ride' ride.id %}" class="btn btn-edit">Edit</a>
+    <a href="{% url 'confirm_delete_ride' ride_id=ride.id %}" class="btn btn-delete">Delete</a>
+{% else %}
+    <a href="{% url 'cancel_ride' ride.id %}" class="btn btn-delete">Cancel</a>
+{% endif %}
+{% else %}
+    <p>This ride has been cancelled.</p>
+{% endif %}
+{% endif %}
 <p><strong>Date:</strong> {{ ride.date }} <strong>Time:</strong> {{ ride.start_time }} </p>
 <p><strong>Start Place:</strong> {{ ride.start_place }}</p>
 <p><strong>End Place:</strong> {{ ride.end_place }}</p>

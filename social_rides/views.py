@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from .models import Ride, RideAttendance, RideOrganiser
@@ -68,16 +69,32 @@ class RegisterForRide(LoginRequiredMixin, View):
 class RideEditView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
-        form = RideForm(instance=ride)
-        return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride})
+        if ride.attendees.count() == 0 and not ride.is_verified:
+            form = RideForm(instance=ride)
+            return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride})
+        else:
+            messages.error(request, "This ride cannot be edited.")
+            return redirect('ride_details', pk=ride_id)
 
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
-        form(request.POST, instance=ride)
-        if form.is_valid():
-            form.save()
-            return rediredct('social_rides/ride_details.html', pk=ride_id)
-        return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride}) 
+        if ride.attendees.count() == 0 and not ride.is_verified:
+            form = RideForm(request.POST, instance=ride)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Ride successfully updated.")
+                return redirect('ride_details', pk=ride_id)
+            else:
+                return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride})
+        else:
+            messages.error(request, "This ride cannot be edited.")
+            return redirect('ride_details', pk=ride_id)
+
+
+class RideConfirmDeleteView(LoginRequiredMixin, View):
+    def get(self, request, ride_id):
+        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        return render(request, 'social_rides/confirm_delete_ride.html', {'ride': ride})
 
 
 class RideDeleteView(LoginRequiredMixin, View):
@@ -98,7 +115,7 @@ class RideCancelView(LoginRequiredMixin, View):
 
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
-        ride.is_canceled = True
+        ride.is_cancelled = True
         ride.save()
-        rmessages.success(request, "Ride has been canceled.")
+        messages.success(request, "Ride has been cancelled.")
         return redirect('ride_details', pk=ride_id)

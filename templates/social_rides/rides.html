@@ -11,7 +11,12 @@
             <i class="fas fa-bicycle"></i>
             {% endif %}
         </h2>
-        {% if ride.is_canceled %}
+        {% if not ride.is_verified %}
+        <div class="alert alert-info" role="alert">
+            This ride is pending verification.
+        </div>
+        {% endif %}
+        {% if ride.is_cancelled %}
             <div class="alert alert-warning" role="alert">
                 <h2>Sorry, this ride has been cancelled.</h2>
             </div>
@@ -19,15 +24,15 @@
             <p>Spaces Left: {{ ride.spaces_left }}</p>
         {% endif %}
         {% if request.user == ride.organiser %}
-        {% if not ride.is_canceled %}
+        {% if not ride.is_cancelled %}
         {% if ride.attendees.count == 0 and not ride.is_verified %}
             <a href="{% url 'edit_ride' ride.id %}" class="btn btn-edit">Edit</a>
-            <a href="{% url 'delete_ride' ride.id %}" class="btn btn-delete">Delete</a>
+            <a href="{% url 'confirm_delete_ride' ride_id=ride.id %}" class="btn btn-delete">Delete</a>
         {% else %}
-            <a href="{% url 'cancel_ride' ride.id %}" class="btn btn-warning">Cancel</a>
+            <a href="{% url 'cancel_ride' ride.id %}" class="btn btn-delete">Cancel</a>
         {% endif %}
         {% else %}
-            <p>This ride has been canceled.</p>
+            <p>This ride has been cancelled.</p>
         {% endif %}
         {% endif %}
         <p>Date: {{ ride.date }} Time: {{ ride.start_time }}</p>
