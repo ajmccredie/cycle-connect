@@ -3,6 +3,8 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.db.models import Q
+from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from .models import Ride, RideAttendance, RideOrganiser
@@ -16,7 +18,10 @@ class RidesOverview(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for ride in context['rides']:
+        today = timezone.now().date()
+        context['upcoming_rides'] = Ride.objects.filter(date__gte=today).order_by('date', 'start_time')
+        context['past_rides'] = Ride.objects.filter(date__lt=today).order_by('-date', '-start_time')
+        for ride in context['upcoming_rides']:
             spaces_left = max(ride.max_participants - ride.attendees.count(), 0)
             ride.spaces_left = 'Full' if spaces_left == 0 else spaces_left
         if self.request.user.is_authenticated:
