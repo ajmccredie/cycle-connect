@@ -27,7 +27,7 @@
         <img src="{{ ride.image.url }}" alt="{{ ride.title }}" />
     {% endif %}
 </div>
-{% if user.is_authenticated %}
+{% if user.is_authenticated and current_date < ride.date %}
 <form action="{% url 'register_for_ride' ride.id %}" method="post">
     {% csrf_token %}
     {% if is_user_registered %}

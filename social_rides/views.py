@@ -19,8 +19,9 @@ class RidesOverview(ListView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         today = timezone.now().date()
-        context['upcoming_rides'] = Ride.objects.filter(date__gte=today).order_by('date', 'start_time')
-        context['past_rides'] = Ride.objects.filter(date__lt=today).order_by('-date', '-start_time')
+        base_query = Ride.objects.filter(Q(is_verified=True) | Q(organiser=self.request.user))
+        context['upcoming_rides'] = base_query.filter(date__gte=today).order_by('date', 'start_time')
+        context['past_rides'] = base_query.filter(date__lt=today).order_by('-date', '-start_time')
         for ride in context['upcoming_rides']:
             spaces_left = max(ride.max_participants - ride.attendees.count(), 0)
             ride.spaces_left = 'Full' if spaces_left == 0 else spaces_left
@@ -55,6 +56,7 @@ class RideDetailView(DetailView, LoginRequiredMixin):
         registered_count = ride.attendees.count()
         context['available_spaces'] = ride.max_participants - registered_count
         context['is_full'] = context['available_spaces'] <= 0
+        context['current_date'] = timezone.now().date()
         if self.request.user.is_authenticated:
             context['is_user_registered'] = RideAttendance.objects.filter(ride=ride, participant=self.request.user).exists()
             context['registered_users'] = RideAttendance.objects.filter(ride=ride)
