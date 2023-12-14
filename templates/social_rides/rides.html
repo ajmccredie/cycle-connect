@@ -19,10 +19,17 @@
             <p>Spaces Left: {{ ride.spaces_left }}</p>
         {% endif %}
         {% if request.user == ride.organiser %}
-                <a href="{% url 'edit_ride' ride.id %}" class="btn btn-edit">Edit</a>
-                <a href="{% url 'delete_ride' ride.id %}" class="btn btn-delete">Delete</a>
-                <a href="{% url 'cancel_ride' ride.id %}" class="btn btn-delete">Cancel</a>
-                {% endif %}
+        {% if not ride.is_canceled %}
+        {% if ride.attendees.count == 0 and not ride.is_verified %}
+            <a href="{% url 'edit_ride' ride.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_ride' ride.id %}" class="btn btn-delete">Delete</a>
+        {% else %}
+            <a href="{% url 'cancel_ride' ride.id %}" class="btn btn-warning">Cancel</a>
+        {% endif %}
+        {% else %}
+            <p>This ride has been canceled.</p>
+        {% endif %}
+        {% endif %}
         <p>Date: {{ ride.date }} Time: {{ ride.start_time }}</p>
         <p>Length: {{ ride.distance }} km </p>
         {% if ride.image %}

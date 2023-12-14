@@ -69,15 +69,15 @@ class RideEditView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
         form = RideForm(instance=ride)
-        return render(request, 'edit_ride', {'form': form, 'ride': ride})
+        return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride})
 
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
         form(request.POST, instance=ride)
         if form.is_valid():
             form.save()
-            return rediredct('ride_details', pk=ride_id)
-        return render(request, 'edit_ride', {'form': form, 'ride': ride}) 
+            return rediredct('social_rides/ride_details.html', pk=ride_id)
+        return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride}) 
 
 
 class RideDeleteView(LoginRequiredMixin, View):
