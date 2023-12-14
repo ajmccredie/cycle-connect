@@ -62,6 +62,43 @@ class RegisterForRide(LoginRequiredMixin, View):
 
         if not created and not attendance.is_verified: 
             attendance.delete()
+        return redirect('ride_details', pk=ride_id)
 
-        #return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('ride_details', kwargs={'pk': ride_id})))
+
+class RideEditView(LoginRequiredMixin, View):
+    def get(self, request, ride_id):
+        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        form = RideForm(instance=ride)
+        return render(request, 'edit_ride', {'form': form, 'ride': ride})
+
+    def post(self, request, ride_id):
+        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        form(request.POST, instance=ride)
+        if form.is_valid():
+            form.save()
+            return rediredct('ride_details', pk=ride_id)
+        return render(request, 'edit_ride', {'form': form, 'ride': ride}) 
+
+
+class RideDeleteView(LoginRequiredMixin, View):
+    def post(self, request, ride_id):
+        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        if ride.attendees.count() == 0 and not ride.is_verified:
+            ride.delete()
+            messages.success(request, "Ride successfully deleted.")
+        else:
+            messages.error(request, "This ride cannot be deleted.")
+        return redirect('rides')
+
+
+class RideCancelView(LoginRequiredMixin, View):
+    def get(self, request, ride_id):
+        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        return render(request, 'delete_ride', {'ride': ride})
+
+    def post(self, request, ride_id):
+        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride.is_canceled = True
+        ride.save()
+        rmessages.success(request, "Ride has been canceled.")
         return redirect('ride_details', pk=ride_id)

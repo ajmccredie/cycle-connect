@@ -113,7 +113,6 @@ def profile_edit(request):
         form = ProfileDetailsForm(request.POST, request.FILES, instance=profile_details)
         if form.is_valid():
             preferred_ride_type_values = form.cleaned_data.get('preferred_ride_type')
-            print("Preferred Ride Type values submitted:", preferred_ride_type_values)
             form.save()
             return redirect('profile_view')
         else:
