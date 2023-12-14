@@ -11,7 +11,9 @@
     <a href="{% url 'confirm_cancel_ride' ride_id=ride.id %}" class="btn btn-delete">Cancel Ride</a>
 {% endif %}
 {% else %}
-    <p>This ride has been cancelled.</p>
+<div class="alert alert-warning" role="alert">
+    <h2>Sorry, this ride has been cancelled.</h2>
+</div>
 {% endif %}
 {% endif %}
 <p><strong>Date:</strong> {{ ride.date }} <strong>Time:</strong> {{ ride.start_time }} </p>
@@ -34,7 +36,13 @@
     {% if is_ride_full %}
         <p>Sorry, because this ride is full you cannot join it.</p>
     {% else %}
+    {% if not ride.is_cancelled %}
         <button type="submit">Sign Up for This Ride</button>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            <h2>Sorry, this ride has been cancelled.</h2>
+        </div>
+    {% endif %}
     {% endif %}
     {% endif %}
 </form>
