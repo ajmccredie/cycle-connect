@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Verify Attendance for {{ ride.title }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {% for attendee in attendees %}
+        <div>
+            <label for="verify_{{ attendee.id }}">{{ attendee.participant.username }}</label>
+            <input type="checkbox" id="verify_{{ attendee.id }}" name="verify_{{ attendee.id }}" {% if attendee.is_verified %}checked{% endif %}>
+        </div>
+    {% endfor %}
+    <button type="submit">Update Attendance</button>
+</form>
+
+{% endblock %}

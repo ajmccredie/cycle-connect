@@ -7,6 +7,10 @@ class RideAdmin(admin.ModelAdmin):
     list_filter = ('difficulty', 'is_verified')
     search_fields = ('title', 'organiser__username')
 
+    def approve_rides(self, request, queryset):
+        queryset.update(approved=True)
+    approve_rides.short_description = "Mark selected rides as verified"
+
 admin.site.register(Ride, RideAdmin)
 admin.site.register(RideOrganiser)
 admin.site.register(RideAttendance)

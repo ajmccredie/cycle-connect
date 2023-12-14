@@ -47,7 +47,10 @@
     {% endif %}
 </form>
 {% endif %}
-<h3>Other people on this ride with you:</h3>
+<h3>CycleConnect members on this ride:</h3>
+{% if request.user == ride.organiser and current_time > ride.combined_datetime %}
+    <a href="{% url 'verify_attendance' ride.id %}" class="btn btn-primary">Verify Attendance</a>
+{% endif %}
 <ul>
     {% for attendance in registered_users %}
     <li>{{ attendance.participant.username }}</li>

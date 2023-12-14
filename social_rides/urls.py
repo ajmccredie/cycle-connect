@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RidesOverview, RideDetailView, AddRideView, RegisterForRide, RideEditView, RideDeleteView, RideCancelView, RideConfirmDeleteView, RideConfirmCancelView
+from .views import RidesOverview, RideDetailView, AddRideView, RegisterForRide, RideEditView, RideDeleteView, RideCancelView, RideConfirmDeleteView, RideConfirmCancelView, VerifyAttendanceView
 from . import views
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('ride/<int:ride_id>/confirm_delete/', views.RideConfirmDeleteView.as_view(), name='confirm_delete_ride'),
     path('ride/<int:ride_id>/cancel_ride/', views.RideCancelView.as_view(), name='cancel_ride'),
     path('ride/<int:ride_id>/confirm_cancel/', views.RideConfirmCancelView.as_view(), name='confirm_cancel_ride'),
+    path('ride/<int:ride_id>/verify_attendance/', VerifyAttendanceView.as_view(), name='verify_attendance'),
 ]
