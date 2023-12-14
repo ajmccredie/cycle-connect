@@ -1,0 +1,11 @@
+{% extends 'base4.html' %}
+
+{% block content %}
+    <h1>Cancel Ride: {{ ride.title }}</h1>
+    <p>Are you sure you want to mark this ride as cancelled?</p>
+    <form action="{% url 'cancel_ride' ride_id=ride.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-delete">Confirm Cancel Ride</button>
+        <a href="{% url 'ride_details' pk=ride.id %}" class="btn btn-edit">Return to the Ride Details</a>
+    </form>
+{% endblock %}

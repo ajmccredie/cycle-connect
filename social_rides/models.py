@@ -27,6 +27,7 @@ class Ride(models.Model):
     difficulty = models.CharField(max_length=2, choices=DIFFICULTY_CHOICES, default=BEGINNER,)
     max_participants = models.PositiveIntegerField(default=10)
     is_verified = models.BooleanField(default=False)
+    is_cancelled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

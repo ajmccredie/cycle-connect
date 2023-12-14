@@ -108,11 +108,13 @@ class RideDeleteView(LoginRequiredMixin, View):
         return redirect('rides')
 
 
-class RideCancelView(LoginRequiredMixin, View):
+class RideConfirmCancelView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
-        return render(request, 'delete_ride', {'ride': ride})
+        return render(request, 'social_rides/confirm_cancel_ride.html', {'ride': ride})
 
+
+class RideCancelView(LoginRequiredMixin, View):
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
         ride.is_cancelled = True
