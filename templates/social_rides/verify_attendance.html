@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base4.html' %}
 
 {% block content %}
 <h1>Verify Attendance for {{ ride.title }}</h1>
@@ -7,8 +7,9 @@
     {% csrf_token %}
     {% for attendee in attendees %}
         <div>
-            <label for="verify_{{ attendee.id }}">{{ attendee.participant.username }}</label>
-            <input type="checkbox" id="verify_{{ attendee.id }}" name="verify_{{ attendee.id }}" {% if attendee.is_verified %}checked{% endif %}>
+            <label for="verify_{{ attendee.id }}">{{ attendee.participant.username }}
+            <input type="checkbox" id="verify_{{ attendee.id }}" name="verify_{{ attendee.id }}"{% if attendee.is_verified %}checked{% endif %}>
+        </label>
         </div>
     {% endfor %}
     <button type="submit">Update Attendance</button>

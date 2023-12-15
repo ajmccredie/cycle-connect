@@ -68,6 +68,9 @@
                 <i class="fas fa-bicycle"></i>
             {% endif %}
         {% endif %}
+        {% if attendance.is_verified %}
+            <i class="fas fa-check"></i>
+        {% endif %}
     </li>
     {% empty %}
     <li>No attendees yet.</li>

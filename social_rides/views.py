@@ -154,15 +154,17 @@ class VerifyAttendanceView(LoginRequiredMixin, View):
         local_timezone = timezone.get_current_timezone()
         combined_datetime = local_timezone.localize(datetime.combine(ride.date, ride.start_time))
         now = timezone.now()
-        if ride.organiser != request.user or timezone.now() <= ride.start_time:
-            return redirect('ride_details')
+        if ride.organiser != request.user or now <= combined_datetime:
+            return redirect('ride_details', pk=ride_id)
         attendees = RideAttendance.objects.filter(ride=ride)
-        return render(request, 'verify_attendance.html', {'ride': ride, 'attendees': attendees})
+        return render(request, 'social_rides/verify_attendance.html', {'ride': ride, 'attendees': attendees})
 
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id)
-        if ride.organiser != request.user or timezone.now() <= ride.combined_datetime:
-            return redirect('ride_details')
+        naive_combined_datetime = datetime.combine(ride.date, ride.start_time)
+        combined_datetime = timezone.make_aware(naive_combined_datetime, timezone.get_default_timezone())
+        if ride.organiser != request.user or timezone.now() <= combined_datetime:
+            return redirect('ride_details', pk=ride_id)
 
         for key, value in request.POST.items():
             if key.startswith('verify_'):
@@ -171,4 +173,4 @@ class VerifyAttendanceView(LoginRequiredMixin, View):
                 attendance_record.is_verified = value == 'on'
                 attendance_record.save()
 
-        return redirect('ride_details')
+        return redirect('ride_details', pk=ride_id)
