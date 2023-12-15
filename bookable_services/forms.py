@@ -1,5 +1,5 @@
 from django import forms
-from .models import Service, Slot
+from .models import Service, Slot, Place
 
 class BookingForm(forms.Form):
     place = forms.ModelChoiceField(queryset=Place.objects.none(), required=True)

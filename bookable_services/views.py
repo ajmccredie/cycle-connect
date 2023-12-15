@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils import timezone
 from .models import Place, Slot, Booking, Service
-from .forms import BookingInquiryForm
+from .forms import BookingForm
 
 # Create your views here.
 class ServiceList(View, LoginRequiredMixin):
