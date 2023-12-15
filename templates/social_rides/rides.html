@@ -1,6 +1,10 @@
 {% extends 'base4.html' %}
 
 {% block content %}
+<div class="verified-attendance-total">
+    <h3>Your Verified Ride Attendance:</h3>
+    <h4><i class="fa fa-bicycle"></i> <strong>{{ verified_attendance_count }}</strong> <i class="fa fa-bicycle"></i></h4>
+</div>
 <h1>Planned Social Rides</h1>
 <a href="{% url 'add_ride' %}" class="btn btn-edit">Create New Ride</a>
 <h2>Upcoming Rides</h2>
@@ -57,6 +61,9 @@
             {% endif %}
         </h2>
         <p>Date: {{ ride.date }} Time: {{ ride.start_time }}</p>
+        {% if ride.is_cancelled %}
+            <p class="alert alert-warning">This ride was cancelled.</p>
+        {% endif %}
         {% if ride.image %}
         <img src="{{ ride.image.url }}" alt="{{ ride.title }}">
         {% endif %}

@@ -34,6 +34,8 @@ class RidesOverview(ListView, LoginRequiredMixin):
         if self.request.user.is_authenticated:
             registered_ride_ids = set(self.request.user.participated_rides.values_list('ride_id', flat=True))
             context['registered_ride_ids'] = registered_ride_ids
+            verified_attendance_count = RideAttendance.objects.filter(participant=self.request.user, is_verified=True).count()
+            context['verified_attendance_count'] = verified_attendance_count
         return context
 
 
