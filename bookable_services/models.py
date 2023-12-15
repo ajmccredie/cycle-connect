@@ -67,4 +67,4 @@ class Booking(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     
     def __str__(self):
-        return f"Booking {self.id} by {self.user} for {self.individual_place}"
+        return f"Booking {self.id} by {self.user} for {self.slot.service.name}"
