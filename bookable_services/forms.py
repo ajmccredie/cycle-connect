@@ -1,26 +1,14 @@
 from django import forms
-from .models import Slot, Booking, Place, IndividualSlot
+from .models import Service, Slot
 
-class BookingInquiryForm(forms.ModelForm):
-    class Meta:
-        model = Booking
-        fields = ['service', 'place', 'individual_slot']
-
-    place = forms.ModelChoiceField(
-        queryset=Place.objects.none(), 
-        label="Select Place",
-        required=False
-    )
-    individual_slot = forms.ModelChoiceField(
-        queryset=IndividualSlot.objects.none(), 
-        label="Select Time Slot",
-        required=False
-    )
+class BookingForm(forms.Form):
+    place = forms.ModelChoiceField(queryset=Place.objects.none(), required=True)
+    slot = forms.ModelChoiceField(queryset=Slot.objects.none(), required=True)
 
     def __init__(self, *args, **kwargs):
-        self.service = kwargs.pop('service', None)
-        super(BookingInquiryForm, self).__init__(*args, **kwargs)
-        if self.service:
-            self.fields['service'].initial = self.service
-            self.fields['service'].disabled = True
-            self.fields['place'].queryset = self.service.regions.all()
+        service_id = kwargs.pop('service_id', None)
+        super().__init__(*args, **kwargs)
+        if service_id:
+            service = Service.objects.get(id=service_id)
+            self.fields['place'].queryset = service.regions.all()
+            self.fields['slot'].queryset = Slot.objects.filter(service=service, is_booked=False)

@@ -6,7 +6,7 @@ from django.views import generic, View
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils import timezone
-from .models import Place, Slot, Booking, Service, IndividualSlot
+from .models import Place, Slot, Booking, Service
 from .forms import BookingInquiryForm
 
 # Create your views here.

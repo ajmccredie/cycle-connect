@@ -29,35 +29,30 @@ class Service(models.Model):
 #Set up and management of the bookable timeslots
 class Slot(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    max_people = models.IntegerField(default=1)
+    max_participants = models.IntegerField(default=1)
+    current_participants = models.IntegerField(default=0)
 
-    def save(self, *args, **kwargs):
-        is_new = self.pk is None
-        super().save(*args, **kwargs)
-        if is_new:
-            for _ in range(self.max_people):
-                new_individual_slot = IndividualSlot.objects.create(slot=self)
+    def is_full(self):
+        return self.current_participants >= self.max_participants
 
-    def __str__(self):
-        return f"{self.service.name} at { self.place.name } ({self.start_time} - {self.end_time})"
+    def add_participant(self):
+        if not self.is_full():
+            self.current_participants += 1
+            self.save()
 
-
-class IndividualSlot(models.Model):
-    slot = models.ForeignKey(Slot, related_name='individual_slots', on_delete=models.CASCADE)
-    is_booked = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"Place in {self.slot} - {'Booked' if self.is_booked else 'Available'}"
+    def remove_participant(self):
+        if self.current_participants > 0:
+            self.current_participants -= 1
+            self.save()
 
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
-    individual_slot = models.ForeignKey(IndividualSlot, on_delete=models.CASCADE, null=True)
     booking_date = models.DateTimeField(default=timezone.now)
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -66,5 +61,16 @@ class Booking(models.Model):
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     
+    def save(self, *args, **kwargs):
+        creating = self._state.adding
+        super().save(*args, **kwargs)
+        if creating:
+            self.slot.add_participant()
+    
+    def cancel(self):
+        self.status = 'cancelled'
+        self.slot.remove_participant()
+        self.save()
+
     def __str__(self):
         return f"Booking {self.id} by {self.user} for {self.slot.service.name}"
