@@ -1,7 +1,11 @@
 {% extends 'base4.html' %}
 
 {% block content %}
-<h1>{{ ride.title }}</h1>
+<h1>{{ ride.title }}
+    {% if is_user_registered %}
+    <i class="fas fa-bicycle"></i>
+    {% endif %}
+</h1>
 {% if request.user == ride.organiser %}
 {% if not ride.is_cancelled %}
 {% if ride.attendees.count == 0 and not ride.is_verified %}
@@ -48,12 +52,23 @@
 </form>
 {% endif %}
 <h3>CycleConnect members on this ride:</h3>
-{% if request.user == ride.organiser and current_time > ride.combined_datetime %}
-    <a href="{% url 'verify_attendance' ride.id %}" class="btn btn-primary">Verify Attendance</a>
+{% if request.user == ride.organiser and current_time > combined_datetime %}
+    <a href="{% url 'verify_attendance' ride.id %}" class="btn btn-submit">Verify Attendance</a>
 {% endif %}
 <ul>
     {% for attendance in registered_users %}
-    <li>{{ attendance.participant.username }}</li>
+    <li>
+        {% if attendance.participant == ride.organiser %}
+            <i class="fas fa-star"></i>
+            <strong>{{ attendance.participant.username }}</strong>
+            <i class="fas fa-star"></i>
+        {% else %}
+            {{ attendance.participant.username }}
+            {% if attendance.participant == request.user %}
+                <i class="fas fa-bicycle"></i>
+            {% endif %}
+        {% endif %}
+    </li>
     {% empty %}
     <li>No attendees yet.</li>
     {% endfor %}

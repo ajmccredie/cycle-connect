@@ -8,6 +8,7 @@ from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
+from datetime import datetime
 from .models import Ride, RideAttendance, RideOrganiser
 from .forms import RideForm
 
@@ -65,8 +66,11 @@ class RideDetailView(DetailView, LoginRequiredMixin):
         context['is_full'] = context['available_spaces'] <= 0
         context['current_date'] = timezone.now().date()
         context['current_time'] = timezone.now()
+        combined_datetime = datetime.combine(ride.date, ride.start_time)
+        context['combined_datetime'] = combined_datetime
         if self.request.user.is_authenticated:
-            context['is_user_registered'] = RideAttendance.objects.filter(ride=ride, participant=self.request.user).exists()
+            user_is_registered = RideAttendance.objects.filter(ride=ride, participant=self.request.user).exists()
+            context['is_user_registered'] = user_is_registered
             context['registered_users'] = RideAttendance.objects.filter(ride=ride)
         return context
 
