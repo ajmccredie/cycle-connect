@@ -52,8 +52,8 @@
 </form>
 {% endif %}
 <h3>CycleConnect members on this ride:</h3>
-{% if request.user == ride.organiser and current_time > combined_datetime %}
-    <a href="{% url 'verify_attendance' ride.id %}" class="btn btn-submit">Verify Attendance</a>
+{% if request.user == ride.organiser and is_past_ride %}
+    <a href="{% url 'verify_attendance' ride.id %}" class="btn btn-edit">Verify Attendance</a>
 {% endif %}
 <ul>
     {% for attendance in registered_users %}

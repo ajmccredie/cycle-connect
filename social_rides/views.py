@@ -61,11 +61,17 @@ class RideDetailView(DetailView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ride = self.get_object()
+        now = timezone.now()
+
+        local_timezone = timezone.get_current_timezone()
+        combined_datetime = local_timezone.localize(datetime.combine(ride.date, ride.start_time))
+        is_past_ride = combined_datetime < now
+        context['is_past_ride'] = is_past_ride
         registered_count = ride.attendees.count()
         context['available_spaces'] = ride.max_participants - registered_count
         context['is_full'] = context['available_spaces'] <= 0
-        context['current_date'] = timezone.now().date()
-        context['current_time'] = timezone.now()
+        context['current_date'] = now.date()
+        context['current_time'] = now
         combined_datetime = datetime.combine(ride.date, ride.start_time)
         context['combined_datetime'] = combined_datetime
         if self.request.user.is_authenticated:
@@ -145,6 +151,9 @@ class RideCancelView(LoginRequiredMixin, View):
 class VerifyAttendanceView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id)
+        local_timezone = timezone.get_current_timezone()
+        combined_datetime = local_timezone.localize(datetime.combine(ride.date, ride.start_time))
+        now = timezone.now()
         if ride.organiser != request.user or timezone.now() <= ride.start_time:
             return redirect('ride_details')
         attendees = RideAttendance.objects.filter(ride=ride)
