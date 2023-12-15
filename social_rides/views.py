@@ -46,6 +46,8 @@ class AddRideView(View, LoginRequiredMixin):
         if form.is_valid():
             ride = form.save(commit=False)
             ride.organiser = request.user
+            if RideOrganiser.objects.filter(user=request.user, trusted_organiser=True).exists():
+                ride.is_verified = True
             ride.save()
             return redirect('rides')
         return render(request, 'social_rides/add_ride.html', {'form': form})
