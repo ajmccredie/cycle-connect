@@ -15,13 +15,15 @@
         <div>
             <h3>{{ service.name }}</h3>
             <h3>£{{ service.price }} </h3>
-            <p> {{ service.description_summary }} </p>
+            <p> {{ service.description }} </p>
             <ul class="service_description fa-ul">
-                {{ service.description_detail_bullets }}
+                {% for feature in service.get_key_features_list %}
+                    <li>{{ feature }}</li>
+                {% endfor %}
             </ul>
         </div>
         <div>
-            <a class="btn btn-a" href="{% url 'select_place' service.id %}">Book {{ service.name }}</a>
+            <a class="btn btn-a" href="{% url 'service_detail' service.id %}">View Details & Book</a>
         </div>
     </li>
     {% empty %}
