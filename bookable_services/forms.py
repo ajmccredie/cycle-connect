@@ -1,13 +1,34 @@
-from django import forms
-from .models import ServiceSlot, Booking
+# from django import forms
+# from .models import ServiceSlot, Booking
 
-class ServiceBookingForm(forms.ModelForm):
+# class ServiceBookingForm(forms.ModelForm):
+#     class Meta:
+#         model = Booking
+#         fields = ['service_slot']
+
+#     def __init__(self, *args, **kwargs):
+#         service_id = kwargs.pop('service_id', None)
+#         super().__init__(*args, **kwargs)
+#         if service_id:
+#             self.fields['service_slot'].queryset = ServiceSlot.objects.filter(service_id=service_id, current_participants__lt=models.F('max_participants'))
+
+from django import forms
+from .models import Slot, Booking, Place
+
+class BookingInquiryForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['service_slot']
+        fields = ['service', 'place', 'date']
+
+    place = forms.ModelChoiceField(
+        queryset=Place.objects.all(), label="Select Place"
+    )
+    date = forms.DateField(widget=forms.SelectDateWidget(), required=False)
 
     def __init__(self, *args, **kwargs):
-        service_id = kwargs.pop('service_id', None)
-        super().__init__(*args, **kwargs)
-        if service_id:
-            self.fields['service_slot'].queryset = ServiceSlot.objects.filter(service_id=service_id, current_participants__lt=models.F('max_participants'))
+        self.service = kwargs.pop('service', None)
+        super(BookingInquiryForm, self).__init__(*args, **kwargs)
+        if self.service:
+            self.fields['service'].initial = self.service
+            self.fields['service'].disabled = True
+            self.fields['date'].queryset = self.service.slot_set.values_list('start_time__date', flat=True).distinct()
