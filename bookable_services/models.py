@@ -37,6 +37,13 @@ class Slot(models.Model):
     end_time = models.DateTimeField()
     max_people = models.IntegerField(default=1)
 
+    def is_fully_booked(self):
+        return self.booking_set.filter(status__in=['pending', 'confirmed']).count() >= self.max_people
+
+    def available_slots(self):
+        booked_slots = self.booking_set.filter(status__in=['pending', 'confirmed']).count()
+        return max(0, self.max_people - booked_slots)
+
     def __str__(self):
         return f"{self.service.name} at { self.place.name } ({self.start_time} - {self.end_time})"
 
