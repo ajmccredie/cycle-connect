@@ -136,6 +136,11 @@ input[type="password"]
     justify-content: center;
 }
 
+.button-container {
+    display: flex;
+    justify-content: righ;
+}
+
 button, input[type="submit"] {
     padding: 10px;
     margin: 5px 0;
@@ -158,6 +163,7 @@ button:hover, input[type="submit"]:hover {
     border: none;
     border-radius: none;
     color: rgba(255, 221, 85);
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
 
 .btn-like:hover {
@@ -175,6 +181,7 @@ button:hover, input[type="submit"]:hover {
     border-radius: none;
     color: rgb(255, 255, 255);
     font-size: x-large;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
 
 .btn-comment:hover {
@@ -207,11 +214,16 @@ button:hover, input[type="submit"]:hover {
     border-radius: 2px;
 }
 
+.forum_input {
+    display: flex;
+    flex-direction: column;
+}
+
 .post {
     margin-top: 50px;
     margin-bottom: 50px;
     border: 1px solid #ddd;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
     padding: 15px;
     border-radius: 10px; 
 }
@@ -359,6 +371,22 @@ button:hover, input[type="submit"]:hover {
     font-weight: bold;
 }
 
+.filter-form {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+}
+
+.filter-select {
+    padding: 10px;
+    margin-right: 10px;
+    background-color: rgba(255, 221, 85, 0.7);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 4px;
+    font-family: 'Dosis', sans-serif;
+    font-weight: bolder;
+}
+
 .post-content {
     display: flex;
     align-items: center;
@@ -446,6 +474,7 @@ button:hover, input[type="submit"]:hover {
 /* Pagination styling */
 .pagination {
     text-align: center;
+    font-weight: bold;
 }
 
 .pagination .step-links a {

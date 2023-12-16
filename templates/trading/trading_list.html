@@ -7,14 +7,14 @@
     <a href="{% url 'trading_new' %}" class="btn btn-edit">Create New Post</a>
 </div>
 
-<form method="get" action="{% url 'trading_list' %}">
-    <select name="category">
+<form method="get" action="{% url 'trading_list' %}" class="filter-form">
+    <select name="category" class="filter-select">
         <option value="">All Categories</option>
         {% for value, name in categories %}
         <option value="{{ value }}">{{ name }}</option>
         {% endfor %}
     </select>
-    <select name="condition">
+    <select name="condition" class="filter-select">
         <option value="">All Conditions</option>
         {% for value, name in conditions %}
         <option value="{{ value }}">{{ name }}</option>
