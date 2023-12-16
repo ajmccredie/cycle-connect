@@ -9,21 +9,20 @@
 </div>
 
 <h2>Please have a look at the services we offer</h2>
-<ul>
+<ul class="services">
     {% for service in services %}
     <li>
-        <div>
-            <h3>{{ service.name }}</h3>
-            <h3>£{{ service.price }} </h3>
+        <div class="service">
+            <h3><i class="fa-solid fa-bicycle"></i> {{ service.name }} <i class="fa-solid fa-bicycle"></i>   £{{ service.price }} </h3>
             <p> {{ service.description }} </p>
             <ul class="service_description fa-ul">
-                {% for feature in service.get_key_features_list %}
-                    <li>{{ feature }}</li>
+                {% for detail in service.get_description_detail_bullets_list %}
+                    <li>{{ detail }}</li>
                 {% endfor %}
+                <div>
+                    <a class="btn btn-a" href="{% url 'select_place' service.id %}">View Details & Book</a>
+                </div>
             </ul>
-        </div>
-        <div>
-            <a class="btn btn-a" href="{% url 'select_place' service.id %}">View Details & Book</a>
         </div>
     </li>
     {% empty %}

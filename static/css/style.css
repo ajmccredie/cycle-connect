@@ -234,16 +234,40 @@ button:hover, input[type="submit"]:hover {
 }
 
 /* I asked AI how to produce a bullet point list in a loop with font awesome bike icons: */
-.fa-ul {
+.services ul {
+    margin-bottom: 0;
+    margin-top: 20px;
     list-style-type: none; /* Removes default bullets */
     padding-left: 0; /* Adjust padding as needed */
+    margin-left: 0;
 }
 
-.fa-ul ul::before {
-    content: "\f206"; /* Unicode for Font Awesome bicycle icon */
+.services li {
+    list-style-type: none; /* Removes default bullets */
+    padding-left: 0; /* Adjust padding as needed */
+    margin-left: 0;
+}
+
+.service {
+    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.65);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;  
+}
+
+.fa-ul ul {
+    list-style-type: none; /* Removes default bullets */
+    padding-left: 0; /* Adjust padding as needed */
+    margin-left: 0;
+}
+
+.fa-ul li::before {
+    content: "\f185"; /* Unicode for Font Awesome sun */
     font-family: "Font Awesome 5 Free"; /* Specify Font Awesome as the font family */
     padding-right: 10px; /* Space between the icon and text */
-    font-weight: 900; /* Required for the solid style */
+    font-weight: 100; /* Required for the solid style */
+    font-size: smaller;
 }
 /* The end of the AI bullet icons code */
 
