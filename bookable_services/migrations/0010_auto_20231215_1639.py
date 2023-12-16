@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='booking',
             name='service',
-            field=models.ForeignKey(default='Standard', on_delete=django.db.models.deletion.CASCADE, to='bookable_services.service'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bookable_services.service'),
             preserve_default=False,
         ),
         migrations.AlterField(

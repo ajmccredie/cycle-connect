@@ -92,7 +92,7 @@ class Slot(models.Model):
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
+    slot = models.ForeignKey(Slot, on_delete=models.CASCADE, null=True, blank=True)
     service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
     booking_date = models.DateTimeField(default=timezone.now)
     STATUS_CHOICES = [
