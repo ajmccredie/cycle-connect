@@ -7,14 +7,14 @@
 
 {% for booking in bookings %}
 <div class="booking">
-    <p>Service: {{ booking.service.name }}</p>
+    <h3>{{ booking.service.name }}</h3>
     <p>Date: {{ booking.slot.start_time|date:"D, d M Y" }}</p>
     <p>Time: {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
-    <p>Status: <span class="status-{{ booking.status|lower }}"></span> {{ booking.status }}  <span class="status-{{ booking.status|lower }}"></span></p>
+    <p><span class="status-{{ booking.status|lower }}"></span> {{ booking.status }}  <span class="status-{{ booking.status|lower }}"></span></p>
     {% if booking.status == 'pending' or booking.status == 'confirmed' %}
       <form method="post" action="{% url 'cancel_booking' booking.id %}">
         {% csrf_token %}
-        <button type="submit">Cancel Booking</button>
+        <button class="btn-edit" type="submit">Cancel Booking</button>
       </form>
     {% endif %}
 </div>

@@ -272,6 +272,36 @@ button:hover, input[type="submit"]:hover {
 }
 /* The end of the AI bullet icons code */
 
+.place_choice {
+    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px; 
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.place_choice li {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.slot, .booking {
+    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px; 
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
 .status-confirmed {
     background-color: green;
     border-radius: 50%;

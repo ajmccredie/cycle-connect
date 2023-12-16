@@ -5,12 +5,11 @@
 {% block content %}
 <h1>Booking confirmation</h1>
 
-<div class="booking">
-    <p>Service: {{ booking.service.name }}</p>
-    <p>Date: {{ booking.slot.start_time|date:"D, d M Y" }}</p>
-    <p>Time: {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
-    <p>Status: {{ booking.status }}</p>
-    <a class="btn btn-a" href="{% url 'booking_status' %}">View My Bookings</a>
+<div class="slot">
+    <h4>{{ booking.service.name }}</h4>
+    <p>{{ booking.slot.start_time|date:"D, d M Y" }}  {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
+    <p><span class="status-{{ booking.status|lower }}"></span> {{ booking.status }}  <span class="status-{{ booking.status|lower }}"></span></p>
 </div>
+<a class="btn btn-a" href="{% url 'booking_status' %}">View My Bookings</a>
 
 {% endblock %}

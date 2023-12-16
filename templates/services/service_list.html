@@ -13,14 +13,14 @@
     {% for service in services %}
     <li>
         <div class="service">
-            <h3><i class="fa-solid fa-bicycle"></i> {{ service.name }} <i class="fa-solid fa-bicycle"></i>   £{{ service.price }} </h3>
-            <p> {{ service.description }} </p>
+            <h3><i class="fa-solid fa-bicycle"></i> {{ service.name }}    £{{ service.price }} <i class="fa-solid fa-bicycle"></i></h3>
+            <p> {{ service.description_summary }} </p>
             <ul class="service_description fa-ul">
                 {% for detail in service.get_description_detail_bullets_list %}
                     <li>{{ detail }}</li>
                 {% endfor %}
                 <div>
-                    <a class="btn btn-a" href="{% url 'select_place' service.id %}">View Details & Book</a>
+                    <a class="btn btn-a" href="{% url 'select_place' service.id %}">View Region Options & Book</a>
                 </div>
             </ul>
         </div>

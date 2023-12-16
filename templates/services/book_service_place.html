@@ -7,20 +7,24 @@
 
 <h2>Please select a Location for {{ service.name }}</h2>
 
-<ul>
-    {% for place in places %}
-        <li>
-            <form method="post" action="{% url 'book_service' service.id place.id %}">
-                {% csrf_token %}
-                <button type="submit">{{ place.name }}</button>
-                <p>Available Slots: {{ place.available_slots }}</p>
-            </form>
-        </li>
-    {% empty %}
-        <p>There are no active bookings available for this service at this time.</p>
-    {% endfor %}
-</ul>
+{% for place in places %}
+<div class="place_choice">
 
+    <form method="post" action="{% url 'book_service' service.id place.id %}">
+        {% csrf_token %}
+        <div>
+            <button type="submit"><i class="fa-solid fa-bicycle"></i> {{ place.name }} <i
+                    class="fa-solid fa-bicycle"></i></button>
+        </div>
+        <div>
+            <p>Available Slots: {{ place.available_slots }}</p>
+        </div>
+    </form>
+
+</div>
+{% empty %}
+<p>There are no active bookings available for this service at this time.</p>
+{% endfor %}
 <a class="btn btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>
 
 {% endblock %}
