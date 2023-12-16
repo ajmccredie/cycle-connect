@@ -5,9 +5,9 @@
 <script src="{% static 'summernote/summernote-bs4.js' %}"></script>
 
 {% block content %}
-<h1>Welcome to the forum {{ user }}</h1>
+<h1>Welcome {{ user }}</h1>
 
-<h2>Join the community discussion</h2>
+<h2>Join the community discussion:</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.title }}
@@ -23,38 +23,45 @@
 
 {% for post in page_obj %}
 <div class="post">
-    <h2>{{ post.title }}</h2>
-    {% if post.user != request.user %}
-    <form action="{% url 'report_post' post.id %}" method="post">
-        {% csrf_token %}
-        <button class="warning" type="submit">Report</button>
-    </form>
-    {% endif %}
-    {% if request.user.id == post.UserId_id %}
-    <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
-    <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
-    {% endif %}
-    <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
-    <p>{{ post.content|safe }}</p>
-
-    <strong>
-        {% if user.is_authenticated %}
-        <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
+    <div class="heading">
+        {% if post.user != request.user %}
+        <form action="{% url 'report_post' post.id %}" method="post">
             {% csrf_token %}
-            {% if post.id in liked_post_ids %}
-            <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
-                    class="fas fa-star"></i></button>
-            {% else %}
-            <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
-                    class="far fa-regular fa-star"></i></button>
-            {% endif %}
+            <button class="btn-edit" type="submit">Report <i class="fa-solid fa-thumbs-down"></i></button>
         </form>
         {% endif %}
-    </strong>
-    <strong class="text-second"> {{ post.number_of_likes }} </strong>
-    <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i
-                class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
+        <h2>{{ post.title }}</h2>
+    {% if request.user.id == post.UserId_id %}
+        <a href="{% url 'edit_forum_post' post.id %}" class="btn btn-edit">Edit</a>
+        <a href="{% url 'delete_forum_post' post.id %}" class="btn btn-delete">Delete</a>
+    {% endif %}
+    </div>
+    <div>
+        <h4>{{ post.UserId }} on {{ post.created_on|date:"d-m-Y" }}</h4>
+    </div>
+    <div>
+        <p>{{ post.content|safe }}</p>
+    </div>
+    <div>
+        <strong>
+            {% if user.is_authenticated %}
+            <form class="d-inline" action="{% url 'like_post' post.id %}" method="POST">
+                {% csrf_token %}
+                {% if post.id in liked_post_ids %}
+                <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
+                        class="fas fa-star"></i></button>
+                {% else %}
+                <button type="submit" name="forumpost_id" value="{{post.id}}" class="btn-like"><i
+                        class="far fa-regular fa-star"></i></button>
+                {% endif %}
+            </form>
+            {% endif %}
+        </strong>
+        <strong class="text-second"> {{ post.number_of_likes }} </strong>
+        <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i
+                    class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
 
+    </div>
 </div>
 {% endfor %}
 

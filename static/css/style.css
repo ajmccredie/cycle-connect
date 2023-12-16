@@ -210,6 +210,30 @@ button:hover, input[type="submit"]:hover {
 .post {
     margin-top: 50px;
     margin-bottom: 50px;
+    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px;
+    border-radius: 10px; 
+}
+
+.post .heading {
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: left;
+}
+
+.post .heading h2 {
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.post .heading button {
+    padding 0;
+    margin: 0;
+    background-color: rgba(251, 164, 59, 0.7);
+    border: 2px solid rgb(250, 3, 3);
+    border-radius: 2px;
+    font-size: medium;
 }
 
 .post img {
@@ -419,6 +443,24 @@ button:hover, input[type="submit"]:hover {
     border-radius: 5px;
 }
 
+/* Pagination styling */
+.pagination {
+    text-align: center;
+}
+
+.pagination .step-links a {
+    color: #fff;
+    padding: 5px 10px;
+    background-color: rgb(111, 111, 188);
+    margin: 0 5px;
+    border-radius: 5px;
+}
+
+.pagination .step-links a:hover {
+    background-color: rgba(255, 221, 85, 0.7);
+}
+
+/* Footer styling */
 footer a {
     color: white;
     padding: 2rem;
@@ -433,5 +475,9 @@ footer a:hover {
 @media (max-width: 768px) {
     .post-content {
         flex-direction: column;
+    }
+
+    .semi-opaque-box {
+        padding: 10px;
     }
 }
