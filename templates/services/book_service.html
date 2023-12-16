@@ -5,19 +5,17 @@
 {% block content %}
 <h1>You will be booking a {{ service.name }} as "{{ user }}"</h1>
 
-<h2>Available Slots for {{ service.name }} in {{ place.name }}</h2>
+<h2>Available Slots for {{ service.name }} in  {{ place.name }}</h2>
 
 <form method="post">
   {% csrf_token %}
-  {% for individual_slot in individual_slots %}
+  {% for slot in slots %}
     <div class="slot">
-        <p>Date: {{ individual_slot.slot.start_time|date:"D, d M Y" }}</p>
-        <p>Time: {{ individual_slot.slot.start_time|time:"H:i" }} - {{ individual_slot.slot.end_time|time:"H:i" }}</p>
-        {% if not individual_slot.is_booked %}
-            <button type="submit" name="individual_slot_id" value="{{ individual_slot.id }}">Request Booking</button>
-        {% endif %}
+      <p>Date: {{ slot.start_time|date:"D, d M Y" }}</p>
+      <p>Time: {{ slot.start_time|time:"H:i" }} - {{ slot.end_time|time:"H:i" }}</p>
+      <button type="submit" name="slot_id" value="{{ slot.id }}">Request Booking</button>
     </div>
-{% endfor %}
+  {% endfor %}
 </form>
 
 <a class="btn btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>

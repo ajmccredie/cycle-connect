@@ -13,7 +13,7 @@
             <form method="post" action="{% url 'book_service' service.id place.id %}">
                 {% csrf_token %}
                 <button type="submit">{{ place.name }}</button>
-                <p>Available Slots: {{ place.total_available_slots }}</p>
+                <p>Available Slots: {{ place.available_slots }}</p>
             </form>
         </li>
     {% empty %}
