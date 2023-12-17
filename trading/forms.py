@@ -29,9 +29,9 @@ class TradingPostForm(forms.ModelForm):
             'status',
             Submit('submit', 'Create Post', css_class='btn btn-edit')
         )
-        self.label_suffix = ""
-        for field in self.fields:
-            self.fields[field].label_suffix = ""
+
+        for field in self.fields.values():
+            field.label = ''
 
 
 class MessageForm(forms.ModelForm):

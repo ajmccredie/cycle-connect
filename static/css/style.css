@@ -269,6 +269,19 @@ button:hover, input[type="submit"]:hover {
     text-shadow: 2px 2px 2px rgb(255, 255, 255);
 }
 
+/* Trading formatting */
+.form-group {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+
+/* Services and booking formatting */
 /* I asked AI how to produce a bullet point list in a loop with font awesome bike icons: */
 .services ul {
     margin-bottom: 0;
