@@ -7,5 +7,6 @@ class RideForm(forms.ModelForm):
         fields = ['title', 'date', 'image', 'route_description', 'start_place', 'end_place', 'start_time', 'distance', 'difficulty']
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
+            'image': forms.ImageField,
             'start_time': forms.TimeInput(attrs={'type': 'time'}),
         }

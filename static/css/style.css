@@ -280,6 +280,10 @@ button:hover, input[type="submit"]:hover {
     padding-bottom: 0;
 }
 
+.form-group img {
+    width: 100px;
+    height: auto;
+}
 
 /* Services and booking formatting */
 /* I asked AI how to produce a bullet point list in a loop with font awesome bike icons: */

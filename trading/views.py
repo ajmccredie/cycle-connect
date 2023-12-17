@@ -94,7 +94,8 @@ class TradingPostEditView(View, LoginRequiredMixin):
     def get(self, request, pk):
         post = get_object_or_404(TradingPost, pk=pk, seller=request.user)
         form = TradingPostForm(instance=post)
-        return render(request, self.template_name, {'form': form})
+        image_url = post.image.url if post.image else None
+        return render(request, self.template_name, {'form': form, 'image_url':image_url})
     
     def post(self, request, pk):
         post = get_object_or_404(TradingPost, pk=pk, seller=request.user)

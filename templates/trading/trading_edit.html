@@ -18,7 +18,13 @@
 
     <div class="form-group">
         <label for="{{ form.image.id_for_label }}"><h3>Upload an image of your item:</h3></label>
-        {{ form.image|as_crispy_field }}
+        <p>Existing image</p>
+        <img src="{{ image_url }}" alt="Image of trading item">
+        <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" onchange="previewImage(event)">
+        <p>New image</p>
+        <img id="image-preview" style="max-width: 100px; display: none;">
+        {{ form.image.errors }}
+        {{ form.image.help_text }}
     </div>
 
     <div class="form-group">

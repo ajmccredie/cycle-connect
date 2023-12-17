@@ -11,6 +11,7 @@ class TradingPostForm(forms.ModelForm):
         model = TradingPost
         fields = ['title', 'description', 'image', 'category', 'condition', 'status']
         widgets = {
+            'image': forms.FileInput,
             'category': forms.RadioSelect,
             'condition': forms.RadioSelect,
             'status': forms.RadioSelect,
