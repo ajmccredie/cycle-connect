@@ -27,10 +27,10 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-#ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
-ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-mniukcxci9u.ws-eu107.gitpod.io']
+ALLOWED_HOSTS = ['cycle-connect-70cef323855a.herokuapp.com', 'localhost']
+#ALLOWED_HOSTS = ['8000-ajmccredie-cycleconnect-mniukcxci9u.ws-eu107.gitpod.io']
 
 # Application definition
 
