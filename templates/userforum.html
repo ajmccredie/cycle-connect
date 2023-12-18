@@ -12,6 +12,9 @@
         {% csrf_token %}
         {{ form.title }}
         {{ form.content }}
+        {% for error in form.content.errors %}
+            <div class="alert alert-danger"><h3>{{ error }}</h3></div>
+        {% endfor %}
         <div class="button_container">
             <button type="submit">Post</button>
         </div>

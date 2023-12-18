@@ -7,7 +7,7 @@ STATUS = ((0, "False"), (1, "True"))
 class ForumPost(models.Model):
     UserId = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, unique=False)
-    content = models.TextField()
+    content = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image', default='placeholder')
     published_status = models.IntegerField(choices=STATUS, default=1)

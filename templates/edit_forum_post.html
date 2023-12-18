@@ -9,7 +9,11 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+        {{ form.title }}
+        {{ form.content }}
+        {% for error in form.content.errors %}
+            <div class="alert alert-danger"><h3>{{ error }}</h3></div>
+        {% endfor %}
     <button type="submit">Update Post</button>
     <a href="{% url 'userforum' %}" class="btn btn-edit">Return to forum with no changes</a>
 </form>

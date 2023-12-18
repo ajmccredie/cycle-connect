@@ -1,9 +1,10 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 from .models import ForumPost, Comment
-from django.core.validators import MaxLengthValidator
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=SummernoteWidget(), required=True, validators=[MinLengthValidator(10, message="Content should be at least 10 characters long.")])
     class Meta:
         model = ForumPost
         fields = ['title', 'content', 'likes']

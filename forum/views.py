@@ -20,14 +20,13 @@ class UserPost(LoginRequiredMixin, View):
         paginator = Paginator(post_list, 8)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        #posts = ForumPost.objects.all()
         liked_post_ids = set(request.user.likes.values_list('id', flat=True)) #Trying an idea from Stack Overflow
         form = PostForm()
         posts = ForumPost.objects.filter(published_status=1)
         return render(request, self.forum_view, {"page_obj": page_obj, "posts": posts, "form": form, "liked_post_ids": liked_post_ids})
 
     def post(self, request, *args, **kwargs):
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.user = request.user
@@ -35,8 +34,13 @@ class UserPost(LoginRequiredMixin, View):
             new_post.save()
             return redirect('userforum') 
         else:
-            posts = ForumPost.objects.filter(published_status=1).order_by('-created_on')
-            return render(request, self.forum_view, {'posts': posts, 'form': form})
+            post_list = ForumPost.objects.filter(published_status=1).order_by('-created_on')
+            paginator = Paginator(post_list, 8)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            liked_post_ids = set(request.user.likes.values_list('id', flat=True))
+            posts = ForumPost.objects.filter(published_status=1)
+            return render(request, self.forum_view, {"page_obj": page_obj, "posts": posts, "form": form, "liked_post_ids": liked_post_ids})
 
 
 class PostLike(LoginRequiredMixin, View):

@@ -3,10 +3,14 @@ from crispy_forms.layout import Layout, Submit
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.models import User
 from django_summernote.widgets import SummernoteWidget
+from django.core.validators import MaxLengthValidator, MinLengthValidator, FileExtensionValidator
 from django import forms
 
 
 class TradingPostForm(forms.ModelForm):
+    title = forms.CharField(validators=[MinLengthValidator(2), MaxLengthValidator(200)])
+    description = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(5), MaxLengthValidator(1000)])
+    image = forms.ImageField(required=False, validators=[FileExtensionValidator(['jpg', 'png'])])
     class Meta:
         model = TradingPost
         fields = ['title', 'description', 'image', 'category', 'condition', 'status']
