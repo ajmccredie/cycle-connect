@@ -66,4 +66,9 @@
     <a href="{% url 'rides' %}" class="btn btn-edit">Return to group rides with no changes</a>
 </form>
 
+<script>
+    window.currentDate = '{{ current_date }}';
+    window.dateFieldId = '{{ form.date.id_for_label }}';
+</script>
+
 {% endblock %}

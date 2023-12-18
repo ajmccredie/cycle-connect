@@ -42,7 +42,8 @@ class RidesOverview(ListView, LoginRequiredMixin):
 class AddRideView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         form = RideForm()
-        return render(request, 'social_rides/add_ride.html', {'form': form})
+        current_date = timezone.now().date().isoformat()
+        return render(request, 'social_rides/add_ride.html', {'form': form, 'current_date': current_date})
 
     def post(self, request, *args, **kwargs):
         form = RideForm(request.POST, request.FILES)
@@ -96,9 +97,10 @@ class RegisterForRide(LoginRequiredMixin, View):
 class RideEditView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        current_date = timezone.now().date().isoformat()
         if ride.attendees.count() == 0 and not ride.is_verified:
             form = RideForm(instance=ride)
-            return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride})
+            return render(request, 'social_rides/edit_ride.html', {'form': form, 'ride': ride, 'current_date': current_date})
         else:
             messages.error(request, "This ride cannot be edited.")
             return redirect('ride_details', pk=ride_id)
