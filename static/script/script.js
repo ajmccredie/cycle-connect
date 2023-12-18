@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Confirm receipt of trading item in market
+function showThankYouMessage() {
+    alert('Thank you for adding your item. It will show as pending until admin has the opportunity to check and verify the post. You will see when it has been accepted, because the "pending" label will be removed. Happy cycling!');
+    return true;
+}
 
 
 // Script to add image thumbnails in userprofile edit and in social rides add ride and edit
