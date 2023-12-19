@@ -12,36 +12,38 @@ from .forms import PostForm, CommentForm, SearchForm
 
 # Create your views here.
 
-class UserPost(LoginRequiredMixin, View):
-    forum_view = 'userforum.html'
-    
+class UserPost(LoginRequiredMixin, ListView):
+    model = ForumPost
+    template_name = 'userforum.html'
+    context_object_name = 'page_obj'
+    paginate_by = 8
 
-    def get(self, request, *args, **kwargs):
-        post_list = ForumPost.objects.filter(published_status=1).order_by('-created_on')
-        paginator = Paginator(post_list, 8)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        liked_post_ids = set(request.user.likes.values_list('id', flat=True)) #Trying an idea from Stack Overflow
-        form = PostForm()
-        posts = ForumPost.objects.filter(published_status=1)
-        return render(request, self.forum_view, {"page_obj": page_obj, "posts": posts, "form": form, "liked_post_ids": liked_post_ids})
+    def get_queryset(self):
+        user = self.request.user
+        return ForumPost.objects.filter(
+            Q(published_status=1) | Q(UserId=user, published_status=0)
+        ).order_by('-created_on')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        liked_post_ids = set(self.request.user.likes.values_list('id', flat=True))
+        context['form'] = PostForm()
+        context['liked_post_ids'] = liked_post_ids
+        return context
 
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
-            new_post.user = request.user
-            new_post.UserId_id = request.user.id
+            new_post.UserId = request.user
             new_post.save()
             return redirect('userforum') 
         else:
-            post_list = ForumPost.objects.filter(published_status=1).order_by('-created_on')
-            paginator = Paginator(post_list, 8)
-            page_number = request.GET.get('page')
-            page_obj = paginator.get_page(page_number)
-            liked_post_ids = set(request.user.likes.values_list('id', flat=True))
-            posts = ForumPost.objects.filter(published_status=1)
-            return render(request, self.forum_view, {"page_obj": page_obj, "posts": posts, "form": form, "liked_post_ids": liked_post_ids})
+            return render(request, self.template_name, {
+                'page_obj': self.get_queryset(),
+                'form': form,
+                'liked_post_ids': set(request.user.likes.values_list('id', flat=True))
+            })
 
 
 class PostLike(LoginRequiredMixin, View):
