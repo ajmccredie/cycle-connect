@@ -3,8 +3,17 @@
 
 {% block content %}
     <h1>Add a New Ride</h1>
+    <div id="submitRideModal" class="modal">
+        <div class="modal-content">
+            <h2>Thank you for submitting your social ride suggestion.</h2>
+            <p>A member of the admin team will review this as soon as possible and publish it to the site.<br>It will show as 'pending' for you until this happens.<br>Once it is published, other members will be able to sign up to your ride too.<br>Happy Cycling!</p>
+            <button id="modalOkBtn" class="btn btn-edit">OK</button>
+        </div>
+    </div>
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <input type="hidden" id="isTrustedOrganiser" value="{{ is_trusted_organiser|yesno:'true,false' }}">
         <div class="form-group">
             <label for="{{ form.title.id_for_label }}">Title:</label>
             {{ form.title|as_crispy_field }}

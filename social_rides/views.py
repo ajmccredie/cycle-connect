@@ -43,7 +43,8 @@ class AddRideView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         form = RideForm()
         current_date = timezone.now().date().isoformat()
-        return render(request, 'social_rides/add_ride.html', {'form': form, 'current_date': current_date})
+        is_trusted_organiser = RideOrganiser.objects.filter(user=request.user, trusted_organiser=True).exists()
+        return render(request, 'social_rides/add_ride.html', {'form': form, 'current_date': current_date, 'is_trusted_organiser': is_trusted_organiser})
 
     def post(self, request, *args, **kwargs):
         form = RideForm(request.POST, request.FILES)

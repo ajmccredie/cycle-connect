@@ -79,8 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Pop-up to confirm ride has been added
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('rideForm').addEventListener('submit', function(e) {
-        alert('Thank you for adding your ride');
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const modal = document.getElementById('submitRideModal');
+    const okBtn = document.getElementById('modalOkBtn');
+    const isTrustedOrganiser = document.getElementById('isTrustedOrganiser').value === 'true';
+
+    form.addEventListener('submit', function(event) {
+        if (!isTrustedOrganiser) {
+            event.preventDefault();
+            modal.style.display = "block";
+        }
     });
+
+    okBtn.onclick = function() {
+        modal.style.display = "none";
+        form.submit();
+    }
 });
