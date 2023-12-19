@@ -8,7 +8,8 @@ A link to the deployed project can be found here https://cycle-connect-70cef3238
 <images of the deployed site across different devices>
 
 ## Problem statement
-
+To address the need for a website to connect fellow cyclists, allowing them to share experiences and find helpful information to improve their cycling journey. Cyclists need a website that allows the creation of a secure personal profile, a place to discuss bike maintenance and other cycling related topics, discover new cycling routes, plan and join group rides, buy and sell bikes and cycling related items, and book cycling related services easily. 
+This website should help all users to feel like they are part of a friendly cycling community, keeping them motivated and informated for their cycling adventures.
 
 ## Initial proposed database structure to meet the problem statement
 <image of database structure>
@@ -17,10 +18,17 @@ Explanation of the different parts and how they interlink.
 
 ## Design and development of themes and project as a whole
 ### Initial ideas
+The site needed to feel clean and professional, preferably making use of motivational cycling images in the background. 
+Information needed to be easy to find and the site easy to navigate. 
+Themes of outdoor adventure were used from the outset and the logo design.
 
-### Wireframes
+### Wireframes and initial mock-ups
 
 ### Colour schemes and background images
+The site colour schemes was XXX
+
+A selection of background images were obtained from Freepik (references below). These were recoloured in PowerPoint to keep with the themes and colours decided. 
+The navbar and footer were styled in dark colours with a consistent logo in the top left and the menu (changing to drop down on smaller screens) in the right. Social media links were placed in the footer.
 
 ### Common themes and navigation
 
