@@ -253,6 +253,16 @@ button:hover, input[type="submit"]:hover {
     height: auto;
 }
 
+.reported-note {
+    padding: 10px;
+    background-color: #ffcccc;
+    border: 1px solid #ff0000;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #ff0000;
+}
+
 .text-second {
     font-family: 'Dosis', sans-serif;
     font-weight: bold;

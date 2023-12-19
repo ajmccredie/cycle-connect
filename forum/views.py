@@ -14,6 +14,7 @@ from .forms import PostForm, CommentForm, SearchForm
 
 class UserPost(LoginRequiredMixin, View):
     forum_view = 'userforum.html'
+    
 
     def get(self, request, *args, **kwargs):
         post_list = ForumPost.objects.filter(published_status=1).order_by('-created_on')
@@ -108,6 +109,16 @@ def userforum_post_detail(request, post_id):
     comments = post.comments.all()
     new_comment = None
     comment_form = CommentForm()
+    is_post_owner = request.user == post.UserId
+    post_reported = post.reported_status == 1
+    context = {
+        'post': post,
+        'post_reported': post_reported,
+        'comments': comments, 
+        'new_comment': new_comment, 
+        'comment_form': comment_form,
+    }
+
     if request.method == 'POST': 
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -119,7 +130,7 @@ def userforum_post_detail(request, post_id):
             return redirect('userforum_post_detail', post_id=post_id)
     else:
         comment_form = CommentForm()
-    return render(request, "userforum_post_detail.html", {"post": post, "comments": comments, "new_comment": new_comment, "comment_form": comment_form})
+    return render(request, "userforum_post_detail.html", context)
 
 def edit_forum_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)

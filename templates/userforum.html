@@ -80,6 +80,11 @@
                     class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
 
     </div>
+    {% if post_reported and post.UserId_id == request.user.id %}
+    <div class="reported-note">
+        <p>This post has been reported. If you believe this is in error, please contact <a href="mailto:admin@cycle-connect.com">admin@example.com</a>.</p>
+    </div>
+    {% endif %}
 </div>
 {% endfor %}
 
