@@ -13,8 +13,8 @@
 {% for comment in comments %} 
     <p>{{ comment.body | linebreaks }} - {{ comment.name }}, {{ comment.created_on|date:"d-m-Y" }}</p>
     {% if request.user.id == comment.name_id %}
-        <a href="{% url 'edit_forum_comment' post_id=post.id comment_id=comment.id %}" class="btn btn-edit">Edit</a>
-        <a href="{% url 'delete_forum_comment' post_id=post.id comment_id=comment.id %}" class="btn btn-delete">Delete</a>
+        <a href="{% url 'edit_forum_comment' pk=comment.id %}" class="btn btn-edit">Edit</a>
+        <a href="{% url 'delete_forum_comment' pk=post.pk comment_id=comment.id %}" class="btn btn-delete">Delete</a>
     {% endif %} 
     {% empty %}
     <p>No comments yet.</p>

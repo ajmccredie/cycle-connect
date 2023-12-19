@@ -76,7 +76,7 @@
             {% endif %}
         </strong>
         <strong class="text-second"> {{ post.number_of_likes }} </strong>
-        <strong class="text-second"><a href="{% url 'userforum_post_detail' post.id %}" class="btn-comment"><i
+        <strong class="text-second"><a href="{% url 'userforum_post_detail' pk=post.id %}" class="btn-comment"><i
                     class="fa-regular fa-comments"></i></a> {{ post.number_of_comments }} </strong>
 
     </div>

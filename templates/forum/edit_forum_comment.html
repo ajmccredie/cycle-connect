@@ -9,8 +9,8 @@
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="btn btn-submit">Update Comment</button>
-    <a href="{% url 'userforum_post_detail' post_id %}" class="btn btn-edit">Return to comments with no changes</a>
+    <button type="submit" class="btn btn-edit">Update Comment</button>
+    <a href="{% url 'userforum_post_detail' pk=post.id %}" class="btn btn-edit">Return to comments with no changes</a>
 </form>
 
 {% endblock %}

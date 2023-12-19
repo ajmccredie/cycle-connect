@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,11 +10,10 @@ from django.db.models import Q
 from .models import ForumPost, Comment
 from .forms import PostForm, CommentForm, SearchForm
 
-# Create your views here.
 
 class UserPost(LoginRequiredMixin, ListView):
     model = ForumPost
-    template_name = 'userforum.html'
+    template_name = 'forum/userforum.html'
     context_object_name = 'page_obj'
     paginate_by = 8
 
@@ -68,7 +67,7 @@ class EditPost(LoginRequiredMixin, View):
 
         form = PostForm(instance=post)
         form.fields.pop('likes', None) # attempt to use 'pop' to remove the rogue likes list
-        return render(request, 'edit_forum_post.html', {'form': form, 'post': post})
+        return render(request, 'forum/edit_forum_post.html', {'form': form, 'post': post})
 
     def post(self, request, *args, **kwargs):
         post_id = kwargs.get('post_id')
@@ -83,7 +82,7 @@ class EditPost(LoginRequiredMixin, View):
             form.save()
             return redirect('userforum')
         else:
-            return render(request, 'edit_forum_post.html', {'form': form, 'post': post})
+            return render(request, 'forum/edit_forum_post.html', {'form': form, 'post': post})
 
 
 class DeletePost(LoginRequiredMixin, View):
@@ -94,7 +93,7 @@ class DeletePost(LoginRequiredMixin, View):
         if post.UserId != request.user:
             return redirect('userforum')
         
-        return render(request, 'delete_forum_post.html', {'post': post})
+        return render(request, 'forum/delete_forum_post.html', {'post': post})
 
     def post(self, request, *args, **kwargs):
         post_id = kwargs.get('post_id')
@@ -106,22 +105,23 @@ class DeletePost(LoginRequiredMixin, View):
         else:
             return redirect('userforum')
 
-def userforum_post_detail(request, post_id):
-    post = get_object_or_404(ForumPost, id=post_id)
-    comments = post.comments.all()
-    new_comment = None
-    comment_form = CommentForm()
-    is_post_owner = request.user == post.UserId
-    post_reported = post.reported_status == 1
-    context = {
-        'post': post,
-        'post_reported': post_reported,
-        'comments': comments, 
-        'new_comment': new_comment, 
-        'comment_form': comment_form,
-    }
+class ForumPostDetailView(DetailView, LoginRequiredMixin):
+    model = ForumPost
+    template_name = "forum/userforum_post_detail.html"
+    context_object_name = 'post'
 
-    if request.method == 'POST': 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        context['comments'] = post.comments.all()
+        context['new_comment'] = None
+        context['comment_form'] = CommentForm()
+        context['post_reported'] = post.reported_status == 1
+        context['post_id'] = post.id
+        return context
+
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
@@ -129,46 +129,55 @@ def userforum_post_detail(request, post_id):
             new_comment.name = request.user
             new_comment.UserId_id = request.user.id
             new_comment.save()
-            return redirect('userforum_post_detail', post_id=post_id)
-    else:
-        comment_form = CommentForm()
-    return render(request, "userforum_post_detail.html", context)
+        return redirect('userforum_post_detail', pk=post.pk)
 
-def edit_forum_comment(request, post_id, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
-    post_id = comment.post.id
-    if request.method =='POST':
-        form = CommentForm(request.POST, instance=comment)
+class EditForumCommentView(UpdateView, LoginRequiredMixin):
+    model = Comment
+    form_class = CommentForm
+    template_name = "forum/edit_forum_comment.html"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        return render(request, self.template_name, {'form': form, 'post': self.object.post})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
         if form.is_valid():
-            form.save()
-            return redirect('userforum_post_detail', post_id=post_id)
-    else:
-        form = CommentForm(instance=comment)
-    context = {
-        'form': form,
-        'post_id': post_id
-    }
-    return render(request, 'edit_forum_comment.html', context) 
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('userforum_post_detail', pk=self.object.post.id)
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form, 'post': self.object.post})
     
 
-def delete_forum_comment(request, post_id, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
-    post_id = comment.post.id
-    if request.method == 'POST':
-        comment.delete()
-        return redirect('userforum_post_detail', post_id=post_id)
-    else:
-        context = {
-            'comment': comment,
-            'post_id': post_id,
-            'comment_id': comment_id
-        }
-        return render(request, 'delete_forum_comment.html', context)
+class DeleteForumCommentView(LoginRequiredMixin, DeleteView):
+    model = Comment
+    template_name = 'forum/delete_forum_comment.html'
+
+    def get_success_url(self):
+        return reverse('userforum_post_detail', kwargs={'pk': self.object.post.pk})
+
+    def get_object(self, queryset=None):
+        comment_id = self.kwargs.get('comment_id')
+        return get_object_or_404(Comment, id=comment_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_id'] = self.object.post.id
+        context['comment_id'] = self.object.id
+        return context
 
 
 class SearchResultsView(LoginRequiredMixin, ListView):
     model = ForumPost
-    template_name = 'forum_search.html'
+    template_name = 'forum/forum_search.html'
     context_object_name = 'search_results'
 
     def get_queryset(self):
