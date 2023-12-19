@@ -43,7 +43,7 @@
 <div class="post">
     <div class="heading">
         {% if post.UserId_id != request.user.id %}
-        <form class="report-form" url="{% url 'report_post' post.id %}" data-post-id="{{ post.id }}">
+        <form class="report-form" action="{% url 'report_post' post.id %}" data-post-id="{{ post.id }}" method="post">
             {% csrf_token %}
             <button class="report-button btn-edit" type="submit">Report <i class="fa-solid fa-thumbs-down"></i></button>
         </form>

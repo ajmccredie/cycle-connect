@@ -30,21 +30,22 @@ document.addEventListener('DOMContentLoaded', function() {
     let reportModal = document.getElementById('reportPostModal');
     let confirmBtn = document.getElementById('confirmReportBtn');
     let cancelBtn = document.getElementById('cancelReportBtn');
-    const reportTriggers = document.querySelectorAll('.report-button');
+    let formToSubmit = null;
 
-    reportTriggers.forEach(trigger => {
-        trigger.addEventListener('click', function(event) {
+    document.querySelectorAll('.report-button').forEach(button => {
+        button.addEventListener('click', function(event) {
             event.preventDefault();
             reportModal.style.display = "block";
-            const form = this.closest('.report-form');
-
-            confirmBtn.onclick = function() {
-                reportModal.style.display = "none";
-                alert('Thank you for reporting');
-                form.submit()
-            };
+            formToSubmit = this.closest('form');
         });
     });
+
+    confirmBtn.onclick = function() {
+        reportModal.style.display = "none";
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    };
 
     cancelBtn.addEventListener('click', function() {
         reportModal.style.display = "none";
