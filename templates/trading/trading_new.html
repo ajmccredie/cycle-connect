@@ -4,7 +4,13 @@
 
 {% block content %}
 <h2>Create new trading post</h2>
-<form method="post" enctype="multipart/form-data" onsubmit="return showThankYouMessage()">
+<div id="thankYouModal" class="modal">
+    <div class="modal-content">
+        <h2>Thank you for adding your item.</h2><br><p>It will show as pending until admin has the opportunity to check and verify the post.<br>You will see when it has been accepted, because the "pending" label will be removed.<br>Happy cycling!</p>
+        <button id="modalOkBtn" class="btn btn-edit">OK</button>
+    </div>
+</div>
+<form id="trade-form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
         <label for="{{ form.title.id_for_label }}"><h3>Title:</h3></label>

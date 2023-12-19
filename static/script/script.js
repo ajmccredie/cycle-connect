@@ -16,14 +16,32 @@ function showThankYouMessage() {
 
 // Script to add image thumbnails in userprofile edit and in social rides add ride and edit
 function previewImage(event) {
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function(){
-        var output = document.getElementById('image-preview');
+        let output = document.getElementById('image-preview');
         output.src = reader.result;
         output.style.display = 'block';
     };
     reader.readAsDataURL(event.target.files[0]);
 }
+
+// Trading thank you submission message
+document.addEventListener('DOMContentLoaded', function() {
+    let form = document.getElementById('trade-form');
+    let modal = document.getElementById('thankYouModal');
+    let okBtn = document.getElementById('modalOkBtn');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        modal.style.display = "block";
+    });
+
+    okBtn.onclick = function() {
+        console.log("OK clicked");
+        modal.style.display = "none";
+        form.submit(); 
+    }
+});
 
 // Form validation prevention selection of past dates
 document.addEventListener('DOMContentLoaded', () => {
