@@ -1,6 +1,5 @@
 # cycle-connect
-<logo image>
-/workspace/cycle-connect/static/images/cc-logo-blue-text.png
+![Logo](static/README-images/cc-logo-blue-text.png)
 
 A mini-social-networking site for cycling enthusiasts to build and enjoy their community of riders.
 A link to the deployed project can be found here https://cycle-connect-70cef323855a.herokuapp.com
@@ -28,7 +27,7 @@ Information needed to be easy to find and the site easy to navigate.
 Themes of outdoor adventure were used from the outset and the logo design.
 
 ### Wireframes and initial mock-ups
-![Concept login screen phone](concept-phone-login.png)
+
 ### Colour schemes and background images
 The site colour schemes was XXX
 
@@ -86,6 +85,16 @@ A first time user can easily sign-up to the site
 ## Agile project planning and methodology
 Initial collection of user stories were made, categorised for 'must', 'should' and 'could' and then used in conjunction with GitHub Projects.
 Meeting the user stories was then planned with a series of goals, and then split down further into sprints. The proposed sprints were then met fully or partially, and any incomplete work was reassessed as to its value and where it should be placed.
+
+| User story | Must/should/ could | Database section | Time-box allocation/ Story points |
+| ----------- | ----------- | ----------- | ----------- |
+| As a **site admin**, I can **manage user accounts and profiles** so that **I can ensure the platform’s security and integrity**.      | Must | Userprofile, Forum, Trading | 8-13 |
+| As a **site user**, I can ** create, view, and update my profile** so that **I can share my cycling interests and connect with other riders.** | Must | Userprofile | 5 |
+| As a **site admin**, I can ** check and verify the content of posts** so that **the community standards can be upheld, and no misleading or offensive information is published.** | Should. Was reviewed in development and altered to the ability to report posts and have them removed pending review. This keeps the feel of the forum more dynamic. | Userprofile | 2 |
+| As a **site user**, I can ** post maintenance tips and tricks** so that **I can help fellow cyclists with their cycle maintenance.** | Must | Forum | 3 |
+| As a **site user**, I can ** post to ask the advice of others in the community** so that **my cycling can improve.** | Must | Forum | 3 |
+| As a **site user**, I can ** like the posts of others** so that **I can encourage them in the cycling community and feel involved.** | Should | Forum | 2 |
+
 ### Sprint 1: Objectives - 
 
 
