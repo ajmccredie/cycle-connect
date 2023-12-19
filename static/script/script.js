@@ -25,6 +25,33 @@ function previewImage(event) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
+// Button to confirm reporting of posts in forum
+document.addEventListener('DOMContentLoaded', function() {
+    let reportModal = document.getElementById('reportPostModal');
+    let confirmBtn = document.getElementById('confirmReportBtn');
+    let cancelBtn = document.getElementById('cancelReportBtn');
+    const reportTriggers = document.querySelectorAll('.report-button');
+
+    reportTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function(event) {
+            event.preventDefault();
+            reportModal.style.display = "block";
+            const form = this.closest('.report-form');
+
+            confirmBtn.onclick = function() {
+                reportModal.style.display = "none";
+                alert('Thank you for reporting');
+                form.submit()
+            };
+        });
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        reportModal.style.display = "none";
+    });
+});
+
+
 // Trading thank you submission message
 document.addEventListener('DOMContentLoaded', function() {
     let form = document.getElementById('trade-form');
@@ -37,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     okBtn.onclick = function() {
-        console.log("OK clicked");
         modal.style.display = "none";
         form.submit(); 
     }

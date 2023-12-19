@@ -172,9 +172,12 @@ class SearchResultsView(LoginRequiredMixin, ListView):
 
 class ReportPostView(LoginRequiredMixin, View):
     def post(self, request, post_id):
+        print("Debug code")
+        print(post_id)
         post = get_object_or_404(ForumPost, pk=post_id)
         post.reported_status = 1
         post.published_status = 0
         post.reported_by.add(request.user)
+        print(post.published_status)
         post.save()
         return redirect('userforum')

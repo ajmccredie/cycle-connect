@@ -13,7 +13,9 @@
         {{ form.title }}
         {{ form.content }}
         {% for error in form.content.errors %}
-            <div class="alert alert-danger"><h3>{{ error }}</h3></div>
+        <div class="alert alert-danger">
+            <h3>{{ error }}</h3>
+        </div>
         {% endfor %}
         <div class="button_container">
             <button type="submit">Post</button>
@@ -27,13 +29,23 @@
     </form>
 </div>
 
+<div id="reportPostModal" class="modal">
+    <div class="modal-content">
+        <h2>Report Post</h2>
+        <p>You are reporting a post due to offensive or inappropriate content.<br>The post will be removed until
+            admin can review it.<br>The post may be returned to the forum if admin deems the report was made in
+            error.<br>Do you wish to proceed with reporting this post?</p>
+        <button id="confirmReportBtn" class="btn btn-edit">Confirm</button>
+        <button id="cancelReportBtn" class="btn btn-edit">Cancel</button>
+    </div>
+</div>
 {% for post in page_obj %}
 <div class="post">
     <div class="heading">
         {% if post.UserId_id != request.user.id %}
-        <form action="{% url 'report_post' post.id %}" method="post">
+        <form class="report-form" url="{% url 'report_post' post.id %}" data-post-id="{{ post.id }}">
             {% csrf_token %}
-            <button class="btn-edit" type="submit">Report <i class="fa-solid fa-thumbs-down"></i></button>
+            <button class="report-button btn-edit" type="submit">Report <i class="fa-solid fa-thumbs-down"></i></button>
         </form>
         {% endif %}
         <h2>{{ post.title }}</h2>
