@@ -20,7 +20,7 @@ from userprofile.views import CustomSignupView, IndexView, LogoutView, AccountLo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', IndexView, name='index'),
+    path('', IndexView.as_view(), name='index'),
     path('sign_up/', include('userprofile.urls')),
     path('log_out/', include('userprofile.urls')),
     path('signup_full_profile/', include('userprofile.urls')),

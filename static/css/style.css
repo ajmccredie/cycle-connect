@@ -428,6 +428,33 @@ button:hover, input[type="submit"]:hover {
     display: inline-block;
 }
 
+.service-item {
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.service-title {
+    margin-bottom: 15px;
+}
+
+.service-content .col-12 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 10px;
+}
+
+.service-image img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 10px;
+    flex-shrink:0;
+}
+
 /* Styling for messages linked to marketplace */
 .warning-label {
     background-color: orange;
@@ -576,5 +603,14 @@ footer a:hover {
 
     .semi-opaque-box {
         padding: 10px;
+    }
+
+    .service-content {
+        flex-direction: column;
+    }
+
+    .service-content .col-12 {
+        max-width: 100%;
+        flex-basis: 100%;
     }
 }

@@ -11,20 +11,27 @@
 <h2>Please have a look at the services we offer</h2>
 <ul class="services">
     {% for service in services %}
-    <li>
-        <div class="service">
-            <h3><i class="fa-solid fa-bicycle"></i> {{ service.name }}    £{{ service.price }} <i class="fa-solid fa-bicycle"></i></h3>
-            <p> {{ service.description_summary }} </p>
-            <ul class="service_description fa-ul">
-                {% for detail in service.get_description_detail_bullets_list %}
-                    <li>{{ detail }}</li>
-                {% endfor %}
-                <div>
+    <div class="service-item mb-4">
+        <li>
+            <h3 class="service-title"><i class="fa-solid fa-bicycle"></i> {{ service.name }} - £{{ service.price }}</h3>
+            <div class="row service-content">
+                <div class="col-12 col-md-6 {% cycle 'order-md-1' 'order-md-2' %}">
+                    {% if service.image %}
+                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6 {% cycle 'order-md-2' 'order-md-1' %}">
+                    <p>{{ service.description_summary }}</p>
+                    <ul class="service_description fa-ul">
+                        {% for detail in service.get_description_detail_bullets_list %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
                     <a class="btn btn-a" href="{% url 'select_place' service.id %}">View Region Options & Book</a>
                 </div>
-            </ul>
-        </div>
-    </li>
+            </div>
+        </li>
+    </div>
     {% empty %}
     <p>No services available.</p>
     {% endfor %}

@@ -21,6 +21,7 @@ class Service(models.Model):
     regions = models.ManyToManyField(Place)
     description_summary = models.TextField(default='No summary available.')
     description_detail_bullets = models.TextField(help_text="Enter key features separated by '~'")
+    image = models.ImageField(upload_to='service_images/', blank=True, null=True)
 
     def get_description_detail_bullets_list(self):
         return [detail.strip() for detail in self.description_detail_bullets.split('~')] #trying out a new bullet pointing strategy
