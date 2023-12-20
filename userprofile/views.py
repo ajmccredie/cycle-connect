@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic, View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -28,9 +29,11 @@ def index(request):
         return render(request, 'index.html')
 
 
-def account_login(request):
-    if request.method == 'POST':
-        # Retrieve username and password from POST request
+class AccountLoginView(View):
+    def get(self, request):
+        return render(request, 'index.html')
+
+    def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
@@ -41,8 +44,6 @@ def account_login(request):
             return render(request, 'index.html', {
                 'error': 'Invalid username or password. Please try again.'
             })
-    else:
-        return render(request, 'index.html')
 
 
 def sign_up(request):
@@ -122,9 +123,10 @@ def profile_edit(request):
     return render(request, 'profile_edit.html', {'form': form})
 
 
-@login_required
-def logout_view(request):
-    if request.method == 'POST':
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'userprofile/logout_confirmation.html')
+
+    def post(self, request):
         logout(request)
-        return redirect('index') 
-    return render(request, 'logout_confirmation.html')
+        return redirect('index')

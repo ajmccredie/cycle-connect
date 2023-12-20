@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from userprofile.views import CustomSignupView, index, sign_up, logout_view, account_login
+from userprofile.views import CustomSignupView, index, sign_up, LogoutView, AccountLoginView
 
 
 urlpatterns = [
@@ -30,7 +30,7 @@ urlpatterns = [
     path('social_rides/', include('social_rides.urls')),
     path('trading/', include('trading.urls')),
     path('accounts/', include('allauth.urls')),
-    path('accounts/login', account_login, name='account_login'),
+    path('accounts/login', include('userprofile.urls'), name='account_login'),
     path('summernote/', include('django_summernote.urls')),
     path('ts_and_cs/', include('ts_and_cs.urls')),
 ]
