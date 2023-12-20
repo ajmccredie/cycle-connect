@@ -160,5 +160,26 @@ Meeting the user stories was then planned with a series of goals, and then split
 
 
 ## Deploying to Heroku
+1. Ensure that debug mode is set to 'False' in the Django main apps 'settings.py'.
+2. Install WhiteNoise `pip3 install whitenoise` and add 'WhiteNoiseMiddleware' to 'MIDDLEWARE' in 'settings.py'.
+3. Configure static files in 'settings.py':
+- `STATIC_URL = /static/`
+- `STATIC_ROOT = BASE_DIR/'staticfiles`
+- `STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'`
+4. Check in the CSS file if any static images are called from your directory. For each of these, upload the file to Cloudinary and extract the direct link to the image. Replace your image url with this link.
+5. Log in to your Heroku account and create a new app with a unique name and appropriate region.
+6. Copy the link for the deployed site from Heroku Domains (in 'settings' link in Heroku) and ensure it is added to 'ALLOWED_HOSTS' in 'settings.py'.
+7. In the app's 'Settings' tab, go to 'Config Vars':
+- Add `PORT` with the value `8000`
+- Add database credentials (eg `DATABASE_URL` for PostgreSQL)
+- Add `CLOUDINARY_URL` with your Cloudinary credentials
+- Add your `SECRET_KEY` 
+8. Back in your code editor, run `pip3 freeze > requirements.txt` to save project dependencies.
+9. Ensure all code is pushed to GitHub.
+10. Back in Heroku, in 'Buildpacks' add 'Python' and 'Node.js', ensuring Python is listed first.
+11. In the 'Deploy' tab, choose 'GitHub' as the deployment method and connect your GitHub account.
+12. Select your repository and choose between automatic or manual deployment.
+13. After deployment, test the project behaves as expected.
+
 
 ## Forking project
