@@ -1,0 +1,45 @@
+{% extends 'base5.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Welcome, {{ user.username }}!{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Please answer the following questions (or skip using the button at the bottom of the page):</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.biography.id_for_label }}"></label>
+            {{ form.biography|as_crispy_field }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.profile_picture.id_for_label }}">Upload here:</label>
+            <input type="file" name="{{ form.profile_picture.name }}" id="{{ form.profile_picture.id_for_label }}" onchange="previewImage(event)">
+            <img id="image-preview" style="max-width: 100px; display: none;">
+            {{ form.profile_picture.errors }}
+            {{ form.profile_picture.help_text }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cycling_skills.id_for_label }}"></label>
+            {{ form.cycling_skills|as_crispy_field }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.preferred_ride_type.id_for_label }}"></label>
+            {{ form.preferred_ride_type|as_crispy_field }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.maintenance_skills.id_for_label }}"></label>
+            {{ form.maintenance_skills|as_crispy_field }}
+        </div>
+        
+        <button type="submit" class="btn btn-edit">Submit</button>
+        <a href="{% url 'userforum' %}" class="btn btn-edit">Skip for Now</a>
+    </form>
+</div>
+{% endblock %}

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from userprofile.views import CustomSignupView, IndexView, LogoutView, AccountLoginView, ProfileView, SignUpView
+from userprofile.views import CustomSignupView, IndexView, LogoutView, AccountLoginView, ProfileView, SignUpView, SignupFullProfileView, ProfileEditView
 
 
 urlpatterns = [

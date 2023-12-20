@@ -59,38 +59,32 @@ class SignUpView(View):
             return redirect('signup_full_profile')
         return render(request, 'userprofile/sign_up.html', {'form': form})
 
-@login_required
-def signup_full_profile(request):
-    user = request.user
-    defaults = {
-        'biography': 'Please tell us a little about yourself and your cycling background',
-        'cycling_skills': 'How would you describe your level of cycling expertise?',
-        'preferred_ride_type': 'What type of bikes do you prefer to ride', 
-        'maintenance_skills': 'Tell us a little about your maintenance experience',
-    }
-    profile_details, created = ProfileDetails.objects.get_or_create(user=user, defaults=defaults)  
-    
-    try:
-        profile_details = ProfileDetails.objects.get(user=request.user)
-    except ProfileDetails.DoesNotExist:
-        profile_details = None
-    
-    if request.method == 'POST':
+class SignupFullProfileView(LoginRequiredMixin, View):
+    template_name = 'userprofile/signup_full_profile.html'
+
+    def get(self, request):
+        profile_details, created = ProfileDetails.objects.get_or_create(
+            user=request.user,
+            defaults={
+                'biography': 'Please tell us a little about yourself and your cycling background',
+                'cycling_skills': 'How would you describe your level of cycling expertise?',
+                'preferred_ride_type': 'What type of bikes do you prefer to ride',
+                'maintenance_skills': 'Tell us a little about your maintenance experience',
+            }
+        )
+        form = ProfileDetailsForm(instance=profile_details)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        profile_details, _ = ProfileDetails.objects.get_or_create(user=request.user)
         form = ProfileDetailsForm(request.POST, request.FILES, instance=profile_details)
         if form.is_valid():
-            profile_details = form.save(commit=False)
-            profile_details.user = request.user
-            profile_details.save()
-
-            user_verified = UserVerified.objects.get(user=request.user)
+            form.save()
+            user_verified, _ = UserVerified.objects.get_or_create(user=request.user)
             user_verified.profile_completed = True
             user_verified.save()
-
             return redirect('userforum')
-    else:
-         form = ProfileDetailsForm(instance=profile_details if profile_details else None)
-
-    return render(request, 'signup_full_profile.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
 
 class ProfileView(LoginRequiredMixin, View):
@@ -105,24 +99,21 @@ class ProfileView(LoginRequiredMixin, View):
         return render(request, 'userprofile/profile_view.html', {'profile': profile_details})
 
 
-def profile_edit(request):
-    user = request.user
-    try:
-        profile_details = ProfileDetails.objects.get(user=user)
-    except ProfileDetails.DoesNotExist:
-        profile_details = None
+class ProfileEditView(LoginRequiredMixin, View):
+    template_name = 'userprofile/profile_edit.html'
 
-    if request.method == 'POST':
+    def get(self, request):
+        profile_details, _ = ProfileDetails.objects.get_or_create(user=request.user)
+        form = ProfileDetailsForm(instance=profile_details)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        profile_details, _ = ProfileDetails.objects.get_or_create(user=request.user)
         form = ProfileDetailsForm(request.POST, request.FILES, instance=profile_details)
         if form.is_valid():
-            preferred_ride_type_values = form.cleaned_data.get('preferred_ride_type')
             form.save()
             return redirect('profile_view')
-        else:
-            print("Form errors", form.errors)
-    else:
-        form = ProfileDetailsForm(instance=profile_details)
-    return render(request, 'profile_edit.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
 
 class LogoutView(LoginRequiredMixin, View):
