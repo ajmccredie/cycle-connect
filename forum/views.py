@@ -11,24 +11,24 @@ from .models import ForumPost, Comment
 from .forms import PostForm, CommentForm, SearchForm
 
 
-class UserPost(LoginRequiredMixin, ListView):
-    model = ForumPost
+class UserPost(LoginRequiredMixin, View):
     template_name = 'forum/userforum.html'
-    context_object_name = 'page_obj'
     paginate_by = 8
 
-    def get_queryset(self):
-        user = self.request.user
-        return ForumPost.objects.filter(
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        post_list = ForumPost.objects.filter(
             Q(published_status=1) | Q(UserId=user, published_status=0)
         ).order_by('-created_on')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        liked_post_ids = set(self.request.user.likes.values_list('id', flat=True))
-        context['form'] = PostForm()
-        context['liked_post_ids'] = liked_post_ids
-        return context
+        paginator = Paginator(post_list, self.paginate_by)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            "page_obj": page_obj,
+            "form": PostForm(),
+            "liked_post_ids": set(user.likes.values_list('id', flat=True)) if user.is_authenticated else set()
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST, request.FILES)
@@ -36,13 +36,22 @@ class UserPost(LoginRequiredMixin, ListView):
             new_post = form.save(commit=False)
             new_post.UserId = request.user
             new_post.save()
-            return redirect('userforum') 
+            return redirect('userforum')
         else:
-            return render(request, self.template_name, {
-                'page_obj': self.get_queryset(),
-                'form': form,
-                'liked_post_ids': set(request.user.likes.values_list('id', flat=True))
-            })
+            user = request.user
+            post_list = ForumPost.objects.filter(
+                Q(published_status=1) | Q(UserId=user, published_status=0)
+            ).order_by('-created_on')
+            paginator = Paginator(post_list, self.paginate_by)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            context = {
+                "page_obj": page_obj,
+                "form": form,
+                "liked_post_ids": set(user.likes.values_list('id', flat=True)) if user.is_authenticated else set()
+            }
+
+            return render(request, self.template_name, context)
 
 
 class PostLike(LoginRequiredMixin, View):
@@ -184,7 +193,7 @@ class SearchResultsView(LoginRequiredMixin, ListView):
         query = self.request.GET.get('q')
         if query:
             print(query)
-            return ForumPost.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(UserId__username__icontains=query))
+            return ForumPost.objects.filter((Q(title__icontains=query) | Q(content__icontains=query) | Q(UserId__username__icontains=query)) & Q(published_status=1)) 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
