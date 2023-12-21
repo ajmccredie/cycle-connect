@@ -2,7 +2,7 @@
 ![Logo](static/README-images/cc-logo-blue-text.png)
 
 A mini-social-networking site for cycling enthusiasts to build and enjoy their community of riders.
-A link to the deployed project can be found here [cycle-connect]https://cycle-connect-70cef323855a.herokuapp.com
+A link to the deployed project can be found here https://cycle-connect-70cef323855a.herokuapp.com
 
 <images of the deployed site across different devices>
 
@@ -35,10 +35,19 @@ Themes of outdoor adventure were used from the outset and the logo design.
 | Concept art Ts and Cs/ forum entry | ![Phone concept art Ts and Cs and forum entry](static/README-images/concept-phone-tcs-forum.png) | ![PC concept art Ts and Cs and forum entry](static/README-images/concept-pc-tcs-forum.png) |
 
 ### Colour schemes and background images
-The site colour schemes was XXX
+The site colour palette:
+1. **Primary Colour - RGB(111, 111, 188):** This is a soft muted blue. It provides the backdrop for all pages and is used as the image overlay for all background images.
+2. **Accent Colour - RGBE(255, 221, 85, 0.7):** This is a semi-transparent golden-yellow to provide a strong contrast and draw the users attention to buttons and key navigational elements.
+3. **White and Black:** These are used for text and borders and some background elements to ensure good readability.
+4. **Warnings and Status Indicators:** These are in clear colours such as red, green, orange and yellow to give intuitive indication to the users.
 
 A selection of background images were obtained from Freepik (references below). These were recoloured in PowerPoint to keep with the themes and colours decided. 
 The navbar and footer were styled in dark colours with a consistent logo in the top left and the menu (changing to drop down on smaller screens) in the right. Social media links were placed in the footer.
+The `background-attachment: fixed` property gives a parallax-like effect, adding depth to the pages.
+
+### Typography
+- **Primary Font - 'Dosis', sans-serif:** Used for most textual content of the site. This font has modern, clean lines.
+- **Secondary Font - 'Kanit', sans-serif:** Used for headings, navigation, and certain buttons. This provides a subtle contrast to the main body text while maintaining overall harmony.
 
 ### Common themes and navigation
 Each app has a different background image (although the colours feel the same). Each of these background images behaves the same way. The buttons and links throughout the site are styled in a similar manner (with the same colours and hover functions), and any pop-up modals used match. This is all with the aim to promote a positive UX throughout the site. 
@@ -91,21 +100,35 @@ The market (or 'trading') app exists within the site to allow users to buy and s
 #### UX/UI key features
 | Feature | Image | Description |
 | ---- | ---- | ---- |
+| Marketplace main page | ![Marketplace main page](static/README-images/trading-1-welcome.png) | For sale items are listed from newest to oldest and there are filters to help find what they may be looking for. There is no 'search' function other than the filters. Items for sale are clearly marked as 'available', which automatically toggles to 'sold' once the seller clicks the button to mark the item as sold. Images and descriptions of the items are presented in a clear and consistent manner. A place-holder image is used if the user does not upload an image. This is to encourage them to use a more meaningful image of their own. |
+| Add item form | ![Marketplace add item form](static/README-images/trading-2-form.png) | Users can add items using a simple, quick form. They have the option to mark the item as 'sold' from the outset, because they might be looking to show the sorts of items they have previously sold (although it is unlikely that many will want to do this). The form has defaults for the item type button, but not the condition. It is important that the user gives the condition some thought and the form will not validate until the enter an input. Users can see a thumbnail of the image they are uploading. They have the ability to navigate back to the Marketplace main page without adding and item if they wish. |
+| Confirmation of item submission | ![Marketplace confirmation](static/README-images/trading-3-thankyou.png) | In order to align with the user story for admin being able to oversee the activity on the marketplace, and to verify the items being sold are appropriate for the site, items need to be verified. This is briefly explained to the user when they add an item for sale using a pop-up modal. |
+| Post pending admin verification | ![Marketplace pending post](static/README-images/trading-4-pendingpost.png) | The added posts are marked as pending for the author, but other users are unable to see the marketplace posts until they are verified by the admin. The pending posts are clearly marked with indicators, which are removed when the post is verified. |
+| Edit their own post | ![Marketplace edit post](static/README-images/trading-5-edit.png) | Users can xxx |
+
 
 
 #### Tests (full details in separate documentation)
 
 ### Bookable company services
 #### Purpose
+This part of the site links to the company providing the site, allowing for services to be booked for more local riders. This section of the site is not necessarily intended for all of the users.
 
 #### UX/UI key features
+| Feature | Image | Description |
+| ---- | ---- | ---- |
+|  |  |  |
 
 #### Tests (full details in separate documentation)
 
 ### Group Cycles
 #### Purpose
+Users can view rides which have been planned or added by themselves or other users (or admin). They can sign up to upcoming rides and receive a running total of the rides they have attended. Uploaded images need to be sourced from other places and saved to be uploaded here.
 
 #### UX/UI key features
+| Feature | Image | Description |
+| ---- | ---- | ---- |
+|  |  |  |
 
 #### Tests (full details in separate documentation)
 
@@ -122,6 +145,24 @@ Meeting the user stories was then planned with a series of goals, and then split
 | As a **site user**, I can **post maintenance tips and tricks** so that **I can help fellow cyclists with their cycle maintenance.** | Must | Forum | 3 |
 | As a **site user**, I can **post to ask the advice of others in the community** so that **my cycling can improve.** | Must | Forum | 3 |
 | As a **site user**, I can **like the posts of others** so that **I can encourage them in the cycling community and feel involved.** | Should | Forum | 2 |
+| As a **site user**, I can **comment on the posts of others** so that **I can feel involved in the conversation.** | Should | Forum | 3 |
+| As a **site user**, I can **post some of my favourite route suggestions** so that **I can help inspire my fellow cyclists.** | Should | Forum (these are just suggestions rather than planning group rides) | 5 (to include the ability to search for the routes) |
+| As a **site user**, I can **list bikes and components for sale** so that **I can find buyers for my items or purchase what I need.** | Must | Trading | 5 |
+| As a **site admin**, I can **monitor and support the marketplace listings** so that **users can buy and sell items without issues.** | Must | Trading | 3 |
+| As a **site user**, I can **immediately show if an item I had listed for sale is no longer available** so that **I do not waste the time of other users who would otherwise have liked to purchase the item.** | Should | Trading | 2 |
+| (As a **site user**, I can **approach the sellers of bikes and components for sale** so that **I can find items or purchase what I need.**) | Must (but added in the sprint) | Trading | 5 |
+| As a **site user**, I can **easily upload images for marketplace items** so that **I can generate more interest in the item.** | Could | Trading | 2 |
+| As a **site user**, I can **make, check, and amend bookings for cycling-related services** so that **I can get the support I need for my cycling.** | Must | Bookings and Services | 8 |
+| As a **site admin**, I can **handle user inquiries and issues related to service bookings** so that **users have a smooth experience.** | Must | Bookings and Services | 5 |
+| As a **site user** I can **see the status of my booking requests** so that **I can be reassured of progress** | Should | Bookings and Services | 3 |
+| As a **site admin**, I can **create, read, update, and delete the general services offered** so that **the information is up-to-date and correct, and bookings can be made.** | Should | Bookings and Services | 3 |
+| As a **site user**, I can **plan and join group rides** so that **I can enjoy cycling with others.** | Must | Social Rides | 8 |
+| As a **site admin**, I can **approve and manage group cycling events** so that **I can facilitate safe and organized rides.** | Must | Social Rides | 5 |
+| As a **site user**, I can **view and RSVP to upcoming group cycling events** so that **I can participate in local rides.** | Must | Social Rides | 3 |
+| As a **site user**, I can **earn badges or achievements based on my cycling milestones** so that **I can visualize and share my cycling experience.** | Could | Social Rides | 3 |
+| As a **site admin**, I can **host virtual cycling challenges or competitions** so that **users can compete and stay engaged.** | Could | Social Rides/ Forum | 3 |
+| As a **site user/admin**, I can **send invites to join the platform through text and emails** so that **the community can grow more quickly.** | Could | Userprofile | 8 |
+
 
 ### Sprint 1: Objectives - 
 
@@ -141,6 +182,7 @@ Meeting the user stories was then planned with a series of goals, and then split
 - **HTML5** is used to create the templates for the UI.
 - **CSS3** is used for the site styling.
 - **JavaScript** is used to make the site more dynamic in places where the Python logic would require a separate page, for example this was mainly used to create modals for the users to confirm actions.
+- **Bootstrap 4** is an open-source front-end framework for designing websites and web applications. It contains HTML, CSS, and JavaScript-based design templates for typography, forms, buttons, navigation, and other interface components, as well as optional JavaScript extensions. It 
 - **Cloudinary 1.37.0** provides cloud storage for the image uploads on the site.
 - **PostgreSQL Database** is more powerful than the inbuilt SQLite Django database. This handles all the storage of the information added on the site.
 - **pyscopg2 2.9.9** is a PostgreSQL database adapter for Python, necessary for interfacing with PostgreSQL databases, commonly used in Django projects.
