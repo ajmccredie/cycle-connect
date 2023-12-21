@@ -5,13 +5,22 @@
 {% block content %}
 <h1>{{ user }} here are your bookings:</h1>
 
+<div id="cancelModal" class="modal">
+  <div class="modal-content">
+      <h2>Confirm Cancellation</h2>
+      <p>Are you sure you want to cancel this booking?</p>
+      <button id="confirmCancelBtn" class="btn btn-edit">Confirm</button>
+      <button id="cancelModalCloseBtn" class="btn btn-edit">Close</button>
+  </div>
+</div>
+
 {% for booking in bookings %}
 <div class="booking">
     <h3>{{ booking.service.name }}</h3>
     <p>Date: {{ booking.slot.start_time|date:"D, d M Y" }}</p>
     <p>Time: {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
     <p><span class="status-{{ booking.status|lower }}"></span> {{ booking.status }}  <span class="status-{{ booking.status|lower }}"></span></p>
-    {% if booking.status == 'pending' or booking.status == 'confirmed' %}
+    {% if booking.status == 'pending' or booking.status == 'confirmed' and not booking.is_past %}
       <form method="post" action="{% url 'cancel_booking' booking.id %}">
         {% csrf_token %}
         <button class="btn-edit" type="submit">Cancel Booking</button>

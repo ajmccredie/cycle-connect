@@ -94,11 +94,14 @@ class BookServiceConfirmationView(LoginRequiredMixin, View):
 # Users can view the status of any bookings they have made and have the option to cancel
 class BookingStatusView(LoginRequiredMixin, View):
     def get(self, request):
+        current_time = timezone.now()
         bookings = Booking.objects.filter(user=request.user).order_by('-booking_date')
+        for booking in bookings:
+            booking.is_past = booking.booking_date < current_time
         return render(request, 'services/booking_list.html', {'bookings': bookings})
 
 
-# 
+# Users can cancel their bookings
 class CancelBookingView(LoginRequiredMixin, View):
     @method_decorator(require_http_methods(["POST"]))
     def post(self, request, booking_id):
