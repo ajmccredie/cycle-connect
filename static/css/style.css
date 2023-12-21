@@ -138,7 +138,7 @@ input[type="password"]
 
 .button-container {
     display: flex;
-    justify-content: righ;
+    justify-content: right;
 }
 
 button, input[type="submit"] {
@@ -161,7 +161,7 @@ button:hover, input[type="submit"]:hover {
     margin: 0;
     background-color: rgba(255, 221, 85, 0);
     border: none;
-    border-radius: none;
+    border-radius: 1px;
     color: rgba(255, 221, 85);
     text-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
@@ -178,7 +178,7 @@ button:hover, input[type="submit"]:hover {
     margin: 0;
     background-color: rgba(255, 221, 85, 0);
     border: none;
-    border-radius: none;
+    border-radius: 1px;
     color: rgb(255, 255, 255);
     font-size: x-large;
     text-shadow: 2px 2px 2px rgb(0, 0, 0);
@@ -231,7 +231,7 @@ button:hover, input[type="submit"]:hover {
 .post .heading {
     display: flex;
     flex-wrap: wrap; 
-    align-items: left;
+    align-items:start;
 }
 
 .post .heading h2 {
@@ -510,7 +510,7 @@ button:hover, input[type="submit"]:hover {
 .display-container {
     position: relative;
     display: flex;
-    align-items: left;
+    align-items: start;
 }
 
 .display-container h1 {

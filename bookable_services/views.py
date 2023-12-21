@@ -32,17 +32,15 @@ class SelectPlace(View):
         places_slots_info = {}
         for place in places:
             slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time)
-            available_slots = sum(1 for slot in slots if Booking.objects.filter(slot=slot, status__in=['confirmed', 'pending']).count() < slot.max_people)
-            if available_slots > 0:
-                place_id = place.id
-                places_slots_info[place.id] = available_slots
-        places_with_available_slots = [place for place in places if place.id in places_slots_info]
-        return render(request, self.select_place_page, {'service': service, 'places': places_with_available_slots, 'places_slots_info': places_slots_info, 'place_id': place_id})
-
-    def post(self, request, *args, **kwargs):
-        service_id = request.POST.get('service_id')
-        place_id = request.POST.get('place_id')
-        return redirect('services/book_service', service_id=service_id, place_id=place_id)
+            for slot in slots:
+                slot.update_status()
+            available_slots_count = slots.filter(status='available').count()
+            places_slots_info[place.id] = available_slots_count
+        return render(request, self.select_place_page, {'service': service, 'places': places, 'places_slots_info': places_slots_info})
+    # def post(self, request, *args, **kwargs):
+    #     service_id = request.POST.get('service_id')
+    #     place_id = request.POST.get('place_id')
+    #     return redirect('services/book_service', service_id=service_id, place_id=place_id)
 
 
 # User then selects the date and time-slot they want to book for the service they want in the place they have chosen
@@ -75,6 +73,7 @@ class BookService(LoginRequiredMixin, View):
                 service=service,
                 status='pending'
             )
+            slot.update_status()
             return redirect('book_service_confirmation', booking_id=new_booking.id)
         else:
             current_time = timezone.now()
