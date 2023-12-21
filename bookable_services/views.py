@@ -28,17 +28,16 @@ class SelectPlace(View):
     def get(self, request, service_id):
         service = get_object_or_404(Service, id=service_id)
         current_time = timezone.now()
-        places = Place.objects.filter(slot__service=service).distinct()
-        places_with_slots = []
+        places = Place.objects.filter(slot__service=service, slot__start_time__gte=current_time).distinct()
+        places_slots_info = {}
         for place in places:
-            slots = Slot.objects.filter(service=service, place=place)
-            available_slots = 0
-            for slot in slots:
-                bookings_count = Booking.objects.filter(slot=slot).count()
-                if bookings_count < slot.max_people:
-                    available_slots += slot.max_people - bookings_count
-            place.available_slots = available_slots
-        return render(request, self.select_place_page, {'service': service, 'places': places}) 
+            slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time)
+            available_slots = sum(1 for slot in slots if Booking.objects.filter(slot=slot, status__in=['confirmed', 'pending']).count() < slot.max_people)
+            if available_slots > 0:
+                place_id = place.id
+                places_slots_info[place.id] = available_slots
+        places_with_available_slots = [place for place in places if place.id in places_slots_info]
+        return render(request, self.select_place_page, {'service': service, 'places': places_with_available_slots, 'places_slots_info': places_slots_info, 'place_id': place_id})
 
     def post(self, request, *args, **kwargs):
         service_id = request.POST.get('service_id')
