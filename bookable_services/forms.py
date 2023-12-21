@@ -1,6 +1,7 @@
 from django import forms
 from .models import Slot, Booking, Place
 
+# This form is designed to allow the user to interact with the admin uploaded services
 class BookingInquiryForm(forms.ModelForm):
     class Meta:
         model = Booking

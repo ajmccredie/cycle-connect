@@ -49,7 +49,7 @@ class Slot(models.Model):
         return f"{self.service.name} at { self.place.name } ({self.start_time} - {self.end_time})"
 
 
-
+# Allow users to make bookings of the available slots and show the booking statuses
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE, null=True, blank=True)

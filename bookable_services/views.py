@@ -3,13 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import generic, View
 from django.shortcuts import render
-from django.http import JsonResponse
 from django.utils import timezone
+from django.contrib import messages
+from django.views.decorators.http import require_http_methods
+from django.utils.decorators import method_decorator
 from .models import Place, Slot, Booking, Service
 from .forms import BookingInquiryForm
 
 # Create your views here.
-
+# This allows the services available all to be seen on the main page
 class ServiceList(View, LoginRequiredMixin):
     model = Service
     template_name = 'services/service_list.html'
@@ -19,6 +21,7 @@ class ServiceList(View, LoginRequiredMixin):
         return render(request, self.template_name, {'services': services})
 
 
+# The user then selects the place they want the service to occur from any that are available
 class SelectPlace(View):
     select_place_page = 'services/book_service_place.html'
     
@@ -43,6 +46,7 @@ class SelectPlace(View):
         return redirect('services/book_service', service_id=service_id, place_id=place_id)
 
 
+# User then selects the date and time-slot they want to book for the service they want in the place they have chosen
 class BookService(LoginRequiredMixin, View):
     model = Booking
     service_booking_page = 'services/book_service.html'
@@ -80,24 +84,29 @@ class BookService(LoginRequiredMixin, View):
             return render(request, self.service_booking_page, {'form': form, 'slots': available_slots, 'service': service, 'place': place})
 
 
-@login_required
-def book_service_confirmation(request, booking_id):
-    latest_booking = get_object_or_404(Booking, id=booking_id, user=request.user)
-    return render(request, 'services/book_service_confirmation.html', {'booking': latest_booking})
+# Receipt of confirmation of booking
+class BookServiceConfirmationView(LoginRequiredMixin, View):
+    def get(self, request, booking_id):
+        latest_booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+        return render(request, 'services/book_service_confirmation.html', {'booking': latest_booking})
 
 
-@login_required
-def booking_status(request):
-    bookings = Booking.objects.filter(user=request.user).order_by('-booking_date')
-    return render(request, 'services/booking_list.html', {'bookings': bookings})
+# Users can view the status of any bookings they have made and have the option to cancel
+class BookingStatusView(LoginRequiredMixin, View):
+    def get(self, request):
+        bookings = Booking.objects.filter(user=request.user).order_by('-booking_date')
+        return render(request, 'services/booking_list.html', {'bookings': bookings})
 
 
-@login_required
-def cancel_booking(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
-    if booking.status != 'cancelled':
-        booking.status = 'cancelled'
-        booking.save()
-    else:
-        messages.error(request, 'Booking cannot be cancelled.')
-    return redirect('services/booking_status')
+# 
+class CancelBookingView(LoginRequiredMixin, View):
+    @method_decorator(require_http_methods(["POST"]))
+    def post(self, request, booking_id):
+        booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+        if booking.status != 'cancelled':
+            booking.status = 'cancelled'
+            booking.save()
+            messages.success(request, 'Booking cancelled successfully.')
+        else:
+            messages.error(request, 'Booking cannot be cancelled.')
+        return redirect('booking_status') 
