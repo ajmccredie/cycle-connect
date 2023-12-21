@@ -78,6 +78,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Pop-up to confirm cancellation of bookings
+document.addEventListener('DOMContentLoaded', function() {
+    let cancelModal = document.getElementById('cancelModal');
+    let confirmBtn = document.getElementById('confirmCancelBtn');
+    let cancelBtn = document.getElementById('cancelModalCloseBtn');
+    let formToSubmit = null;
+
+    document.querySelectorAll('.cancel-booking-btn').forEach(btn => {
+        btn.addEventListener('click', function(event) {
+            event.preventDefault();
+            cancelModal.style.display = "block";
+            formToSubmit = this.closest('form');
+        });
+    });
+
+    confirmBtn.onclick = function() {
+        cancelModal.style.display = "none";
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    };
+
+    cancelBtn.addEventListener('click', function() {
+        cancelModal.style.display = "none";
+    });
+});
+
 // Pop-up to confirm ride has been added
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');

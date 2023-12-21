@@ -56,7 +56,7 @@ class BookService(LoginRequiredMixin, View):
         place = get_object_or_404(Place, id=place_id)
         current_time = timezone.now()
         slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).order_by('start_time')
-        booked_slots_ids = Booking.objects.filter(status='confirmed').values_list('slot_id', flat=True)
+        booked_slots_ids = Booking.objects.filter(status__in=['confirmed', 'pending']).values_list('slot_id', flat=True)
         available_slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).exclude(id__in=booked_slots_ids).order_by('start_time')
         form = BookingInquiryForm(initial={'service': service}, service=service)
         return render(request, self.service_booking_page, {'form': form, 'slots': available_slots, 'service': service, 'place': place})
