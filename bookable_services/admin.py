@@ -4,13 +4,16 @@ from django.contrib import messages
 
 # Register your models here.
 admin.site.register(Place)
-admin.site.register(Slot)
 
 # Admin can view and add services to the system
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
     search_fields = ('name',)
+
+@admin.register(Slot)
+class SlotAdmin(admin.ModelAdmin):
+    list_display = ('place', 'service', 'start_time', 'status')
 
 # Admin can view and approve service bookings
 @admin.register(Booking)

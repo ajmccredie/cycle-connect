@@ -32,16 +32,21 @@ class SelectPlace(View):
         places_slots_info = {}
         for place in places:
             slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time)
+            available_slots_count = 0
             for slot in slots:
-                slot.update_status()
-            available_slots_count = slots.filter(status='available').count()
+                self.update_slot_status(slot)
+                if slot.status == 'available':
+                    available_slots_count += 1
             places_slots_info[place.id] = available_slots_count
-        return render(request, self.select_place_page, {'service': service, 'places': places, 'places_slots_info': places_slots_info})
-    # def post(self, request, *args, **kwargs):
-    #     service_id = request.POST.get('service_id')
-    #     place_id = request.POST.get('place_id')
-    #     return redirect('services/book_service', service_id=service_id, place_id=place_id)
-
+        total_available_slots = sum(places_slots_info.values())
+        return render(request, self.select_place_page, {'service': service, 'places': places, 'places_slots_info': places_slots_info, 'total_available_slots': total_available_slots})
+    
+    def update_slot_status(self, slot):
+        if slot.booking_set.filter(status__in=['pending', 'confirmed']).exists():
+            slot.status = 'booked'
+        else:
+            slot.status = 'available'
+        slot.save()
 
 # User then selects the date and time-slot they want to book for the service they want in the place they have chosen
 class BookService(LoginRequiredMixin, View):
@@ -52,9 +57,10 @@ class BookService(LoginRequiredMixin, View):
         service = get_object_or_404(Service, id=service_id)
         place = get_object_or_404(Place, id=place_id)
         current_time = timezone.now()
-        slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).order_by('start_time')
-        booked_slots_ids = Booking.objects.filter(status__in=['confirmed', 'pending']).values_list('slot_id', flat=True)
-        available_slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time).exclude(id__in=booked_slots_ids).order_by('start_time')
+        slots = Slot.objects.filter(service=service, place=place, start_time__gte=current_time, status='available').order_by('start_time')
+        for slot in slots:
+            slot.update_slot_status() 
+        available_slots = slots.filter(status='available').order_by('start_time')
         form = BookingInquiryForm(initial={'service': service}, service=service)
         return render(request, self.service_booking_page, {'form': form, 'slots': available_slots, 'service': service, 'place': place})
 
@@ -73,7 +79,8 @@ class BookService(LoginRequiredMixin, View):
                 service=service,
                 status='pending'
             )
-            slot.update_status()
+            slot.update_slot_status()
+            slot.save()
             return redirect('book_service_confirmation', booking_id=new_booking.id)
         else:
             current_time = timezone.now()
@@ -107,7 +114,9 @@ class CancelBookingView(LoginRequiredMixin, View):
         if booking.status != 'cancelled':
             booking.status = 'cancelled'
             booking.save()
-            messages.success(request, 'Booking cancelled successfully.')
+            booking.slot.update_status()
+            booking.slot.save()
+            messages.warning(request, 'Booking cancelled successfully.')
         else:
             messages.error(request, 'Booking cannot be cancelled.')
         return redirect('booking_status') 

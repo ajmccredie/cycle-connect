@@ -8,9 +8,12 @@
 
 <h2>Please select a Location for {{ service.name }}</h2>
 
+{% if total_available_slots == 0 %}
+<p>There are no active bookings available for this service at this time.</p>
+{% else %}
 {% for place in places %}
+{% if places_slots_info|get_item:place.id > 0 %}
 <div class="place_choice">
-
     <form method="post" action="{% url 'book_service' service.id place.id %}">
         {% csrf_token %}
         <div>
@@ -19,13 +22,12 @@
         </div>
         <div>
             <p>Available Slots: {{ places_slots_info|get_item:place.id }}</p>
-        </div>
+        </div>  
     </form>
-
 </div>
-{% empty %}
-<p>There are no active bookings available for this service at this time.</p>
+{% endif %}
 {% endfor %}
+{% endif %}
 <a class="btn btn-a" href="{% url 'service_list' %}">Return to Services and Bookings</a>
 
 {% endblock %}

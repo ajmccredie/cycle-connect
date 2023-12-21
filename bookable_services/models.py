@@ -50,12 +50,12 @@ class Slot(models.Model):
         booked_slots = self.booking_set.filter(status__in=['booked']).count()
         return max(0, self.max_people - booked_slots)
 
-    def update_status(self):
-            if self.booking_set.filter(status__in=['pending', 'confirmed']).exists():
-                self.status = 'booked'
-            else:
-                self.status = 'available'
-            self.save()
+    def update_slot_status(self):
+        if self.booking_set.filter(status__in=['pending', 'confirmed']).exists():
+            self.status = 'booked'
+        else:
+            self.status = 'available'
+        self.save()
 
     def __str__(self):
         return f"{self.service.name} at { self.place.name } ({self.start_time} - {self.end_time})"
