@@ -37,10 +37,12 @@
             {% endif %}
         </p>
         <p>Condition: {{ post.get_condition_display }} - Category: {{ post.get_category_display }}</p>
-        <div>
+        <div class="post-content">
             <img src="{{ post.image.url }}" alt="Image of {{ post.title }}">
-            <p>{{ post.description }}</p>
-        </div class="post-content">
+            <div class="post-text">
+                <p>{{ post.description }}</p>
+            </div>
+        </div>
         {% if not post.approved %}
         <span class="label warning-label">Pending Approval</span>
         {% endif %}

@@ -117,7 +117,7 @@ class CancelBookingView(LoginRequiredMixin, View):
         if booking.status != 'cancelled':
             booking.status = 'cancelled'
             booking.save()
-            booking.slot.update_status()
+            booking.slot.update_slot_status()
             booking.slot.save()
             messages.warning(request, 'Booking cancelled successfully.')
         else:

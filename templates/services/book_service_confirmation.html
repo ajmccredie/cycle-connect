@@ -6,7 +6,10 @@
 <h1>Booking confirmation</h1>
 
 <div class="slot">
+    <div>
     <h4>{{ booking.service.name }}</h4>
+    <h4>({{ booking.slot.place.name }})</h4>
+</div>
     <p>{{ booking.slot.start_time|date:"D, d M Y" }}  {{ booking.slot.start_time|time:"H:i" }} - {{ booking.slot.end_time|time:"H:i" }}</p>
     <p><span class="status-{{ booking.status|lower }}"></span> {{ booking.status }}  <span class="status-{{ booking.status|lower }}"></span></p>
 </div>
