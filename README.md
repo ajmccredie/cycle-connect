@@ -225,3 +225,90 @@ Meeting the user stories was then planned with a series of goals, and then split
 
 
 ## Forking project
+
+
+## References 
+### Images
+
+### Code
+Bootstrap navbar - https://getbootstrap.com/docs/4.0/components/navbar/ - Bootstrap Documentation (6th November).
+<br>
+<br>
+Crispy forms general use, Helper, and data cleaning - https://django-crispy-forms.readthedocs.io/en/latest/form_helper.html - Crispy Forms Documentation (6th November).
+<br>
+<br>
+Crispy forms layout helpers and widgets - https://simpleisbetterthancomplex.com/tutorial/2018/11/28/advanced-form-rendering-with-django-crispy-forms.html#crispy-forms-layout-helpers - Vitor Freitas (Nov 28th 2018) (6th November). 
+<br>
+<br>
+Allauth sign-up and sign-out - https://docs.allauth.org/en/latest/account/views.html - Allauth Documentation (8th November).
+<br><br>
+'Semi-opaque box' CSS from my own code in the Code Institute's Halloween Hackathon 'BeetleJuice Curse Generator'
+<br><br>
+Initial set-up of the forum largely based on Code Institute's 'I Think, Therefore I Blog' Walkthrough code.
+<br><br>
+Help with use of logic in views for userprofile (after getting really stuck) from Chat-GPT AI. Code used to fix bug and then adapted (14th November).
+<br><br>
+Use of Django's authentication. This was referred to frequently in User creation, authentication and use. Includes use of LoginRequiredMixin and the ModelBackend used to attempt a bug fix (later discarded) - https://docs.djangoproject.com/en/5.0/topics/auth/default/ - Django Documentation (16th November). 
+<br><br>
+Pagination based on walkthrough ('I Think, Therefore I Blog') and classes added to be able to style later (20th November)
+<br><br>
+Configurations for Django Summernote. Use shown in settings.py - https://github.com/summernote/django-summernote - Django-summernote on GitHub (20th November).
+<br><br>
+Django Project Docs used to help with trying to get the ‘likes’ working when the walk-though code did not seem to work as expected. Includes use of Django.http imports -  https://docs.djangoproject.com/en/5.0/intro/tutorial04/ - Django Documentation (21st November).
+<br><br>
+Use of Whitenoise to sort static files - 
+https://devcenter.heroku.com/articles/django-assets - Heroku Help. https://devmaesters.com/blog/34 - DevMaesters. 
+https://www.w3schools.com/django/django_static_whitenoise.php - W3Schools (22nd November).
+<br><br>
+Use of JsonResponse in bug fix attempt for likes after asking chat GPT for suggestions. Fix was unsuccessful (22nd November). Then reverted to HttpResponseRedirect after reading more on the issue from the Django Project Documentation (referenced earlier) and fixed bug (23rd November).
+<br><br>
+MDN Web Docs Guides > Django Tutorial Part 9: Working with forms. For general advice, guidance and things to try when the error messages were flowing. Try/except statement fix in particular for the ProfileDetailsForm: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Forms (24th November).
+<br><br>
+Liked posts display partially from “I think therefore I blog”, with some other parts tried from Stack overflow: https://stackoverflow.com/questions/64997951/getting-all-the-users-name-who-liked-a-post-in-django - Stack Overflow (27th November).
+<br><br>
+Queryset and general Admin actions - https://docs.djangoproject.com/en/4.2/topics/db/queries/ and  https://docs.djangoproject.com/en/4.2/ref/contrib/admin/actions/ - Django Documentation (30th November).
+<br><br>
+More information used on querysets and Q - https://www.fullstackpython.com/django-db-models-query-q-examples.html - Fullstack Python, https://www.w3schools.com/django/django_queryset_filter.php - W3Schools (30th November).
+<br><br>
+Information and tutorial for sending information between the JS and the templates, and how the JSONResponse links into the views.py. Failed attempts at dynamic drop downs for services and bookings tried from: Sorting dynamic requests in Django for the bookings: AJAX - https://www.youtube.com/watch?v=QDdLvImfq_g - Django AJAX Tutorial: Basic AJAX in Django app | Django casts # (23rd November)
+<br><br>
+Chat GPT to try to solve the issues with the bookings forms: It generated the following lines of code which I used and appeared to be successful in fixing the problem (1st December): 
+`If self.service:
+		self.fields['service'].initial = self.service
+		self.fields['service'].disabled = True
+		# Assuming your Slot model has date and time fields
+		self.fields['date'].queryset = self.service.slot_set.values_list('start_time__date', flat=True).distinct()
+`
+<br><br>
+Chat GPT for how to create bicycle bullet points for my list in services and bookings. The start and finish of that code is clearly marked in the CSS file. (4th December)
+<br><br>
+I imported Pillow after reading some comments in various Python forums (and from the PP4 channel of the Code Institute’s Slack feed) to handle the images - https://realpython.com/image-processing-with-the-python-pillow-library/ - RealPython (4th December).
+<br><br>
+I asked Chat GPT how to best display the information in my template gathered from my form input radio buttons regarding status, condition and category. It suggested the use of ‘post.get_status_display’, which worked really well, so I also used this approach for category and condition. (5th December)
+<br><br>
+Toggling the status (sold or available) views code was run through Chat GPT again (after all the issues I had getting the ‘likes’ sorted for the forum posts. The use of ‘@require_POST’ and how to apply the subsequent logic was explained through the AI engine. I added my own variables and it worked really well.  (6th December).
+<br><br>
+Filters for the items developed from the Django docs https://docs.djangoproject.com/en/5.0/topics/db/queries/ and https://learndjango.com/tutorials/django-search-tutorial - Django Documentation (6th December and again on 9th December).
+<br><br>
+Use of Subquery and OuterRef. This helped to fix the bugs encountered with the ‘trading conversations’ buttons - https://docs.djangoproject.com/en/5.0/ref/models/expressions/#:~:text=Use%20OuterRef%20when%20a%20queryset,outer%20query%20or%20its%20transform - Django Project. And https://djangocentral.com/how-to-use-subquery-in-django/ - Django Central (8th December).
+<br><br>
+Use of Case/When - https://stackoverflow.com/questions/51165089/using-case-in-django - Stack Overflow (8th December).
+<br><br>
+Ts and Cs text generated by Chat GPT after being given a rough outline of requirement from me. (9th December)
+<br><br>
+Middleware requirements for ts and cs - https://django-termsandconditions.readthedocs.io/ - Django Read The Docs (9th December).
+<br><br>
+General set up of Ts and Cs - Users are asked to agree to terms and conditions for the site: https://www.youtube.com/watch?v=tR_z6mG1oe8 Django Web App Beginner Tutorial: User Registration, Login, Logout, Terms Conditions.  Skolo Online 9th December.
+Ride registration with the toggle button and display referred from https://docs.djangoproject.com/en/5.0/ref/request-response/ (13th December) 
+Using and developing logic for dates for rides and sign-ups: https://docs.djangoproject.com/en/5.0/ref/models/conditional-expressions/ (14th December)
+Using key.startswith to interpret the users on the ride, verify and save them with the logic from https://www.geeksforgeeks.org/python-prefix-key-match-in-dictionary/ Adding the prefixes inspired by https://www.geeksforgeeks.org/python-add-prefix-to-each-key-name-in-dictionary/, but heavily modified and simplified in the application. (14th December)
+Timezone.make_aware and timezone.get_default_timezone() https://docs.djangoproject.com/en/5.0/topics/i18n/timezones/ and https://www.fullstackpython.com/django-utils-timezone-make-aware-examples.html (15th December)
+Creating image thumbnails using JS: https://dev.to/pqina/generating-image-thumbnails-in-the-browser-using-javascript-and-filepond-10b8 and https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL (17th December)
+Using JavaScript to retrieve and compare date fields: https://phoenixnap.com/kb/how-to-get-the-current-date-and-time-javascript (18th December)
+Custom template tags for counting and comparing slots in bookings: https://docs.djangoproject.com/en/5.0/howto/custom-template-tags/ (21st December)
+<br><br>
+Check and verification of initial data-model from Mentor
+<br><br>
+Project inspiration and general support
+
+
