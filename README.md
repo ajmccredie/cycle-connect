@@ -163,17 +163,104 @@ Meeting the user stories was then planned with a series of goals, and then split
 | As a **site admin**, I can **host virtual cycling challenges or competitions** so that **users can compete and stay engaged.** | Could | Social Rides/ Forum | 3 |
 | As a **site user/admin**, I can **send invites to join the platform through text and emails** so that **the community can grow more quickly.** | Could | Userprofile | 8 |
 
+The data relationship model was prepared and verified prior to the sprints.
 
 ### Sprint 1: Objectives - 
+Getting a minimum viable product (MVP) in place: users can sign-up, set up an account, login, logout and use the forum. Within the forum users have full 'CRUD' (Create, Read, Update and Delete) capabilities of their own posts and add images. Admin can oversee the forum activity. Create test groups and user profiles to use on the site. Deploy to Heroku.
+#### Definition of done for Sprint 1: 
+A MVP site deployed to Heroku with full CRUD capability in the forum.
+#### Break down of work goals to meet objectives and the user stories at the top of the table (not the optional ones at the bottom):
+Goal 1: Set-up the project on GitHub and transfer user stories into Kanban Projects board in GitHub. Move the essential user stories relating to profile and forum into the 'Working on' column.
+Goal 2: Set-up the Django project for the site (as per the CodeStar Blog walkthough), set-up a superuser, and check admin access. 
+Goal 3: Initial deployment and set-up in Heroku
+Goal 4: Set-up apps and database for the user account/profile.
+Goal 5: Design wire frames and concept art for site
+Goal 6: Create tests for minimum functionality (create, view, update and delete accounts, create, view, update and delete posts on the forum, including images)
+Goal 7: Create html and css for login and basic account set-up (adaptation of existing forms for sign-up to accept additional profile information). Use of crispy-forms? There will be button use and toggle similar to Hello Django. Consider multiple choice buttons as well as free text input for fields.
+Goal 8: Set-up the app and models for the data in main user forum. This will take a similar form and structure initially to CodeStar blog.
+Goal 9: Link up html and css to the forum
+Goal 10: Check the link up and the admin capabilities
+*Goal 11: Set-up user likes for posts on the forum
+*Goal 12: Add commenting ability and CRUD capability to comments
+Goal 13: Deploy MVP site to Heroku
+Goal 14: Full-testing of key-feature behaviour to check capability
+Goal 15: Create user groups and profiles.
+<br>
 
+#### Analysis of the sprint (lessons learned):
+The initial time-boxing points were not very accurate, and many of these goals took a disproportionate amount of time to complete. This sprint took far longer than intended to reach the MVP and therefore to meet the Definition of Done. 
+Lessons were learned due to the overly ambitious nature and not fully understanding  many of the Django features. The Userforum was mainly based on walk-through code, which I thought would have been easier to have customised for my requirements. Initially many lessons were learned about how to better interpret the Debug error messages and how to solve issues of getting templates, urls, views, models, forms and admin files to all work effectively together. The first sprint took around double the amount of time which had been predicted from previous experience, but the majority of the planned work was necessary to complete in order to make a Minimum Viable Product (and therefore meet the Definition of Done for that sprint).
+Testing found some bugs, some of which required immmediate tackling. Some ideas to improve UX/UI were identified and listed to be potentially added to future sprint backlogs (in order of importance):
+- Fully consistent application of CSS on pages
+- Pagination of posts
+- Admin verification of posts
+- Categorisation or search function for posts
+- Thumbnails of images in profiles
+- JavaScript feedback messages confirming user actions
+- Feedback to user regarding upload image size
 
 ### Sprint 2: Objectives - 
+Add ability for users to view the services available for booking, make appropriate bookings and cancel bookings. Admin must be able to set the services up in the admin panel in a straightforward manner, and must confirm bookings for the users. It is important that service slots cannot be double booked, and take into account where the set-up or collection and returns of bikes are intended for on each day.
+#### Definition of done for Sprint 2: 
+A bookings system for services offered with full CRUD capability for both site admin and user.
+#### Break down of goals meet objectives and the user stories regarding bookings and services:
+Goal 1: Set up the app for the additional services offered
+Goal 2: Design the page and information flow structure
+Goal 3: Create a list of tests for the app to pass for this sprint to meet the definition of done
+Goal 4: Create models
+Goal 5: Create forms
+Goal 6: Allow for admin to mark when particular things are available for booking
+Goal 7: Link the mobile service details to the admin calendar
+Goal 8: Make and link up all the html template pages and view
+Goal 9: Write the css and the js
+Goal 10: Produce specific enquiries forms and fill in all the details (bikes and pedibus details – lift from cycool site, including images)
+*Goal 11: Link enquiry forms up to email service and test X NO EMAIL FORM – add to ‘nice to haves’
+Goal 12: full-testing
+Goal 13: Fix static files issues and deploy to Heroku
+<br>
+
+#### Analysis of sprint 2 and lessons learned:
+The Definition of Done was met, and users were able to access a list of services, make, view, amend and delete their bookings. The static files issues were sorted and the site was successfully deployed to Heroku.
+Generally, this sprint went far better than the first one, and the story-points were more or less accurate. Some features were decided to be left (and possibly not picked up again), including integration of an email alert system for the admin. Major bugs were found and fixed in testing, but one minor bug being added for investigation on a later sprint. Other things identified for adding to the backlog to be addressed in a later sprint if appropriate are also listed below in order of importance to the project:
+- Fixing the bug to make sure the slot count for the region is accurate (or remove the count)
+- Adding improved formatting and potentially images to the services lists
+- Pop-ups for user to confirm action for delete
+- Message to user when status has been changed by admin (ie a ‘new’ sort of indication)
+- Set up of a daily summary email for admin of any bookings requiring confirmation?
 
 
 ### Sprint 3: Objectives - 
+Reuse a similar code to the userforum and layout for the UI for the ‘Market’. Users need to be able to list items for sale easily, browse and approach other users to buy items they are interested in. Find a way for users to connect directly when a sale is to be agreed.
+#### Definition of Done for Sprint 3:
+A marketplace where users have full CRUD capability for listings, and can approach other users to inquire about and purchase items of interest. 
+#### Break down of goals meet objectives and the user stories regarding marketplace/trading app:
+Goal 1: Set up the model for a ‘for sale’ item (include the CycleConnect logo as a default image which should be there for the users to be encouraged to change). Posts should have item, location, price, picture, categories (new/used, clothing/bike gear, etc), status (sold/available)
+Goal 2: Set up the views for the user market post (including admin verification from the outset)
+Goal 3: Set up urls and get the basic categorised posts working with images and suitable layout. Toggle of sold/available should work, as should the ability to CRUD items
+Goal 4: Set up the messaging for the posts (which are hidden to all the users except for the ones holding the conversation and admin). General users should be able to see the number of different users who are in conversation about the item, but not see the conversation (this needs to be added to user stories, because was not considered at project inception, but is absolutely essential)
+Goal 5: Set up the filter according to category (show only those items/those items first)
+Goal 6: Items which are sold should drop to the bottom of the list, but not disappear immediately
+Goal 7: Sort pagination for the views
+Goal 8: Full testing of app and interactions. 
+Goal 9: Use the success with the pagination, categorisation and the admin verification to look at the forum app and solve some of the issues
+Goal 10: Add a Ts&Cs to verify on first sign up.
+Goal 11: Add thumbnail of user image to the header on the pages.
+Goal 12: Full testing of additional work
 
+#### Analysis of sprint 3 and lessons learned:
+
+(Goals 8 through to 12 were added later due to the speed at which the first goals were achieved)
 
 ### Sprint 4: Objectives - 
+
+#### Definintion of Done for Sprint 4:
+
+#### Break down of goals meet objectives and the user stories regarding social rides app:
+
+#### Analysis of sprint 4 and lessons learned:
+
+
+### Sprint 5: Objectives - 
 
 
 ## Main Technologies used
