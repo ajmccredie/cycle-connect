@@ -104,8 +104,10 @@ The market (or 'trading') app exists within the site to allow users to buy and s
 | Add item form | ![Marketplace add item form](static/README-images/trading-2-form.png) | Users can add items using a simple, quick form. They have the option to mark the item as 'sold' from the outset, because they might be looking to show the sorts of items they have previously sold (although it is unlikely that many will want to do this). The form has defaults for the item type button, but not the condition. It is important that the user gives the condition some thought and the form will not validate until the enter an input. Users can see a thumbnail of the image they are uploading. They have the ability to navigate back to the Marketplace main page without adding and item if they wish. |
 | Confirmation of item submission | ![Marketplace confirmation](static/README-images/trading-3-thankyou.png) | In order to align with the user story for admin being able to oversee the activity on the marketplace, and to verify the items being sold are appropriate for the site, items need to be verified. This is briefly explained to the user when they add an item for sale using a pop-up modal. |
 | Post pending admin verification | ![Marketplace pending post](static/README-images/trading-4-pendingpost.png) | The added posts are marked as pending for the author, but other users are unable to see the marketplace posts until they are verified by the admin. The pending posts are clearly marked with indicators, which are removed when the post is verified. |
-| Edit their own post | ![Marketplace edit post](static/README-images/trading-5-edit.png) | Users can xxx |
-
+| Edit their own post | ![Marketplace edit post](static/README-images/trading-5-edit.png) | Users can edit their marketplace posts using the straightforward form. Uploaded images can be seen on the thumbnails provided. |
+| Delete their own post | ![Marketplace delete post](static/README-images/trading-6-delete.png) | Users can delete their items. This action also clears any of the chats associated with the items. |
+| Interest and conversation buttons | ![Marketplace view of interested party conversation buttons](static/README-images/trading-7-interestbuttons.png) | If a potential buyer user starts a conversation with a vendor user, the 'start conversation' button changes text to 'continue conversation', making it easy to keep track of which items have on-going dialogue. For the vendor user, as they are approached with conversations from potential buyers, a list of the interested buyers appears below their item, which are all rendered as buttons which link straight to those conversations. This makes it easy for the seller to gauge interest in the item. |
+| Conversation view for the items | ![Marketplace conversations regarding items](static/README-images/trading-8-conversations.png) | Users can converse about the item in a private space, so they can haggle price, discuss delivery and payment options, without other users being able to read the details of their conversations. The profile pictures were added to these conversations to make the transactions feel more personal, which is important in a buying/selling situation. |
 
 
 #### Tests (full details in separate documentation)
@@ -117,7 +119,7 @@ This part of the site links to the company providing the site, allowing for serv
 #### UX/UI key features
 | Feature | Image | Description |
 | ---- | ---- | ---- |
-|  |  |  |
+| Services list | ![Services main page](static/README-images/services-1-welcome.png) |  |
 
 #### Tests (full details in separate documentation)
 
@@ -128,7 +130,19 @@ Users can view rides which have been planned or added by themselves or other use
 #### UX/UI key features
 | Feature | Image | Description |
 | ---- | ---- | ---- |
-|  |  |  |
+| Group rides main page | ![Group rides main page](static/README-images/rides-1-welcome.png) | On this page users can browse upcoming suggested group rides, which are organised according to date. They can also see past rides, which may add to their own riding inspiration. Rides which they have signed up for gain a bike symbol next to the name. This means that at a glance they can see what they were planning to be involved with, or did in the past. The button to add a new ride is clear, and the ability to amend their own rides (specifically to cancel verified rides) is clear when they were the organiser. Additionally the users can see the number of rides they have attended clearly displayed in the top right-hand corner. |
+| Past rides on the main page | ![Past rides in the group rides main page](static/README-images/rides-2-pastrides.png) | The users can see which rides they participated in in the list of past rides, and look at the details of the rides if they want inspiration for their own future plans. |  
+| Detailed view of individual ride and one-click sign-up | ![Ride details and sign-up](static/README-images/rides-3-detailsignup.png) | Users can see the full detail of a ride they might be interested in. If they decide they want to join that ride, they can add themselves to the list by clicking the button. |
+| Signed-up view | ![Signed-up for ride changes](static/README-images/rides-4-signedup.png) | Once the user opts into a ride, their name appears in the list, marked with a bike so they can find themself quickly. The text in the button changes, and clicking the button again removes them from the list. |
+| Create ride | ![Form to create a new social ride](static/README-images/rides-5-create.png) | The form has a few straightforward input fields, including an image. Users enter the details of the ride route and any additional information such as ease of parking and places to socailise afterwards. The date input cannot be in the past and the time input has to be a valid time. |
+| Cancel ride | ![Option to cancel rides](static/README-images/rides-6-cancel.png) | Creators of the rides can cancel them up until the point the ride would occur. Past rides cannot be cancelled. Once a ride is verified, it can only be cancelled and not deleted or edited. This is to safeguard against user confusion if they sign-up to rides or put details in their plans. |
+| Cancelled ride in detail view | ![Changes made to ride details by cancelling the ride](static/README-images/rides-7-cancelleddetail.png) | A cancelled ride is clearly shown so that there is no confusion. |
+| Cancelled ride in list | ![Appearance of cancelled rides in main list](static/README-images/rides-8-cancelledlist.png) | Cancelled rides clearly show on the list at a glance. A user can see quickly if their symbol is against a cancelled ride and adjust their plans accordingly. |
+| Edit ride | ![Form to edit rides](static/README-images/rides-9-edit.png) | Rides with edit permissions (ie ones which are still 'pending') can have details edited and updated if required. Any field in the form can be changed. |
+| Register view | ![Attendance register for rides](static/README-images/rides-10-attendanceregister.png) | The list of signed-up users is automatically rendered into a register once the ride has become 'in the past'. The ride organiser simply has to click a button from the detailed ride view, and then add checks next to the usernames of the riders who came. This then updates the total on the main page of the rides. |
+| Pop-up modal to thank the user for adding the ride and explaining the 'pending' status | ![Pending verification pop-up modal](static/README-images/rides-11-pending.png) | Admin and other designated 'trusted planners' (which can be toggled quickly and easily by site admin) are able to create verified rides from the outset. These rides instantly show to all users. When other users create rides, they are shown as 'pending' while they wait for admin approval. This pop-up modal explains the process to the user. |
+| Rides showing as pending in the main list | ![Appearance of pending rides in the main page](static/README-images/rides-12-pendingview.png) | When an added ride is still pending, only the ride creator can see the ride in the list. It is clearly marked as 'pending'. These labels go away once the ride is marked as verified, and at that point all other site users have the ability to view and book onto the ride if they wish. |
+| Delete ride confirmation | ![Delete confirmation](static/README-images/rides-13-delete.png) | Users can delete unverified rides if they wish. This is confirmed before it is carried out. |
 
 #### Tests (full details in separate documentation)
 
