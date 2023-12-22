@@ -66,16 +66,31 @@ A first time user can easily sign-up to the site and immediately feel involved.
 | ---- | ---- | ---- |
 | Login screen | ![Login screen](static/README-images/general-1-signin.png) | Clear layout where existing users can sign-in and new users can click to sign-up. |
 | Initial sign-up screen | ![Basic sign-up screen](static/README-images/general-2-createaccount.png) | The site only requires a username and a password (entered twice). |
-| Ts and Cs | <image> | A very basic user agreement is generated for the user to sign. The user is unable to access any other features until this is done using Django Middleware. Admin has a list of the users who have agreed to the terms. |
+| Ts and Cs |  ![Ts and Cs document](static/README-images/general-3-tsandcs-top.png)  | A very basic user agreement is generated for the user to sign. The user is unable to access any other features until this is done using Django Middleware. Admin has a list of the users who have agreed to the terms. |
+| Ts and Cs (base of form) | ![The base of the Ts and Cs document](static/README-images/general-4-tsandcs-base.png) | It is easy for the user to agree to the conditions on the form. |
 | Detailed profile form | ![Detailed profile sign-up and edit form](static/README-images/profile-2-edit.png) | A first time user can feel involved with the site from the outset as they are invited to share a bit about their cycling background. They can also skip the form and go straight into the site if they wish, accommodating for users who might want to do this later, or simply are not interested in this piece of functionality. The profile pictures are used for the trading conversations part of the site and the top right corner to show the user is logged in. The form has one longer input field, some radio buttons and a thumbnail display of any uploaded images for the user to check their inputs.|
 | Profile details view | ![Profile view screen](static/README-images/profile-1-view.png) | The user can see their profile at any time by clicking on the profile link or their profile picture in the top right hand corner of any logged in page. This profile is currently private to the user (aside from the profile picture), but there is room to add future functionality here in sharing profiles, cross-referencing skills to social ride sign-ups and even targeting discussions regarding maintenance. |
 
 #### Tests (full details in separate documentation)
+Basic functionality of the two apps which the user interacts with at this point in the site
+| Test | Pass? |
+| ---- | ---- |
+| Sign-in page loads | Yes |
+| Returning user can sign in and is redirected to the forum | Yes |
+| First time user can read and consent to Ts and Cs | Yes |
+| First time user can set-up a basic sign-in. They can choose whether to do the detailed sign-up. | Yes |
+| User can view and edit profile as required. | Yes |
+
+Basic functionaity of admin interfaces
+| Test | Pass? |
+| ---- | ---- |
+| Admin can access a list of accounts | Yes |
+| Admin can see users who have agreed to the terms and conditions | Yes |
 
 ### Main user forum
 #### Purpose
 The main userforum is where the cyclists can bring up and discuss any topics of their choosing, including bike types, interesting cycle routes and upcoming races/events. 
-
+<br>
 The page is self-monitoring and users can report posts that go against community standards. The decision was taken not to require admin approval to post on this page in order to allow the site users to be immediately involved in discussions and posts.
 
 #### UX/UI key features
@@ -90,8 +105,22 @@ The page is self-monitoring and users can report posts that go against community
 | Post reporting verification | ![Forum reporting of posts](static/README-images/forum-8-reportcheck.png) | Users who report posts using the 'report' button are required to verify this action, because it will remove the post from the forum, alongside all associated comments. It does not cause deletion of the post, so admin can reinstate the post if it was done in error. |
 | Reported post notification | ![Forum reported post](static/README-images/forum-9-reportedpost.png) | The author of a reported post receives a warning on their post, which they are still able to see. It provides the option to contact admin if they believe it was reported in error. This prevents user confusion of their post simply vanishing. |
 
-
 #### Tests (full details in separate documentation)
+Basic UI functionality tests
+| Test | Pass? |
+| ---- | ---- |
+| User can read all the non-reported posts on the forum | Yes |
+| Users can create, read, update and delete their own posts on the forum | Yes |
+| Users can like and comment on the posts of other users (and their own) | Yes |
+| Users can update and delete their comments | Yes |
+| Users can report offensive or misleading posts to admin | Yes |
+| Users receive notification if their post(s) has been reported | Yes |
+
+Basic admin site functionality tests
+| Test | Pass? |
+| ---- | ---- |
+| Admin can see all posts and their status | Yes |
+| Admin can re-publish posts which were reported in error | Yes |
 
 ### User Market
 #### Purpose
@@ -109,8 +138,19 @@ The market (or 'trading') app exists within the site to allow users to buy and s
 | Interest and conversation buttons | ![Marketplace view of interested party conversation buttons](static/README-images/trading-7-interestbuttons.png) | If a potential buyer user starts a conversation with a vendor user, the 'start conversation' button changes text to 'continue conversation', making it easy to keep track of which items have on-going dialogue. For the vendor user, as they are approached with conversations from potential buyers, a list of the interested buyers appears below their item, which are all rendered as buttons which link straight to those conversations. This makes it easy for the seller to gauge interest in the item. |
 | Conversation view for the items | ![Marketplace conversations regarding items](static/README-images/trading-8-conversations.png) | Users can converse about the item in a private space, so they can haggle price, discuss delivery and payment options, without other users being able to read the details of their conversations. The profile pictures were added to these conversations to make the transactions feel more personal, which is important in a buying/selling situation. |
 
-
 #### Tests (full details in separate documentation)
+Basic UI functionality:
+| Test | Pass? |
+| ---- | ---- |
+| Users  can browse a list of items they may wish to purchase | Yes |
+| Users can apporach the seller of the items they are interested in | Yes |
+| Users can easily list items for sale. Items can be edited and deleted | Yes |
+| Users can toggle the sold/available state of their items | Yes |
+
+Basic admin site functionality tests:
+| Test | Pass? |
+| ---- | ---- |
+| Admin can see a list of added posts and verify suitable ones for publishing | Yes |
 
 ### Bookable company services
 #### Purpose
@@ -122,6 +162,15 @@ This part of the site links to the company providing the site, allowing for serv
 | Services list | ![Services main page](static/README-images/services-1-welcome.png) |  |
 
 #### Tests (full details in separate documentation)
+Basic UI functionality:
+| Test | Pass? |
+| ---- | ---- |
+|  |  |
+
+Basic admin site functionality tests:
+| Test | Pass? |
+| ---- | ---- |
+|  |  |
 
 ### Group Cycles
 #### Purpose
@@ -360,8 +409,14 @@ The remainder of the work was to transfer the information gathered during testin
 13. After deployment, test the project behaves as expected.
 
 
-## Forking project
-
+## Cloning this project
+1. Navigate to the main repository page on GitHub.com
+2. Select the ‘Code’ button above the list of files
+3. Select between https, SSH or GitHub CLI
+4. Click the clipboard icon to copy the URL
+5. Open your code terminal
+6. Navigate to the directory where you want to place the cloned project
+7. Type ‘git clone’ in the terminal and then paste the URL copied in step 4.
 
 ## References 
 ### Images
@@ -434,17 +489,24 @@ Ts and Cs text generated by Chat GPT after being given a rough outline of requir
 <br><br>
 Middleware requirements for ts and cs - https://django-termsandconditions.readthedocs.io/ - Django Read The Docs (9th December).
 <br><br>
-General set up of Ts and Cs - Users are asked to agree to terms and conditions for the site: https://www.youtube.com/watch?v=tR_z6mG1oe8 Django Web App Beginner Tutorial: User Registration, Login, Logout, Terms Conditions.  Skolo Online 9th December.
+General set up of Ts and Cs - Users are asked to agree to terms and conditions for the site: https://www.youtube.com/watch?v=tR_z6mG1oe8 - Django Web App Beginner Tutorial: User Registration, Login, Logout, Terms Conditions - Skolo Online (9th December).
+<br><br>
 Ride registration with the toggle button and display referred from https://docs.djangoproject.com/en/5.0/ref/request-response/ (13th December) 
+<br><br>
 Using and developing logic for dates for rides and sign-ups: https://docs.djangoproject.com/en/5.0/ref/models/conditional-expressions/ (14th December)
+<br><br>
 Using key.startswith to interpret the users on the ride, verify and save them with the logic from https://www.geeksforgeeks.org/python-prefix-key-match-in-dictionary/ Adding the prefixes inspired by https://www.geeksforgeeks.org/python-add-prefix-to-each-key-name-in-dictionary/, but heavily modified and simplified in the application. (14th December)
+<br><br>
 Timezone.make_aware and timezone.get_default_timezone() https://docs.djangoproject.com/en/5.0/topics/i18n/timezones/ and https://www.fullstackpython.com/django-utils-timezone-make-aware-examples.html (15th December)
+<br><br>
 Creating image thumbnails using JS: https://dev.to/pqina/generating-image-thumbnails-in-the-browser-using-javascript-and-filepond-10b8 and https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL (17th December)
+<br><br>
 Using JavaScript to retrieve and compare date fields: https://phoenixnap.com/kb/how-to-get-the-current-date-and-time-javascript (18th December)
+<br><br>
 Custom template tags for counting and comparing slots in bookings: https://docs.djangoproject.com/en/5.0/howto/custom-template-tags/ (21st December)
 <br><br>
 Check and verification of initial data-model from Mentor
 <br><br>
 Project inspiration and general support
-
-
+<br><br>
+Code Institute Tutor Support - Deployment of project in non-Debug mode.
