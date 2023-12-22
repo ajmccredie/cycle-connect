@@ -159,18 +159,26 @@ This part of the site links to the company providing the site, allowing for serv
 #### UX/UI key features
 | Feature | Image | Description |
 | ---- | ---- | ---- |
-| Services list | ![Services main page](static/README-images/services-1-welcome.png) |  |
+| Services list | ![Services main page](static/README-images/services-1-welcome.png) | Users are able to see a list of the services and the descriptions. They can opt to view the locations where those services have active bookings from this page. |
+| Location selection | ![Select location of service](static/README-images/services-2-selectlocation.png) | Users are shown any places with active available bookings, and the number of slots currently available at that location. The user can select from these if there are more than one available. |
+| Confirm intended booking | ![Click to confirm booking](static/README-images/services-3-confirmbooking.png) | The user is presented with a lists of times and dates available for the service they wish to book at the location they selected on the previous screen. They have clear buttons to click to proceed with the booking. |
+| Booking confirmation | ![System booking confirmation](static/README-images/services-4-bookingconfirmed.png) | Users receive a confirmation that their booking has been acknowledged, but that the current status is 'pending'. The status of the booking will be updated by the admin. This is necessary so that the admin can add the booking to their own diary, becayse the system is not integrated with a company calendar. |
+| Booking list | ![List of bookings and statuses](static/README-images/services-5-bookings.png) | Users can view a full list of bookings they have made, and the status of these bookings. The statuses are written and colour coded in order to not be ambiguous. Users can cancel their bookings from this page if required. |
+| Confirm cancel | ![Services main page](static/README-images/services-6-confirmdelete.png) | Users are asked to confirm cancelling the services (to prevent accidental cancellations). This redirects to the bookings list page, so the user receives instant feedback of the successful cancellation. |
 
 #### Tests (full details in separate documentation)
 Basic UI functionality:
 | Test | Pass? |
 | ---- | ---- |
-|  |  |
+| Users can view and book services | Yes |
+| Users can can cancel booked services and receive confirmation of their action | Yes |
 
 Basic admin site functionality tests:
 | Test | Pass? |
 | ---- | ---- |
-|  |  |
+| Admin can add new services, locations and booking slots which will render on the front end of the site | Yes |
+| Admin can see new bookings | Yes |
+| Admin can update bookings to 'confirmed' | Yes |
 
 ### Group Cycles
 #### Purpose
@@ -194,7 +202,22 @@ Users can view rides which have been planned or added by themselves or other use
 | Delete ride confirmation | ![Delete confirmation](static/README-images/rides-13-delete.png) | Users can delete unverified rides if they wish. This is confirmed before it is carried out. |
 
 #### Tests (full details in separate documentation)
+Basic UI functionality:
+| Test | Pass? |
+| ---- | ---- |
+| Users can see upcoming rides, and can book onto ones with space | Yes |
+| Users can easily see which rides they are booked onto | Yes |
+| Users can easily cancel bookings | Yes |
+| Users can be confirmed as attending social rides, and can view a total of their achievements | Yes |
+| Users can add and cancel rides easily | Yes |
+| Users can edit and delete rides until they are verified by admin | Yes |
 
+Basic admin site functionality tests:
+| Test | Pass? |
+| ---- | ---- |
+| Admin can check and verify user added rides | Yes |
+| Admin can add rides from the admin panel or the front end without requiring further validation | Yes |
+| Admin can designate certain users as 'trusted organisers' whose rides need no further validation | Yes |
 
 ## Agile project planning and methodology
 Initial collection of user stories were made, categorised for 'must', 'should' and 'could' and then used in conjunction with GitHub Projects.
