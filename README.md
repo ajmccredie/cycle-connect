@@ -87,6 +87,8 @@ Basic functionaity of admin interfaces
 | Admin can access a list of accounts | Yes |
 | Admin can see users who have agreed to the terms and conditions | Yes |
 
+Full details [here](/TESTDETAILS.md)
+
 ### Main user forum
 #### Purpose
 The main userforum is where the cyclists can bring up and discuss any topics of their choosing, including bike types, interesting cycle routes and upcoming races/events. 
@@ -106,7 +108,7 @@ The page is self-monitoring and users can report posts that go against community
 | Reported post notification | ![Forum reported post](static/README-images/forum-9-reportedpost.png) | The author of a reported post receives a warning on their post, which they are still able to see. It provides the option to contact admin if they believe it was reported in error. This prevents user confusion of their post simply vanishing. |
 
 #### Tests (full details in separate documentation)
-Basic UI functionality tests
+Basic UI functionality tests:
 | Test | Pass? |
 | ---- | ---- |
 | User can read all the non-reported posts on the forum | Yes |
@@ -115,12 +117,14 @@ Basic UI functionality tests
 | Users can update and delete their comments | Yes |
 | Users can report offensive or misleading posts to admin | Yes |
 | Users receive notification if their post(s) has been reported | Yes |
-
-Basic admin site functionality tests
+<br>
+Basic admin site functionality tests:
 | Test | Pass? |
 | ---- | ---- |
 | Admin can see all posts and their status | Yes |
 | Admin can re-publish posts which were reported in error | Yes |
+<br>
+Full details [here](/TESTDETAILS.md)
 
 ### User Market
 #### Purpose
@@ -146,11 +150,13 @@ Basic UI functionality:
 | Users can apporach the seller of the items they are interested in | Yes |
 | Users can easily list items for sale. Items can be edited and deleted | Yes |
 | Users can toggle the sold/available state of their items | Yes |
-
+<br>
 Basic admin site functionality tests:
 | Test | Pass? |
 | ---- | ---- |
 | Admin can see a list of added posts and verify suitable ones for publishing | Yes |
+<br>
+Full details [here](/TESTDETAILS.md)
 
 ### Bookable company services
 #### Purpose
@@ -172,6 +178,7 @@ Basic UI functionality:
 | ---- | ---- |
 | Users can view and book services | Yes |
 | Users can can cancel booked services and receive confirmation of their action | Yes |
+<br>
 
 Basic admin site functionality tests:
 | Test | Pass? |
@@ -179,6 +186,8 @@ Basic admin site functionality tests:
 | Admin can add new services, locations and booking slots which will render on the front end of the site | Yes |
 | Admin can see new bookings | Yes |
 | Admin can update bookings to 'confirmed' | Yes |
+<br>
+Full details [here](/TESTDETAILS.md)
 
 ### Group Cycles
 #### Purpose
@@ -211,6 +220,7 @@ Basic UI functionality:
 | Users can be confirmed as attending social rides, and can view a total of their achievements | Yes |
 | Users can add and cancel rides easily | Yes |
 | Users can edit and delete rides until they are verified by admin | Yes |
+<br>
 
 Basic admin site functionality tests:
 | Test | Pass? |
@@ -218,10 +228,13 @@ Basic admin site functionality tests:
 | Admin can check and verify user added rides | Yes |
 | Admin can add rides from the admin panel or the front end without requiring further validation | Yes |
 | Admin can designate certain users as 'trusted organisers' whose rides need no further validation | Yes |
+<br>
+Full details [here](/TESTDETAILS.md)
 
 ## Agile project planning and methodology
-Initial collection of user stories were made, categorised for 'must', 'should' and 'could' and then used in conjunction with GitHub Projects.
+Initial collection of user stories were made, categorised for 'must', 'should' and 'could' and then used in conjunction with GitHub Projects.<br>
 Meeting the user stories was then planned with a series of goals, and then split down further into sprints. The proposed sprints were then met fully or partially, and any incomplete work was reassessed as to its value and where it should be placed.
+<br>
 
 | User story | Must/should/ could | Database section | Time-box allocation/ Story points |
 | ----------- | ----------- | ----------- | ----------- |
@@ -300,7 +313,7 @@ Goal 7: Link the mobile service details to the admin calendar<br>
 Goal 8: Make and link up all the html template pages and view<br>
 Goal 9: Write the css and the js<br>
 Goal 10: Produce specific enquiries forms and fill in all the details (bikes and pedibus details – lift from cycool site, including images)<br>
-*Goal 11: Link enquiry forms up to email service and test X NO EMAIL FORM – add to ‘nice to haves’<br>
+* ~~Goal 11: Link enquiry forms up to email service and test X NO EMAIL FORM~~ – add to ‘nice to haves’<br>
 Goal 12: full-testing<br>
 Goal 13: Fix static files issues and deploy to Heroku
 <br>
@@ -385,11 +398,15 @@ The remainder of the work was to transfer the information gathered during testin
 
 
 ## Main Technologies used
-- **Python Django 3.2.23** is the main Python web framework used to build the site. The apps are built within the central workspace.
-- **Gunicorn 21.2.0** is a Python WSGI HTTP server for UNIX, providing a powerful interface for deploying Python web applications.
+### Languages
+- **Python** is the basis of the site logic and functionality.
 - **HTML5** is used to create the templates for the UI.
 - **CSS3** is used for the site styling.
 - **JavaScript** is used to make the site more dynamic in places where the Python logic would require a separate page, for example this was mainly used to create modals for the users to confirm actions.
+
+### Framewords and packages
+- **Python Django 3.2.23** is the main Python web framework used to build the site. The apps are built within the central workspace.
+- **Gunicorn 21.2.0** is a Python WSGI HTTP server for UNIX, providing a powerful interface for deploying Python web applications.
 - **Bootstrap 4** is an open-source front-end framework for designing websites and web applications. It contains HTML, CSS, and JavaScript-based design templates for typography, forms, buttons, navigation, and other interface components, as well as optional JavaScript extensions. It 
 - **Cloudinary 1.37.0** provides cloud storage for the image uploads on the site.
 - **PostgreSQL Database** is more powerful than the inbuilt SQLite Django database. This handles all the storage of the information added on the site.
@@ -403,11 +420,60 @@ The remainder of the work was to transfer the information gathered during testin
 
 ## Key issues and bugs
 ### Resolved
+The majority of bugs were encountered due to typos in the code preventing the pages behaving as expected. Some of these took longer to find than others (such as issues in the CSS and some of the lesser-used features). Additionally, a number of minor issues were found from the logic, where irrelevant buttons were still visible. These were fixed in the template, ensuring that only the correct buttons were rendered to allow valid choices for the user (for example not being able to sign up to past social rides). 
+
+The more persistent and time-consuming bugs are listed below:
+1.	The first major bug encountered was the integration of the allauth files with my own templates and sorting the urls and the views to handle these appropriately. This required a good deal of reading information online and trying different things. As my familiarity with working in Django improved, this error later felt trivial, but at the time it took a large amount of effort to overcome.
+2.	The initial issues of getting posts to show properly in the forum was overcome by creating and linking appropriate templates and views. Again, this was down to my inexperience of working with Django and was not an issue moving forward.
+3.	When the site was first deployed to Heroku, the static files (images and css) were lost. This was fixed by adding Whitenoise.
+4.	Initially the ‘likes’ were not behaving as expected. This was fixed using HttpResponseRedirect. There were then weird drop down lists of users appearing by the ‘likes’ on the front end. These were produced in the forum comments view initially. These were removed using a ‘pop’ statement in the views.py.
+5.	One of the profile forms was originally going to have multiple tick boxes (preferred ride type), but this feature did not work as intended. Rather than continue to try to fix the issue, the feature was re-evaluated and it was decided that radio button inputs would not damage the UI, so these were used instead.
+6.	There were a number of issues with registering users to the site and the need for appropriate redirection upon first login. This was fixed by ensuring correct direction logic in the templates, views and urls.
+7.	Services and bookings issues – slot count not consistently giving accurate results initially. Services with multiple places were not able to have more than one booking assigned to them. This was found to be down to a fundamental error in the way the service code was set up and bookings were assigned. The code for individual bookings was restored (after trying a few different methods to fix the issue) and it was decided that a form of the social rides booking code could be adapted in the future to allow a different booking mechanism for the group excursions. This issue was found late on in testing toward the end of the project. I tried removing much of the existing structure to replace with something far simpler, but was still facing a number of issues, mostly the inability to migrate any further models. I had given a bad ‘default’ value in the command prompt, and I did not know how to fix it. Consequently, my simpler approach may have worked, but I was unable to implement and test the models. I had to leave this issue on a few occasions and think about how better to resolve it. Eventually I had basically decided to delete the entire services and bookings app and start again with it, however that gave me the confidence to try doing something which I was convinced would break the whole thing: I went into the migration code in the app (guided by the error messages in the terminal) and found and changed the problematic default values. This then resolved the issue of not allowing migrations. I then replaced all the code I had being trying to use to resolve the issue with my own code from when the service bookings worked. For the time being there are no group bookings to make on the site, but new code would be required to add and use these bookings in the future, because the existing code cannot handle multiple sign-ups to a single event. Further work was still required and the models were updated to add ‘available’ and ‘booked’ to the fields. This was then integrated and eventually the page now works and shows the correct number of bookable slots for a location and then only loads available slots on the next page.
+8.	An ‘integrity error’ was found in the Ts and Cs during testing, this was fixed by simply adding a null=False clause. There was also an issue initially with an incorrect redirect after agreeing to the terms, but this was fixed through updating the logic in the templates and the views.
+9.	Pagination for the forum was an intermittent issue. This was caused by refactoring the views class for the forum to be a ListView in order to streamline and solve another issue. It was later changed back to View and the other issues resolved around that, allowing pagination to work appropriately.
+10.	The issue of reappearing reported posts was also fixed through moving the class back to ‘View’ and controlling the logic more explicitly. 
+11.	Form validation was mostly straightforward, however the main forum page summernote editor proved to be more difficult than the others. This was fixed in the end by creating an alert to display. However, when this was first used, it created other issues on the page. These were eventually resolved with a full-scale overhaul of the views for the forum. 
+12.	Issues with forms and the ways they were displaying were initially fixed using the ‘FormHelper’, which was then extended to look at individual fields. This approach was also then taken in the templates and the increased control over the labels, inputs and validation overcame the majority of the issues faced.
+13.	When the project was nearing completion and a deployment attempt was made in Heroku with `DEBUG=False` all the images called through the CSS (the background images) disappeared. The rest of the static files were fine. Eventually a fix was found with tutor support to upload those images to Cloudinary and call them into the background directly from there. 
+14.	When one of the JavaScript modals was initially deployed, it was not functional. This was fixed by increasing the ‘z-index’ of the element in the CSS.
 
 ### Unresolved
+Some automated tests were written, but were not able to be used due to persistent issue in redirecting to the test database. I tried a number of fixes for this after extensive online research, but eventually decided to settle for manual testing. 
 
 ## Potential future work beyond the scope of this project
+There were a few features which would propel this project to the point of being far more useful in the real world: 
 
+The first would be to add email details on sign-up and allow email resets of passwords when users forget theirs. The emails could also be set up to align with user preferences to receive notification of site activity or of other upcoming events or new services offered by the site which may be of interest to the user. 
+
+The notifications for the user was not possible within the time-frame. This was looked at on several occasions at different stages of the project, but there was just never quite enough time to implement and fully test this system. Ideally, the site would be able to show the user where changes had occurred that affected them. The simplest implementation of this would either be to display ‘new’ indicators on the menu items, or a symbol showing an update, which would disappear after they clicked on those parts of the site, or a ‘catch-up’ list that is displayed on login. The list could contain more details than simply the indicators, for example, how many likes a post they had made had received. 
+
+A list of updates that would be most beneficial to the user would include:
+- Whether anyone has liked/commented on their forum posts
+- Whether a post has been removed/reported
+- Whether there is anyone contacting them or any further new messages about an item they put up for sale/are trying to buy.
+- Whether the status of a marketplace item they have put up for sale has been changed from ‘pending’ to ‘verified’
+- Whether the status of any of their bookings has changed
+- Whether a ride they have signed up to is now cancelled
+- Whether they have a pending attendance register to complete for a ride they organised
+- When they have been verified as attending a ride
+
+The admin would also benefit from an easily accessible list of updates or actions required, as well as some basic indicators of site activity. An admin ‘dashboard’ could be developed which shows and provides easy links to the admin part of the site each of the following things:
+- How many new posts/comments have been made in the forum (numerical or graphical information, not requiring action)
+- How many logins there have been over a given period (numerical or graphical information, not requiring action)
+- Whether a post has been reported
+- Whether any new items have been added for sale and require verification
+- Whether any new bookings have been made and require verification 
+- Whether the number of uploaded ‘slots’ for booking is below a certain threshold value and a reminder to consider adding more.
+- Whether any users have cancelled a booking
+- Whether any new group rides have been planned and if any of these require verification
+- How many group rides have been planned and the attendance figures for these (numerical or graphical information, not requiring action)
+
+In order to allow the site to grow quickly, the ability for users to easily invite their friends using a simple sign up link on an email or text message would be good to implement. 
+
+There is currently no easy way for a user to change their password either, so this should be incorporated into the site before any form of commercial launch would be possible.
+
+Categorisation of the posts on the forum could also be a beneficial feature for the user, particularly as the forum expands (in addition to the general search bar). This could increase the speed at which they are able to access relevant information.
 
 ## Deploying to Heroku
 1. Ensure that debug mode is set to 'False' in the Django main apps 'settings.py'.
