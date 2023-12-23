@@ -52,7 +52,7 @@
 </form>
 {% endif %}
 <h3>CycleConnect members on this ride:</h3>
-{% if request.user == ride.organiser and is_past_ride %}
+{% if request.user == ride.organiser and is_past_ride and not ride.is_cancelled %}
     <a href="{% url 'verify_attendance' ride.id %}" class="btn btn-edit">Verify Attendance</a>
 {% endif %}
 <ul>

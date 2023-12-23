@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label for="{{ form.image.id_for_label }}">Upload an image of your planned route:</label>
-            <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" onchange="previewImage(event)">
+            <input type="file" accept="image/*" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" onchange="previewImage(event)">
             <img id="image-preview" style="max-width: 100px; display: none;">
             {{ form.image.errors }}
             {{ form.image.help_text }}

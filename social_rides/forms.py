@@ -1,7 +1,10 @@
 from django import forms
 from crispy_forms.helper import FormHelper
+from django.core.exceptions import ValidationError
 from django.utils import timezone
+import datetime
 from crispy_forms.layout import Layout, Submit, Field
+from datetime import timedelta
 from .models import Ride
 
 class RideForm(forms.ModelForm):
@@ -13,6 +16,28 @@ class RideForm(forms.ModelForm):
             'start_time': forms.TimeInput(attrs={'type': 'time'}),
             'difficulty': forms.RadioSelect,
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        date = cleaned_data.get('date')
+        start_time = cleaned_data.get('start_time')
+        route_description = cleaned_data.get('route_description')
+        if date and start_time:
+            now = timezone.localtime(timezone.now())
+            ride_datetime = timezone.make_aware(timezone.datetime.combine(date, start_time))
+            if ride_datetime < now:
+                raise ValidationError('You cannot organize a ride in the past.')
+        if route_description and len(route_description) > 750:
+            self.add_error('route_description', 'Route description cannot be longer than 750 characters.')
+        return cleaned_data
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image:
+            max_size = 9 * 1024 * 1024  # 9MB
+            if image.size > max_size:
+                raise ValidationError('Image file too large ( > 9MB )')
+        return image
     
     def __init__(self, *args, **kwargs):
         super(RideForm, self).__init__(*args, **kwargs)

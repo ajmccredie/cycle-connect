@@ -25,8 +25,8 @@ class TradingPost(models.Model):
     ]
 
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, unique=False)
-    description = models.TextField()
+    title = models.CharField(max_length=200, unique=False, null=False)
+    description = models.TextField(max_length=750, null=False)
     created_on = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image', default='trading_placeholder', blank=True, null=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='other')
@@ -54,7 +54,7 @@ class TradingConversation(models.Model):
 class Message(models.Model):
     conversation = models.ForeignKey(TradingConversation, on_delete=models.CASCADE, related_name='messages')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
-    text = models.TextField()
+    text = models.TextField(max_length=500, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

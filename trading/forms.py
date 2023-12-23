@@ -9,7 +9,7 @@ from django import forms
 
 class TradingPostForm(forms.ModelForm):
     title = forms.CharField(validators=[MinLengthValidator(2), MaxLengthValidator(200)])
-    description = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(5), MaxLengthValidator(1000)])
+    description = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(5), MaxLengthValidator(750)])
     image = forms.ImageField(required=False, validators=[FileExtensionValidator(['jpg', 'png'])])
     class Meta:
         model = TradingPost
