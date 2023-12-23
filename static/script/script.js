@@ -1,17 +1,10 @@
 // A function to allow formatting of the information added about the services:
-
 document.addEventListener('DOMContentLoaded', function() {
     let serviceDescriptions = document.getElementsByClassName('service_description');
     Array.from(serviceDescriptions).forEach(function(bulletDescription) {
         bulletDescription.innerHTML = bulletDescription.innerHTML.replace(/\*/g, '<br>');
     });
 });
-
-// Confirm receipt of trading item in market
-function showThankYouMessage() {
-    alert('Thank you for adding your item. It will show as pending until admin has the opportunity to check and verify the post. You will see when it has been accepted, because the "pending" label will be removed. Happy cycling!');
-    return true;
-}
 
 
 // Script to add image thumbnails in userprofile edit and in social rides add ride and edit
@@ -97,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cancelModal.style.display = "none";
         if (formToSubmit) {
             formToSubmit.submit();
-        }
+        };
     };
 
     cancelBtn.addEventListener('click', function() {
@@ -116,11 +109,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isTrustedOrganiser) {
             event.preventDefault();
             modal.style.display = "block";
-        }
+        };
     });
 
     okBtn.onclick = function() {
         modal.style.display = "none";
         form.submit();
-    }
+    };
 });

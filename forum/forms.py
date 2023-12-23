@@ -18,16 +18,19 @@ class PostForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    body = forms.CharField(widget=forms.Textarea, validators=[MaxLengthValidator(500, message="Comment should be under 500 characters")])
     class Meta:
         model = Comment
         fields = ('body',)
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs['placeholder'] = 'Write your comment here...'
-            field.label = ''
-            field.label_suffix = '' 
+        self.fields['body'].widget.attrs['placeholder'] = 'Write your comment here...'
+        self.fields['body'].label = ''
+        self.fields['body'].label_suffix = '' 
 
 
 class SearchForm(forms.Form):
-    query = forms.CharField()
+    query = forms.CharField(
+        validators=[MaxLengthValidator(100, message="Search query should be under 100 characters")],
+        widget=forms.TextInput(attrs={'maxlength': '100'})  
+    )
