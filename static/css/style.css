@@ -1,3 +1,4 @@
+/* General backgrounds and site-wide styles */
 body {
     background-color: rgb(111, 111, 188);
     background-image: url('https://res.cloudinary.com/dhq62mbxk/image/upload/v1702902558/blue-road-race_pidwpi.jpg');
@@ -97,6 +98,7 @@ label {
     margin-left: auto;
 }
 
+/* Sign-in/sign-up */
 .sign-up-link {
     font-weight: bold;
     font-size: x-large;
@@ -119,6 +121,7 @@ label {
     max-width: 100%;
 }
 
+/* Email was not used yet, but has been left in for when this is addressed in future work */
 input[type="text"],
 input[type="email"],
 input[type="password"]
@@ -156,6 +159,7 @@ button:hover, input[type="submit"]:hover {
     font-weight: bolder;
 }
 
+/* Forum styles */
 .btn-like {
     padding: 0;
     margin: 0;
@@ -515,6 +519,7 @@ button:hover, input[type="submit"]:hover {
     object-fit: cover;
 }
 
+/* Social rides styles */
 .display-container {
     position: relative;
     display: flex;

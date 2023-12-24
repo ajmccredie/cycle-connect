@@ -42,40 +42,115 @@ This document provides additional testing details for the site.
 ### Overview
 | Test case description | Expected outcome | Pass? |
 | ---- | ---- | ---- |
+| Post creation | User can create a forum post successfully | Yes |
+| Post viewing | User can see the posts created by themselves and others | Yes |
+| Post update | User can update their posts | Yes |
+| Post deletion | User can delete their own post | Yes |
+| Post liking | User can like a post, and the like is recorded correctly | Yes |
+| Post liking limit | User can like a post only once, and attempts to like again are prevented | Yes |
+| Comment creation | User can add comments to a post | Yes |
+| Comment display | Comments are displayed under the respective post | Yes |
+| Comment update | User can edit comments they have written | Yes |
+| Comment delete | User can delete comments they have written | Yes |
+| Forum search | User can obtain search results with posts matching title, content or author. | Yes |
 
 ### Testing specific to form inputs
 | Form field | Blank | Too long/large | Incorrect | Invalid |
 | ---- | ----- | ----- | ----- | ----- |
+| Post name | User is told the field cannot be blank | Field stops accepting new characters | Form field only accepts characters, but it is possible to only add spaces as the name | Form field only accepts characters |
+| Main forum post | User is told the field cannot be blank | Rich text input only limits the input when the upload size becomes too large.  | Rich text input, users can upload images and links | Trying to upload items not included in text, images or links, returns an error message |
+| Search bar | Users are provided with the results of a search for nothing. | Field stops accepting new characters | Form field only accepts characters, but it is possible to only add spaces | Form field only accepts characters |
+| Post name (edit)| User is told the field cannot be blank | Field stops accepting new characters | Form field only accepts characters, but it is possible to only add spaces as the name | Form field only accepts characters |
+| Main forum post (edit)| User is told the field cannot be blank | Rich text input only limits the input when the upload size becomes too large.  | Rich text input, users can upload images and links | Trying to upload items not included in text, images or links, returns an error message |
+| Add comment | Users are told the field cannot be blank | Page re-renders with the form input blank. No error message printed | Only text can be entered. | Form field only accepts characters |
+| Edit comment | Users are told the field cannot be blank | Page re-renders with the form input blank. No error message printed | Only text can be entered. | Form field only accepts characters |
+
+### Buttons
+| Button | Performs intended action? | Redirects to the correct place? |
+| ---- | ---- | ---- |
+| Edit forum post | Yes | Yes - Leads to edit form |
+| Delete forum post | Yes | Yes - Leads to confirm delete |
+| Confirm delete forum post | Yes | Yes - Back to forum without post |
+| Report post | Yes | Yes - Leads to confirm report |
+| Confirm report post | Yes | Yes - Returns to forum with reported post removed |
+| Report post cancel | Yes | Yes - Leads back to forum with post still in place |
+| Like post | Yes | Yes - Leads back to forum with the post liked |
+| Like post second click | Yes | Yes  - Leads back to the forum with the post ‘unliked’ |
+| Edit comment | Yes | Yes - Leads to edit form |
+| Delete comment | Yes | Yes - Leads to confirm delete |
+| Confirm delete comment | Yes | Yes - Leads back to the comment page with the comment removed |
 
 ### Other tests of possible user actions
 | Action | Result acceptable? |
 | ---- | ---- |
+| Back-up can be pressed at any time during the forms and the previous page is rendered. | Yes |
+| Back-up does not restore a reported post to the forum. | Yes |
+| Back-up does not delete forum posts, nor does it delete comments. | Yes |
 
 ## Marketplace/trading
 ### Overview
 | Test case description | Expected outcome | Pass? |
 | ---- | ---- | ---- |
+| Item creation | User can create listings for bikes and components with details | Yes |
+| Item viewing | User can view bike and component listings | Yes |
+| Item edit | User can update the information regarding their listing | Yes |
+| Item deletion | User can delete their own listed items | Yes |
+| Item status update | User can mark a listed item as no longer available and the status is immediately updated | Yes |
+| Admin control and support | Admin can view listings before verifying | Yes |
+| Conversation creation | Users can start a conversation with someone selling an item | Yes |
+| Conversation view | Both users involved in  the conversation can see the content of the conversation | Yes |
 
 ### Testing specific to form inputs
 | Form field | Blank | Too long/large | Incorrect | Invalid |
 | ---- | ----- | ----- | ----- | ----- |
+| Conversation comment | Form input allows this | Summernote field does not limit the number of characters unless the combined size of image and text is too large | Rich text input, users can upload images and links | Trying to upload items not included in text, images or links, returns an error message |
+| Title of item | User informed it cannot be blank | Field no longer accepts characters | Misleading titles can be filtered by admin validation | Field only accepts text |
+| Description of item (create and edit) | User informed it cannot be blank | User informed it is too large | Misleading descriptions can be filtered by admin validation | Field only accepts text |
+| Upload image  (create and edit) | A default image of the logo is provided. | User informed it is too large | Misleading images can be filtered by admin validation | Field only accepts images |
+| Category radio buttons  (create and edit) | A default value is given | - | Misleading information can be filtered by admin | - |
+| Condition radio buttons  (create and edit) | User told to select a condition | - | Misleading information can be filtered by admin | - |
+| Status radio buttons  (create and edit) | A default is given | - | Misleading information can be filtered by admin | - |
+
+### Buttons
+| Button | Perform intended action? | Redirects to the correct place? |
+| ---- | ---- | ---- |
+| Filter (after changing one or both of the drop-down menus) | Yes | Yes - Market with only items containing the search terms | 
+| Edit listing | Yes | Yes - Leads to edit form |
+| Delete listing | Yes | Yes - Leads to confirm delete |
+| Confirm delete listing | Yes | Yes - Confirm delete listing |
+| Toggle sold status | Yes | Yes - Leads back to market with item listed as ‘sold’ |
+| Start conversation | Yes | Yes - Starts a conversation between the potential buyer and the seller. Returning to the market page the button for that conversation has toggled content from ‘start conversation’ to ‘continue conversation’ |
+| Continue conversation | Yes | Yes - Returns to the private conversation between the potential buyer (user) and the seller. |
+| Named conversations | Yes | Yes - Leads to the private conversation between the seller and the named potential buyer |
 
 ### Other tests of possible user actions
 | Action | Result acceptable? |
 | ---- | ---- |
+| Back-up does not delete items or conversations | Yes |
+| Admin verification required before posts show for other users | Yes |
+| Verified posts show for all users | Yes |
+The form field being able to be submitted as blank and still start a conversation is a known bug, but removing the summernote field and replacing with a normal text field would remove the ability for the seller to send more pictures easily to the potential buyers if asked.
 
 ## Services and Bookings
 ### Overview
 | Test case description | Expected outcome | Pass? |
 | ---- | ---- | ---- |
+| Service creation | Admin can create a service with details | Yes |
+| Service update | Admin can update service information | Yes |
+| Service deletion | Admin can delete services | Yes |
+| Service booking | Users can make bookings | Yes |
+| Booking confirmation | Admin can accept bookings made and change the status from ‘pending’ to ‘confirmed’ | Yes |
+| Booking cancellation | Users can cancel their bookings | Yes |
 
-### Testing specific to form inputs
-| Form field | Blank | Too long/large | Incorrect | Invalid |
-| ---- | ----- | ----- | ----- | ----- |
+### Buttons
+| Button | Performs intended action? | Redirects to the correct place? |
+| ---- | ----- | ----- |
+|  |  |  |
 
 ### Other tests of possible user actions
 | Action | Result acceptable? |
 | ---- | ---- |
+|  |  |
 
 ## Social Rides
 ### Overview

@@ -24,7 +24,7 @@
 
     <h2>Seach existing posts</h2>
     <form method="get" action="{% url 'forum_search' %}">
-        <input type="text" name="q" value="{{ query }}" placeholder="Search the forum...">
+        <input type="text" name="q" maxlength="100" value="{{ query }}" placeholder="Search the forum...">
         <button type="submit">Search</button>
     </form>
 </div>
