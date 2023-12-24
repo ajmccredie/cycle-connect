@@ -129,7 +129,7 @@ This document provides additional testing details for the site.
 | Back-up does not delete items or conversations | Yes |
 | Admin verification required before posts show for other users | Yes |
 | Verified posts show for all users | Yes |
-<br>
+
 The form field being able to be submitted as blank and still start a conversation is a known bug, but removing the summernote field and replacing with a normal text field would remove the ability for the seller to send more pictures easily to the potential buyers if asked.
 
 ## Services and Bookings
