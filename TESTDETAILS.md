@@ -129,6 +129,7 @@ This document provides additional testing details for the site.
 | Back-up does not delete items or conversations | Yes |
 | Admin verification required before posts show for other users | Yes |
 | Verified posts show for all users | Yes |
+<br>
 The form field being able to be submitted as blank and still start a conversation is a known bug, but removing the summernote field and replacing with a normal text field would remove the ability for the seller to send more pictures easily to the potential buyers if asked.
 
 ## Services and Bookings
@@ -142,30 +143,85 @@ The form field being able to be submitted as blank and still start a conversatio
 | Booking confirmation | Admin can accept bookings made and change the status from ‘pending’ to ‘confirmed’ | Yes |
 | Booking cancellation | Users can cancel their bookings | Yes |
 
+All the form inputs are in the admin part of the site. These form fields are clear regarding what is required, and the fields are validated.
+
 ### Buttons
 | Button | Performs intended action? | Redirects to the correct place? |
 | ---- | ----- | ----- |
-|  |  |  |
+| View and book | Yes | Yes - Page listing towns/places with slots |
+| Place with slots | Yes | Yes - Details of slots to request bookings (filtered by service and place) |
+| Request booking | Yes | Yes - Booking confirmation |
+| View bookings | Yes | Yes - Full list of user's bookings |
+| Cancel booking | Yes | Yes - Booking cancellation confirmation |
+| Confirm cancel booking | Yes | Yes - Bookings list with status returned to ‘cancelled’ |
+
+Additional checks (these all behave as expected):
+- Only places with available slots show with the numbers, the others do not render - this is useful because it avoids user confusion.
+- User cancels a booking and it is returned to the list as ‘available’
+- Users cannot double-book slots.
 
 ### Other tests of possible user actions
 | Action | Result acceptable? |
 | ---- | ---- |
-|  |  |
+| Bookings procedures can be backed-up using the browser back-up (until the point a booking is marked as pending) | Yes |
+| Back-up does not remove service bookings once they are pending or confirmed | Yes |
+| Back-up does not restore cancelled bookings | Yes |
 
 ## Social Rides
 ### Overview
 | Test case description | Expected outcome | Pass? |
 | ---- | ---- | ---- |
+| Proposal creation | User can create a proposal for a group cycling event with details | Yes |
+| Proposal viewing | User can view verified proposed group cycling events | Yes |
+| Proposal cancellation | Users can cancel proposed group rides | Yes |
+| Admin can verify proposed rides | Users who are not already designated as ‘trusted organisers’ can have their rides verified by admin | Yes |
+| Badge/number of rides display | The correct number of verified rides displays for the user. | Yes |
+| Proposal edit and deletion of un-verified rides | User can edit or delete a ride proposal which has not yet been viewed by other users | Yes |
+| Event RSVP | User can sign up to any ride with space | Yes |
+| Event attendance | User attendance at event is recorded | Yes |
 
 ### Testing specific to form inputs
 | Form field | Blank | Too long/large | Incorrect | Invalid |
 | ---- | ----- | ----- | ----- | ----- |
+| Title of ride | User given message that field cannot be blank | No further text accepted | Poor titles may be changed by admin on verification | Only text accepted in this field |
+| Date | Not possible to be completely blank | - | Dates cannot be set in the past, but user can select any future date | Field recognises valid dates and will change invalid inputs |
+| Image | Not a mandatory field, so no issue | User warned image is too large | Incorrect images could be uploaded, but found and removed by admin on verification | Only image files accepted. Users receive warnings about invalid file types |
+| Route description | User given message that field cannot be blank | User informed of character limit | If a poor assessment is made, admin may be able to see this (if familiar with the route) during verification | Only text accepted |
+| Start place | User given message that field cannot be blank | No further text accepted | Checked by admin | Only text accepted |
+| End place | User given message that field cannot be blank | No further text accepted | Checked by admin | Only text accepted |
+| Start time | Not possible to be completely blank | Input field corrects dates (for example 32 changes to 31 in January, or 30 in April) | Checked by admin. Time cannot be in the past, page will re-render without submitting. | Only valid time inputs accepted |
+| Distance | User given message that field cannot be blank | User informed that exceeds limit | If a poor assessment is made, admin may be able to see this (if familiar with the route) during verification | Only numerical input accepted |
+| Difficulty | Default value provided | - | If a poor assessment is made, admin may be able to see this (if familiar with the route) during verification | - |
+| Attendance register | No update to the attendance of users | - | - | - |
+
+### Buttons
+| Button | Performs intended action? | Redirects to the correct place? |
+| ---- | ---- | ---- |
+| View ride detail | Yes | Yes - Detailed view of ride and those already signed up |
+| Sign-up for ride | Yes | Yes - Detailed view with user in list. Sign-up button changes text to ‘cancel registration’ |
+| Cancel registration | Yes | Yes - Detailed user view without user in list and button text toggled back to ‘sign-up’ |
+| Cancel created ride | Yes | Yes - Ride list with the ride showing as 'cancelled' |
+| Edit (non-verified rides only) | Yes | Yes - edit form |
+| Delete (non-verified rides only) | Yes | Yes - delete confirmation |
+| Delete confirmation | Yes | Yes - rides list without the item that was deleted |
 
 ### Other tests of possible user actions
 | Action | Result acceptable? |
 | ---- | ---- |
-
-
+| Back-up from ride creation form returns to rides list with no ride created | Yes |
+| Back-up after ride is submitted (modal clicked as 'OK') does not remove proposed ride | Yes |
+| Back-up after ride sign-up removes ride sign-up (back-up toggles the button) | Yes |
+| Back-up after taking the attendance register returns to the attendance register | Yes |
 
 ## Testing of JavaScript
-A limited amount of JavaScript was added to the code
+A limited amount of JavaScript was added to the code. The code itself was passed through JSHint with no issues.
+
+| Intended function | Action | Pass? |
+| ---- | ---- | ---- |
+| Formatting of list items from admin to allow rendering as a list with bullet points in Services and Bookings | Each item from the list had the prefix of '*' removed and was replaced with a line break. This script was made redundant by another solution later. | Yes, but not used in production |
+| To add thumbnail images of the new files the user is uploading to improve UX and clarity | Miniature pictures are shown of the new images | Yes |
+| Pop-up to confirm whether a user wishes to report a forum post | Pop-up appears with 'confirm' and 'cancel'. 'Confirm' continues to form submission and the report is deleted, 'cancel' returns the user to the forum with no action on the post | Yes |
+| Pop-up modal to thank user for submission of trading item | Modal pops up and informs the user that the item will be marked as pending until admin verify it. The form is submitted when the user clicks 'OK' | Yes |
+| Additional protection for date input in planning social rides | Date selector has past dates blanked out and unavailable for selection | Yes |
+| Pop-up modal to thank user for submission of social ride suggestion | Modal pops up and informs the user that the ride will be marked as pending until admin verify it. The form is submitted when the user clicks 'OK' | Yes |
+| Pop-up to confirm whether a user wishes to cancel a booking | Pop-up appears with 'confirm' and 'cancel'. 'Confirm' continues to form submission and the booking is cancelled, 'cancel' returns the user to the bookings list with no action on the booking | Yes |

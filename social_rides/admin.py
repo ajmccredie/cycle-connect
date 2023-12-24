@@ -13,7 +13,7 @@ class RideAdmin(admin.ModelAdmin):
     actions = ['approve_rides']
 
     def approve_rides(self, request, queryset):
-        queryset.update(approved=True)
+        queryset.update(is_verified=True)
     approve_rides.short_description = "Mark selected rides as verified"
 admin.site.register(Ride, RideAdmin)
 

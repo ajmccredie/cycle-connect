@@ -1,13 +1,4 @@
-// A function to allow formatting of the information added about the services:
-document.addEventListener('DOMContentLoaded', function() {
-    let serviceDescriptions = document.getElementsByClassName('service_description');
-    Array.from(serviceDescriptions).forEach(function(bulletDescription) {
-        bulletDescription.innerHTML = bulletDescription.innerHTML.replace(/\*/g, '<br>');
-    });
-});
-
-
-// Script to add image thumbnails in userprofile edit and in social rides add ride and edit
+// Script to add image thumbnails in userprofile and in social rides add ride and edit
 function previewImage(event) {
     let reader = new FileReader();
     reader.onload = function(){
@@ -16,7 +7,7 @@ function previewImage(event) {
         output.style.display = 'block';
     };
     reader.readAsDataURL(event.target.files[0]);
-}
+};
 
 // Button to confirm reporting of posts in forum
 document.addEventListener('DOMContentLoaded', function() {
@@ -37,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reportModal.style.display = "none";
         if (formToSubmit) {
             formToSubmit.submit();
-        }
+        };
     };
 
     cancelBtn.addEventListener('click', function() {
@@ -60,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     okBtn.onclick = function() {
         modal.style.display = "none";
         form.submit(); 
-    }
+    };
 });
 
 // Form validation prevention selection of past dates
@@ -68,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dateInput = document.getElementById(window.dateFieldId);
     if (dateInput) {
         dateInput.setAttribute('min', window.currentDate);
-    }
+    };
 });
 
 // Pop-up to confirm cancellation of bookings
