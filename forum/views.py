@@ -1,14 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.views import generic, View
+from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.http import JsonResponse
 from django.db.models import Q
 from .models import ForumPost, Comment
-from .forms import PostForm, CommentForm, SearchForm
+from .forms import PostForm, CommentForm
 
 
 # See and add posts

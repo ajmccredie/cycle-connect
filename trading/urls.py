@@ -1,5 +1,4 @@
 from django.urls import path
-from . import views
 from trading.views import TradingPostView, TradingPostNewView, TradingPostEditView, TradingPostDeleteView, TradingConversationView
 from .views import toggle_post_status
 

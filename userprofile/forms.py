@@ -2,10 +2,10 @@ from .models import ProfileDetails
 from allauth.account.forms import SignupForm
 from crispy_forms.layout import Layout, Submit
 from crispy_forms.helper import FormHelper
-from django.contrib.auth.models import User
 from django import forms
 
 
+# Allow detailed sign-ups
 class CustomSignupForm(SignupForm):
     PREFERRED_RIDE_TYPE_CHOICES = [
     ("road", "Road"),

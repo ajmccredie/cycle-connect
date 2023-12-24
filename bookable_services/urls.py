@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import BookService, ServiceList, SelectPlace, BookServiceConfirmationView, BookingStatusView, CancelBookingView
-from . import views
 
 urlpatterns = [
     path('services/', ServiceList.as_view(), name='service_list'),

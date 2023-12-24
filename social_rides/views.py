@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.db.models import Q, DateTimeField
+from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView

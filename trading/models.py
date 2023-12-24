@@ -4,6 +4,7 @@ from cloudinary.models import CloudinaryField
 
 APPROVED = ((0, "Draft"), (1, "Published"))
 
+# Data model of trading posts
 class TradingPost(models.Model):
     CATEGORY_CHOICES = [
         ("clothing", "Clothing"),
@@ -41,6 +42,7 @@ class TradingPost(models.Model):
         return self.title
 
 
+# Data model of conversation
 class TradingConversation(models.Model):
     post = models.ForeignKey(TradingPost, on_delete=models.CASCADE, related_name='conversations')
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='selling_conversations')
@@ -51,6 +53,7 @@ class TradingConversation(models.Model):
         return f'Conversation about {self.post.title} between {self.seller} and {self.buyer}'
 
 
+# Data model of message
 class Message(models.Model):
     conversation = models.ForeignKey(TradingConversation, on_delete=models.CASCADE, related_name='messages')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')

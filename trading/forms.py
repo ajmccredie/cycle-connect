@@ -7,11 +7,14 @@ from django.core.validators import MaxLengthValidator, MinLengthValidator, FileE
 from django.core.exceptions import ValidationError
 from django import forms
 
+# Additional image size for form validation
 def validate_image_size(image):
     max_size = 9 * 1024 * 1024  # 9MB
     if image.size > max_size:
         raise ValidationError('Image file too large ( > 9MB )')
 
+
+# Set-up and edit trading posts
 class TradingPostForm(forms.ModelForm):
     title = forms.CharField(validators=[MinLengthValidator(2), MaxLengthValidator(200)])
     description = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(5), MaxLengthValidator(750)])
@@ -44,6 +47,7 @@ class TradingPostForm(forms.ModelForm):
             field.label = ''
 
 
+# Allow conversations about items
 class MessageForm(forms.ModelForm):
     text = forms.CharField(widget=SummernoteWidget(), required=True)
 

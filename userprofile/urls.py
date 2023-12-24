@@ -1,6 +1,5 @@
 from django.urls import path
-from . import views
-from userprofile.views import CustomSignupView, LogoutView, AccountLoginView, ProfileView, SignUpView, IndexView, SignupFullProfileView, ProfileEditView
+from userprofile.views import LogoutView, AccountLoginView, ProfileView, SignUpView, IndexView, SignupFullProfileView, ProfileEditView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),

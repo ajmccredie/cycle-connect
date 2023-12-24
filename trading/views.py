@@ -1,17 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, Count, Subquery, OuterRef, Case, When, Value, IntegerField
-from django.db.models.functions import Coalesce
-from django.views import generic, View
+from django.views import View
 from django.views.generic import ListView
 from .models import TradingPost, TradingConversation, Message
 from .forms import TradingPostForm, MessageForm
 from django.contrib import messages
 
-# Create your views here.
 
+# Display listings
 class TradingPostView(ListView, LoginRequiredMixin):
     model = TradingPost
     template_name = 'trading/trading_list.html'
@@ -64,6 +62,7 @@ def toggle_post_status(request, post_id):
     return redirect('trading_list')
 
 
+# Add new items
 class TradingPostNewView(View, LoginRequiredMixin):
     form_class = TradingPostForm
     template_name = 'trading/trading_new.html'
@@ -83,11 +82,12 @@ class TradingPostNewView(View, LoginRequiredMixin):
             trading_post = form.save(commit=False)
             trading_post.seller = request.user
             trading_post.save()
-            messages.success(request, 'New post created successfully!')
+            messages.warning(request, 'New trading post')
             return redirect('trading_list')
         return render(request, self.template_name, {'form': form}) 
 
 
+# Edit existing items
 class TradingPostEditView(View, LoginRequiredMixin):
     template_name = 'trading/trading_edit.html'
     
@@ -110,6 +110,7 @@ class TradingPostEditView(View, LoginRequiredMixin):
         return self.request.user == post.seller
 
 
+# Delete existing post
 class TradingPostDeleteView(View, LoginRequiredMixin):
     template_name = 'trading/trading_delete.html'
 
@@ -127,6 +128,7 @@ class TradingPostDeleteView(View, LoginRequiredMixin):
         return self.request.user == post.seller
 
 
+# Discuss posts
 class TradingConversationView(View, LoginRequiredMixin):
     model = TradingConversation
     template_name = 'trading/trading_conversation.html'

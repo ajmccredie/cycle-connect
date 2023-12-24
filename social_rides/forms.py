@@ -2,9 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-import datetime
 from crispy_forms.layout import Layout, Submit, Field
-from datetime import timedelta
 from .models import Ride
 
 # Set up form for new rides

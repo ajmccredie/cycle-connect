@@ -1,7 +1,7 @@
+# Automated tests were never run as intended. 
 from django.test import TestCase, override_settings
-from django.conf import settings
 from django.test.utils import override_settings
-from .forms import CustomSignupForm, ProfileDetailsForm
+from .forms import CustomSignupForm
 
 
 @override_settings(DATABASES={

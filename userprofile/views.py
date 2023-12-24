@@ -1,19 +1,21 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import generic, View
+from django.shortcuts import render, redirect
+from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 from .models import ProfileDetails
 from ts_and_cs.models import UserVerified
 from .forms import CustomSignupForm, ProfileDetailsForm
 from allauth.account.views import SignupView
 
+
+# Full user sign-up form
 class CustomSignupView(SignupView):
     template_name = 'userprofile/signup.html'
     form_class = CustomSignupForm
 
 
+# Home page for logged out and logged in users
 class IndexView(View):
     def get(self, request):
         return render(request, 'index.html')
@@ -29,6 +31,7 @@ class IndexView(View):
             return render(request, 'index.html', {'error': 'Invalid username or password.'})
 
 
+# Check login credentials
 class AccountLoginView(View):
     def get(self, request):
         return render(request, 'index.html')
@@ -46,6 +49,7 @@ class AccountLoginView(View):
             })
 
 
+# Basic sign up form
 class SignUpView(View):
     def get(self, request):
         form = UserCreationForm()
@@ -59,6 +63,8 @@ class SignUpView(View):
             return redirect('signup_full_profile')
         return render(request, 'userprofile/sign_up.html', {'form': form})
 
+
+# Render full sign-up form
 class SignupFullProfileView(LoginRequiredMixin, View):
     template_name = 'userprofile/signup_full_profile.html'
 
@@ -87,6 +93,7 @@ class SignupFullProfileView(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
+# View detailed profile information
 class ProfileView(LoginRequiredMixin, View):
     def get(self, request):
         defaults = {
@@ -99,6 +106,7 @@ class ProfileView(LoginRequiredMixin, View):
         return render(request, 'userprofile/profile_view.html', {'profile': profile_details})
 
 
+# Edit the profile information
 class ProfileEditView(LoginRequiredMixin, View):
     template_name = 'userprofile/profile_edit.html'
 
@@ -116,6 +124,7 @@ class ProfileEditView(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
+# Logout from the site
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'userprofile/logout_confirmation.html')

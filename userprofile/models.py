@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
+# Data model for profile details
 class ProfileDetails(models.Model):
     #Fields added to fix rendering issue in template
     CYCLING_SKILLS_CHOICES = [
@@ -48,6 +49,7 @@ class ProfileDetails(models.Model):
         return dict(self.MAINTENANCE_SKILLS_CHOICES).get(self.maintenance_skills, '')
 
 
+# Data model for use notifications (un-used within project scope)
 class Notification(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     message = models.CharField(max_length=250)

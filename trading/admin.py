@@ -4,6 +4,8 @@ from .models import TradingPost, TradingConversation, Message
 admin.site.register(TradingConversation)
 admin.site.register(Message)
 
+
+# Admin can see and approve trading posts
 class TradingPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'seller', 'created_on', 'approved', 'status')
     list_filter = ('approved', 'status', 'created_on')
