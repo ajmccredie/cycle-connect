@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib import messages
-from django.db.models import Q, ExpressionWrapper, DateTimeField
-from django.db.models.functions import Coalesce
+from django.db.models import Q, DateTimeField
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
@@ -12,7 +10,7 @@ from datetime import datetime
 from .models import Ride, RideAttendance, RideOrganiser
 from .forms import RideForm
 
-# Create your views here.
+# View all the rides
 class RidesOverview(ListView, LoginRequiredMixin):
     model = Ride
     template_name = 'social_rides/rides.html'
@@ -39,6 +37,7 @@ class RidesOverview(ListView, LoginRequiredMixin):
         return context
 
 
+# Add a new ride
 class AddRideView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         form = RideForm()
@@ -58,6 +57,7 @@ class AddRideView(View, LoginRequiredMixin):
         return render(request, 'social_rides/add_ride.html', {'form': form})
 
 
+# View ride details
 class RideDetailView(DetailView, LoginRequiredMixin):
     model = Ride
     template_name = 'social_rides/ride_details.html'
@@ -85,6 +85,7 @@ class RideDetailView(DetailView, LoginRequiredMixin):
         return context
 
 
+# Register attendance
 class RegisterForRide(LoginRequiredMixin, View):
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id)
@@ -95,6 +96,7 @@ class RegisterForRide(LoginRequiredMixin, View):
         return redirect('ride_details', pk=ride_id)
 
 
+# Edit unverified rides
 class RideEditView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
@@ -121,12 +123,15 @@ class RideEditView(LoginRequiredMixin, View):
             return redirect('ride_details', pk=ride_id)
 
 
+
+# Confirm delete of unverified rides
 class RideConfirmDeleteView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
         return render(request, 'social_rides/confirm_delete_ride.html', {'ride': ride})
 
 
+# Delete unverified rides
 class RideDeleteView(LoginRequiredMixin, View):
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
@@ -138,12 +143,14 @@ class RideDeleteView(LoginRequiredMixin, View):
         return redirect('rides')
 
 
+# Confirm cancel rides
 class RideConfirmCancelView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
         return render(request, 'social_rides/confirm_cancel_ride.html', {'ride': ride})
 
 
+# Cancel rides
 class RideCancelView(LoginRequiredMixin, View):
     def post(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
@@ -153,6 +160,7 @@ class RideCancelView(LoginRequiredMixin, View):
         return redirect('ride_details', pk=ride_id)
 
 
+# Verify attendance
 class VerifyAttendanceView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
         ride = get_object_or_404(Ride, id=ride_id)

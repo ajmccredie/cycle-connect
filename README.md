@@ -240,6 +240,7 @@ Full details [here](/TESTDETAILS.md)
 
 ## Agile project planning and methodology
 Initial collection of user stories were made, categorised for 'must', 'should' and 'could' and then used in conjunction with GitHub Projects.<br>
+The user stories were prepared and placed on the Kanban Board for my GitHub Project: https://github.com/users/ajmccredie/projects/2/views/1 <br>
 Meeting the user stories was then planned with a series of goals, and then split down further into sprints. The proposed sprints were then met fully or partially, and any incomplete work was reassessed as to its value and where it should be placed.
 <br>
 
@@ -400,6 +401,9 @@ The work on the site was not intended to be intense at this stage, but rather fu
 The items which were added back to the product backlog in other sprints were assessed for story points and for how much added benefit they were likely to bring. 
 
 The remainder of the work was to transfer the information gathered during testing and regarding the write ups of the sprints, key features and design and development into the README document in Markdown format.
+
+Final view of Kanban Project Board:
+![Kanban project board](static/README-images/kanban-board.png)
 
 #### Analysis of Sprint 5 and lessons learned:
 The Definition of Done was met and the site's forms and navigation all work as expected under test. 

@@ -4,6 +4,7 @@ from cloudinary.models import CloudinaryField
 
 STATUS = ((0, "False"), (1, "True"))
 
+# Data model and relationships for forum posts
 class ForumPost(models.Model):
     UserId = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, unique=False)
@@ -28,12 +29,13 @@ class ForumPost(models.Model):
         return self.comments.count()
 
 
+# Data model and relationships for forum comments
 class Comment(models.Model):
     post = models.ForeignKey(ForumPost, on_delete=models.CASCADE, related_name='comments')
     name = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['created_on']

@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 
-# Create your models here.
 
+# Data model for the ride set-up
 class Ride(models.Model):
     organiser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='organised_rides')
     title = models.CharField(max_length=200)
@@ -33,6 +33,7 @@ class Ride(models.Model):
         return self.title
 
 
+# Data model for the trusted ride organisers
 class RideOrganiser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     trusted_organiser = models.BooleanField(default=False)
@@ -41,6 +42,7 @@ class RideOrganiser(models.Model):
         return self.user.username
 
 
+# Data model for the ride attendance list and attendance registration
 class RideAttendance(models.Model):
     ride = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='attendees')
     participant = models.ForeignKey(User, on_delete=models.CASCADE, related_name='participated_rides')

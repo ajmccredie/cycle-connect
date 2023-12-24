@@ -7,6 +7,7 @@ from crispy_forms.layout import Layout, Submit, Field
 from datetime import timedelta
 from .models import Ride
 
+# Set up form for new rides
 class RideForm(forms.ModelForm):
     class Meta:
         model = Ride

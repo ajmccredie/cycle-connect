@@ -2,8 +2,7 @@ from django.contrib import admin
 from .models import ForumPost, Comment
 from django_summernote.admin import SummernoteModelAdmin
 
-# Register your models here.
-
+# Admin can view posts and reported posts
 @admin.register(ForumPost)
 class PostAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'title': ('title',)}
@@ -23,6 +22,7 @@ class PostAdmin(SummernoteModelAdmin):
     reported_by_list.short_description = 'Reported By'
 
 
+# Admin can view comments on posts
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'body', 'post', 'created_on', 'approved')

@@ -11,6 +11,7 @@ from .models import ForumPost, Comment
 from .forms import PostForm, CommentForm, SearchForm
 
 
+# See and add posts
 class UserPost(LoginRequiredMixin, View):
     template_name = 'forum/userforum.html'
     paginate_by = 8
@@ -54,6 +55,7 @@ class UserPost(LoginRequiredMixin, View):
             return render(request, self.template_name, context)
 
 
+# Like posts on the forum
 class PostLike(LoginRequiredMixin, View):
     def post(self, request, post_id):
         post = get_object_or_404(ForumPost, id=post_id)
@@ -66,6 +68,7 @@ class PostLike(LoginRequiredMixin, View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('userforum'))) # from a suggestion from Stack Overflow
 
 
+# Edit posts
 class EditPost(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         post_id = kwargs.get('post_id')
@@ -94,6 +97,7 @@ class EditPost(LoginRequiredMixin, View):
             return render(request, 'forum/edit_forum_post.html', {'form': form, 'post': post})
 
 
+# Delete posts
 class DeletePost(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         post_id = kwargs.get('post_id')
@@ -114,6 +118,8 @@ class DeletePost(LoginRequiredMixin, View):
         else:
             return redirect('userforum')
 
+
+# View greater detail about a post and comment
 class ForumPostDetailView(DetailView, LoginRequiredMixin):
     model = ForumPost
     template_name = "forum/userforum_post_detail.html"
@@ -140,6 +146,8 @@ class ForumPostDetailView(DetailView, LoginRequiredMixin):
             new_comment.save()
         return redirect('userforum_post_detail', pk=post.pk)
 
+
+# Edit the comment
 class EditForumCommentView(UpdateView, LoginRequiredMixin):
     model = Comment
     form_class = CommentForm
@@ -166,6 +174,7 @@ class EditForumCommentView(UpdateView, LoginRequiredMixin):
         return render(self.request, self.template_name, {'form': form, 'post': self.object.post})
     
 
+# Delete the comment
 class DeleteForumCommentView(LoginRequiredMixin, DeleteView):
     model = Comment
     template_name = 'forum/delete_forum_comment.html'
@@ -184,6 +193,7 @@ class DeleteForumCommentView(LoginRequiredMixin, DeleteView):
         return context
 
 
+# Search the forum posts
 class SearchResultsView(LoginRequiredMixin, ListView):
     model = ForumPost
     template_name = 'forum/forum_search.html'
@@ -201,6 +211,7 @@ class SearchResultsView(LoginRequiredMixin, ListView):
         return context
 
 
+# Report forum posts
 class ReportPostView(LoginRequiredMixin, View):
     def post(self, request, post_id):
         print("Debug code")
