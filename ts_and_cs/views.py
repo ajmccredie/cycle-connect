@@ -26,9 +26,9 @@ class TermsAndConditionsView(LoginRequiredMixin, View):
 
 # Custom 404 page
 def custom_404(request, exception):
-    return render(request, 'ts_and_cs/404.html', {}, status=404)
+    return render(request, 'ts_and_cs/custom_404.html', {}, status=404)
 
 
 # Custom 500 page
 def custom_500_handler(request):
-    return render(request, '500.html', status=500)
+    return render(request, 'ts_and_cs/custom_500.html', status=500)
