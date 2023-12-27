@@ -15,4 +15,12 @@
 </div>
 <a class="btn btn-a" href="{% url 'booking_status' %}">View My Bookings</a>
 
+<!-- Script to prevent users backing up from this page to attempt to rebook a booked slot -->
+<script>
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+
 {% endblock %}
