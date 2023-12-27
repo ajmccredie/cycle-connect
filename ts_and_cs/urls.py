@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import TermsAndConditionsView
-from ts_and_cs.views import custom_404
+from ts_and_cs.views import custom_404, custom_500_handler
 
+handler500 = 'core.views.custom_500_handler'
 handler404 = 'ts_and_cs.views.custom_404'
 
 urlpatterns = [
