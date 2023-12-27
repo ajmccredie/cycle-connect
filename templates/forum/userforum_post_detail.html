@@ -20,6 +20,14 @@
     <p>No comments yet.</p>
 {% endfor %}
 
+{% if messages %}
+<div class="message-box">
+    {% for message in messages %}
+        <div class="{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <h3>Add a comment:</h3>
 <form method="post">
     {% csrf_token %}

@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from ts_and_cs.views import custom_404
 from userprofile.views import CustomSignupView, IndexView, LogoutView, AccountLoginView, ProfileView, SignUpView, SignupFullProfileView, ProfileEditView
 
+handler404 = 'ts_and_cs.views.custom_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),

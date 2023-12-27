@@ -4,6 +4,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.urls import reverse
 from django.db.models import Q
 from .models import ForumPost, Comment
@@ -152,6 +153,13 @@ class EditForumCommentView(UpdateView, LoginRequiredMixin):
     form_class = CommentForm
     template_name = "forum/edit_forum_comment.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.name != request.user:
+            messages.error(request, "You do not have permission to edit this comment.")
+            return redirect('userforum_post_detail', pk=self.object.post.id)
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
@@ -177,6 +185,13 @@ class EditForumCommentView(UpdateView, LoginRequiredMixin):
 class DeleteForumCommentView(LoginRequiredMixin, DeleteView):
     model = Comment
     template_name = 'forum/delete_forum_comment.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.name != request.user:
+            messages.error(request, "You do not have permission to delete this comment.")
+            return redirect('userforum_post_detail', pk=self.object.post.id)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('userforum_post_detail', kwargs={'pk': self.object.post.pk})

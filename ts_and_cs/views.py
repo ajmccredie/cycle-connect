@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserVerified
 
-# Create your views here.
+# Terms and conditions page
 class TermsAndConditionsView(LoginRequiredMixin, View):
     template_name = 'ts_and_cs/terms.html'
 
@@ -22,3 +22,8 @@ class TermsAndConditionsView(LoginRequiredMixin, View):
         if not user_verified.profile_completed:
             return redirect('signup_full_profile')  # Redirect to complete profile
         return redirect('index')
+
+
+# Custom 404 page
+def custom_404(request, exception):
+    return render(request, 'ts_and_cs/404.html', {}, status=404)

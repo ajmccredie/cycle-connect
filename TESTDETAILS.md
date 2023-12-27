@@ -1,4 +1,4 @@
-This document provides additional testing details for the site. 
+This document provides additional testing details for the site. Back to [README](/README.md)
 
 # Full details of manual site testing
 ## Sign-up and profile
@@ -14,8 +14,7 @@ This document provides additional testing details for the site.
 | Form field | Blank | Too long/large | Incorrect | Invalid |
 | ---- | ----- | ----- | ----- | ----- |
 | Username (initial sign-up) | States that it is required | The list of requirements is under the field. If it does not meet the requirements, the page re-renders and the user is required to try again | The list of requirements is under the field. If it does not meet the requirements, the page re-renders and the user is required to try again | Users are told if that username is already taken and asked to select a new one. |
-| Password
-(initial sign-up) | States that it is required | Unable to reach this limit in manual testing | If the password does not meet the requirements it says so on the page | Non-matching second password re-renders the page and the user is required to try again |
+| Password (initial sign-up) | States that it is required | Unable to reach this limit in manual testing | If the password does not meet the requirements it says so on the page | Non-matching second password re-renders the page and the user is required to try again |
 | Username (login) | Sign-in button is disabled | - | Sign-in button is disabled and page re-renders | Sign-in button is disabled and page re-renders |
 | Password (login) | Sign-in button is disabled | - | Sign-in button is disabled and page re-renders | Sign-in button is disabled and page re-renders |
 | Ts and Cs | Page re-renders with form in place | - | Page re-renders with form in place | Page re-renders with form in place |
@@ -86,6 +85,8 @@ This document provides additional testing details for the site.
 | Back-up can be pressed at any time during the forms and the previous page is rendered. | Yes |
 | Back-up does not restore a reported post to the forum. | Yes |
 | Back-up does not delete forum posts, nor does it delete comments. | Yes |
+
+Back to [README](/README.md)
 
 ## Marketplace/trading
 ### Overview
@@ -167,6 +168,8 @@ Additional checks (these all behave as expected):
 | Back-up does not remove service bookings once they are pending or confirmed | Yes |
 | Back-up does not restore cancelled bookings | Yes |
 
+Back to [README](/README.md)
+
 ## Social Rides
 ### Overview
 | Test case description | Expected outcome | Pass? |
@@ -213,6 +216,8 @@ Additional checks (these all behave as expected):
 | Back-up after ride sign-up removes ride sign-up (back-up toggles the button) | Yes |
 | Back-up after taking the attendance register returns to the attendance register | Yes |
 
+Back to [README](/README.md)
+
 ## Testing of JavaScript
 A limited amount of JavaScript was added to the code. The code itself was passed through JSHint with no issues.
 
@@ -225,3 +230,5 @@ A limited amount of JavaScript was added to the code. The code itself was passed
 | Additional protection for date input in planning social rides | Date selector has past dates blanked out and unavailable for selection | Yes |
 | Pop-up modal to thank user for submission of social ride suggestion | Modal pops up and informs the user that the ride will be marked as pending until admin verify it. The form is submitted when the user clicks 'OK' | Yes |
 | Pop-up to confirm whether a user wishes to cancel a booking | Pop-up appears with 'confirm' and 'cancel'. 'Confirm' continues to form submission and the booking is cancelled, 'cancel' returns the user to the bookings list with no action on the booking | Yes |
+
+Back to [README](/README.md)

@@ -10,6 +10,13 @@
 </div>
 
 <a href="{% url 'add_ride' %}" class="btn btn-edit">Create New Ride</a>
+{% if messages %}
+<div class="message-box">
+    {% for message in messages %}
+        <div class="{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
 <h2>Upcoming Rides</h2>
 <div class="rides-list">
     {% for ride in upcoming_rides %}

@@ -81,6 +81,7 @@ class RideDetailView(DetailView, LoginRequiredMixin):
             user_is_registered = RideAttendance.objects.filter(ride=ride, participant=self.request.user).exists()
             context['is_user_registered'] = user_is_registered
             context['registered_users'] = RideAttendance.objects.filter(ride=ride)
+        context['is_organiser'] = ride.organiser == self.request.user
         return context
 
 
@@ -98,7 +99,10 @@ class RegisterForRide(LoginRequiredMixin, View):
 # Edit unverified rides
 class RideEditView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
-        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride = get_object_or_404(Ride, id=ride_id)
+        if ride.organiser != request.user:
+            messages.error(request, "You are not authorised to edit this ride.")
+            return redirect('ride_details', pk=ride_id)
         current_date = timezone.now().date().isoformat()
         if ride.attendees.count() == 0 and not ride.is_verified:
             form = RideForm(instance=ride)
@@ -108,7 +112,10 @@ class RideEditView(LoginRequiredMixin, View):
             return redirect('ride_details', pk=ride_id)
 
     def post(self, request, ride_id):
-        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride = get_object_or_404(Ride, id=ride_id)
+        if ride.organiser != request.user:
+            messages.error(request, "You are not authorised to edit this ride.")
+            return redirect('ride_details', pk=ride_id)
         if ride.attendees.count() == 0 and not ride.is_verified:
             form = RideForm(request.POST, instance=ride)
             if form.is_valid():
@@ -126,14 +133,20 @@ class RideEditView(LoginRequiredMixin, View):
 # Confirm delete of unverified rides
 class RideConfirmDeleteView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
-        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride = get_object_or_404(Ride, id=ride_id)
+        if ride.organiser != request.user:
+            messages.error(request, "You are not authorised to delete this ride.")
+            return redirect('rides')
         return render(request, 'social_rides/confirm_delete_ride.html', {'ride': ride})
 
 
 # Delete unverified rides
 class RideDeleteView(LoginRequiredMixin, View):
     def post(self, request, ride_id):
-        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride = get_object_or_404(Ride, id=ride_id)
+        if ride.organiser != request.user:
+            messages.error(request, "You are not authorised to delete this ride.")
+            return redirect('rides')
         if ride.attendees.count() == 0 and not ride.is_verified:
             ride.delete()
             messages.success(request, "Ride successfully deleted.")
@@ -145,14 +158,20 @@ class RideDeleteView(LoginRequiredMixin, View):
 # Confirm cancel rides
 class RideConfirmCancelView(LoginRequiredMixin, View):
     def get(self, request, ride_id):
-        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride = get_object_or_404(Ride, id=ride_id)
+        if ride.organiser != request.user:
+            messages.error(request, "You are not authorised to cancel this ride.")
+            return redirect('ride_details', pk=ride_id)
         return render(request, 'social_rides/confirm_cancel_ride.html', {'ride': ride})
 
 
 # Cancel rides
 class RideCancelView(LoginRequiredMixin, View):
     def post(self, request, ride_id):
-        ride = get_object_or_404(Ride, id=ride_id, organiser=request.user)
+        ride = get_object_or_404(Ride, id=ride_id)
+        if ride.organiser != request.user:
+            messages.error(request, "You are not authorised to cancel this ride.")
+            return redirect('rides')
         ride.is_cancelled = True
         ride.save()
         messages.success(request, "Ride has been cancelled.")
