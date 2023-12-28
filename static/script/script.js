@@ -37,6 +37,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Pop-up to confirm user edit actions
+document.getElementById('editForm').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    let form = this;
+    let overlay = document.getElementById('popup-overlay');
+    let popup = document.getElementById('success-popup');
+
+    overlay.style.display = 'flex';
+    popup.style.display = 'block';
+
+    setTimeout(function() {
+        setTimeout(function() { 
+            overlay.style.display = 'none';
+            popup.style.display = 'none';
+            form.submit();
+        }, 500);
+    }, 1500);
+});
+
 // Trading thank you submission message
 document.addEventListener('DOMContentLoaded', function() {
     let form = document.getElementById('trade-form');

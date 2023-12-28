@@ -7,7 +7,13 @@
 {% block content %}
 <h1>Please edit your post</h1>
 
-<form method="post">
+<div id="popup-overlay">
+    <div id="success-popup" class="popup-message">
+        <p>Edit was successful!</p>
+    </div>
+</div>
+
+<form method="post" id="editForm">
     {% csrf_token %}
         {{ form.title }}
         {{ form.content }}

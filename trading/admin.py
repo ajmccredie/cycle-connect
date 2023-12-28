@@ -16,4 +16,9 @@ class TradingPostAdmin(admin.ModelAdmin):
         queryset.update(approved=True)
     approve_posts.short_description = "Mark selected posts as approved"
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if not change:  # This checks if it's a new instance
+            self.message_user(request, f"New trading post '{obj.title}' has been added and is awaiting approval.", messages.INFO)
+
 admin.site.register(TradingPost, TradingPostAdmin)
