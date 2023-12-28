@@ -5,7 +5,13 @@
 {% block content %}
 <h1>Please edit your ride</h1>
 
-<form method="post">
+<div id="popup-overlay">
+    <div id="success-popup" class="popup-message">
+        <p>Ride updated successfully!</p>
+    </div>
+</div>
+
+<form method="post" id="editForm">
     {% csrf_token %}
     <div class="form-group">
         <label for="{{ form.title.id_for_label }}">Title:</label>

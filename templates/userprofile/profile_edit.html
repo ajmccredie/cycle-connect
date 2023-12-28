@@ -5,7 +5,14 @@
 {% block content %}
 <div class="container">
     <h2>Edit Profile</h2>
-    <form method="post" enctype="multipart/form-data">
+
+    <div id="popup-overlay">
+        <div id="success-popup" class="popup-message">
+            <p>Profile update successful!</p>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" id="editForm">
         {% csrf_token %}
         <div class="form-group">
             <label for="{{ form.biography.id_for_label }}"></label>

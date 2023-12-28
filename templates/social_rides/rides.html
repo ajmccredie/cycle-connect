@@ -4,7 +4,7 @@
 <div class="display-container">
     <h1><strong>Social Rides</strong><br>- join a planned ride or create a new one</h1>
     <div class="verified-attendance-total">
-        <h4>Rides:<br>
+        <h4>Rides<br>Completed:<br>
         <i class="fa fa-bicycle"></i> <strong>{{ verified_attendance_count }}</strong></h4>
     </div>
 </div>
@@ -33,7 +33,7 @@
         {% endif %}
         {% if ride.is_cancelled %}
         <div class="alert alert-warning" role="alert">
-            <h2>Sorry, this ride has been cancelled.</h2>
+            <h4>Sorry, this ride has been cancelled.</h4>
         </div>
         {% else %}
         <p>Spaces Left: {{ ride.spaces_left }}</p>

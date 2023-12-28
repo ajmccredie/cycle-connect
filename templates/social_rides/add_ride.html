@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <form method="post" enctype="multipart/form-data">
+    <form id="ride-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" id="isTrustedOrganiser" value="{{ is_trusted_organiser|yesno:'true,false' }}">
         <div class="form-group">

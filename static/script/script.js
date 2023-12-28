@@ -48,11 +48,9 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
     popup.style.display = 'block';
 
     setTimeout(function() {
-        setTimeout(function() { 
-            overlay.style.display = 'none';
-            popup.style.display = 'none';
-            form.submit();
-        }, 500);
+        form.submit();
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
     }, 1500);
 });
 
@@ -110,13 +108,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Pop-up to confirm ride has been added
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
+    const form = document.getElementById('ride-form');
     const modal = document.getElementById('submitRideModal');
     const okBtn = document.getElementById('modalOkBtn');
-    const isTrustedOrganiser = document.getElementById('isTrustedOrganiser').value === 'true';
+    const isTrustedOrganiser = document.getElementById('isTrustedOrganiser').value === 'True';
 
     form.addEventListener('submit', function(event) {
         if (!isTrustedOrganiser) {
+            console.log("Form submit event")
             event.preventDefault();
             modal.style.display = "block";
         };
