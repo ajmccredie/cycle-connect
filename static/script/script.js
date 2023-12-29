@@ -37,22 +37,27 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Pop-up to confirm user edit actions
-document.getElementById('editForm').addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    let form = this;
-    let overlay = document.getElementById('popup-overlay');
-    let popup = document.getElementById('success-popup');
+// Pop-up to confirm ride has been added
+document.addEventListener('DOMContentLoaded', function() {
+    let form = document.getElementById('ride-form');
+    let modal = document.getElementById('submitRideModal');
+    let okBtn = document.getElementById('modalOkBtn');
+    let isTrustedOrganiser = document.getElementById('isTrustedOrganiser').value === 'True';
 
-    overlay.style.display = 'flex';
-    popup.style.display = 'block';
+    form.addEventListener('submit', function(event) {
+        if (!isTrustedOrganiser) {
+            console.log("Form submit event")
+            event.preventDefault();
+            modal.style.display = "block";
+        };
+    });
 
-    setTimeout(function() {
+    okBtn.onclick = function() {
+        modal.style.display = "none";
         form.submit();
-        overlay.style.display = 'none';
-        popup.style.display = 'none';
-    }, 1500);
+    };
 });
+
 
 // Trading thank you submission message
 document.addEventListener('DOMContentLoaded', function() {
@@ -70,6 +75,52 @@ document.addEventListener('DOMContentLoaded', function() {
         form.submit(); 
     };
 });
+
+
+// Trading toggle status confirmation
+document.addEventListener('DOMContentLoaded', function() {
+    let soldModal = document.getElementById('soldConfirmationModal');
+    let confirmSoldBtn = document.getElementById('confirmSoldBtn');
+    let cancelSoldBtn = document.getElementById('cancelSoldBtn');
+
+    document.querySelectorAll('.btn-toggle-status').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            currentForm = this.closest('form');
+            soldModal.style.display = "block";
+        });
+    });
+
+    confirmSoldBtn.addEventListener('click', function() {
+        soldModal.style.display = "none";
+        if (currentForm) {
+            currentForm.submit();
+        }
+    });
+
+    cancelSoldBtn.addEventListener('click', function() {
+        soldModal.style.display = "none";
+    });
+});
+
+
+// Pop-up to confirm user edit actions
+document.getElementById('editForm').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    let form = this;
+    let overlay = document.getElementById('popup-overlay');
+    let popup = document.getElementById('success-popup');
+
+    overlay.style.display = 'flex';
+    popup.style.display = 'block';
+
+    setTimeout(function() {
+        form.submit();
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
+    }, 1500);
+});
+
 
 // Form validation prevention selection of past dates
 document.addEventListener('DOMContentLoaded', () => {
@@ -104,25 +155,4 @@ document.addEventListener('DOMContentLoaded', function() {
     cancelBtn.addEventListener('click', function() {
         cancelModal.style.display = "none";
     });
-});
-
-// Pop-up to confirm ride has been added
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('ride-form');
-    const modal = document.getElementById('submitRideModal');
-    const okBtn = document.getElementById('modalOkBtn');
-    const isTrustedOrganiser = document.getElementById('isTrustedOrganiser').value === 'True';
-
-    form.addEventListener('submit', function(event) {
-        if (!isTrustedOrganiser) {
-            console.log("Form submit event")
-            event.preventDefault();
-            modal.style.display = "block";
-        };
-    });
-
-    okBtn.onclick = function() {
-        modal.style.display = "none";
-        form.submit();
-    };
 });

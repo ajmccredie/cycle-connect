@@ -25,6 +25,16 @@
 
 <div class="posts">
     {% for post in trading_posts %}
+    
+    <div id="soldConfirmationModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Action</h2>
+            <p>Toggling this item as 'sold' will move it to the end of the marketplace listings. <br>If you are toggling it to 'available', it will go back to the top. <br>Are you sure you want to proceed?</p>
+            <button id="confirmSoldBtn" class="btn btn-edit">OK</button>
+            <button id="cancelSoldBtn" class="btn btn-edit">Cancel</button>
+        </div>
+    </div>
+
     <div class="post">
         <h2>{{ post.title }} - {{ post.get_status_display }} </h2>
         {% if not post.approved %}
@@ -47,7 +57,7 @@
         <span class="label warning-label">Pending Approval</span>
         {% endif %}
         {% if user.is_authenticated and post.seller == user %}
-        <form action="{% url 'toggle_post_status' post.id %}" method="POST">
+        <form action="{% url 'toggle_post_status' post.id %}" method="POST" id="soldToggle">
             {% csrf_token %}
             <button type="submit" class="btn-toggle-status">
                 {% if post.status == 'available' %}

@@ -2,7 +2,13 @@
 {% block content %}
 <h2>Are you sure you want to delete this post?</h2>
 <div>
-    <form method="post">
+    <div id="popup-overlay">
+        <div id="success-popup" class="popup-message">
+            <p>Marketplace post deleted successfully!</p>
+        </div>
+    </div>
+
+    <form method="post" id="editForm">
         {% csrf_token %}
         <button type="submit">Confirm</button>
     </form>

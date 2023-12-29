@@ -229,7 +229,9 @@ button:hover, input[type="submit"]:hover {
     border: 1px solid #ddd;
     background-color: rgba(255, 255, 255, 0.5);
     padding: 15px;
-    border-radius: 10px; 
+    border-radius: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .post .heading {
@@ -308,7 +310,7 @@ button:hover, input[type="submit"]:hover {
     display: none;
     transition: opacity 0.5s ease;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
+    z-index: 5;
 }
 
 .popup-message {
@@ -344,7 +346,7 @@ button:hover, input[type="submit"]:hover {
 .modal { 
     display: none; 
     position: fixed; 
-    z-index: 3; 
+    z-index: 10; 
     left: 0; 
     top: 0; 
     width: 100%; 
@@ -364,7 +366,7 @@ button:hover, input[type="submit"]:hover {
 }
 
 .modal-content button {
-    z-index: 4; 
+    z-index: 11; 
     margin-top: 20px;
     padding: 10px 20px;
     background-color: rgba(255, 221, 85, 0.7);

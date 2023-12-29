@@ -230,5 +230,16 @@ A limited amount of JavaScript was added to the code. The code itself was passed
 | Additional protection for date input in planning social rides | Date selector has past dates blanked out and unavailable for selection | Yes |
 | Pop-up modal to thank user for submission of social ride suggestion | Modal pops up and informs the user that the ride will be marked as pending until admin verify it. The form is submitted when the user clicks 'OK' | Yes |
 | Pop-up to confirm whether a user wishes to cancel a booking | Pop-up appears with 'confirm' and 'cancel'. 'Confirm' continues to form submission and the booking is cancelled, 'cancel' returns the user to the bookings list with no action on the booking | Yes |
+| Pop-up to confirm successful profile edit | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful post edit | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful post delete | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful post comment edit | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful post comment delete | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful marketplace listing edit | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful marketplace listing delete | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful social ride edit | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful social ride delete | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm successful social ride cancellation | Pop-up appears to confirm successful action, disappears and the user is directed to the correct next page. | Yes |
+| Pop-up to confirm user toggle of status of marketplace item | Pop-up appears to confirm whether the user wishes to proceed in toggling the item status, and tells them what will happen to the post. If the user cancels, it no changes are made. If the user confirms, the post status is changed and the post moves. | Yes |
 
 Back to [README](/README.md)

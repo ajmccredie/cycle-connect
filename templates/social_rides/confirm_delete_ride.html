@@ -4,7 +4,13 @@
     <h1>Delete Ride</h1>
     <p>Are you sure you want to delete the ride "{{ ride.title }}"?</p>
 
-    <form action="{% url 'delete_ride' ride_id=ride.id %}" method="post">
+    <div id="popup-overlay">
+        <div id="success-popup" class="popup-message">
+            <p>Delete was successful!</p>
+        </div>
+    </div>
+
+    <form action="{% url 'delete_ride' ride_id=ride.id %}" method="post" id="editForm">
         {% csrf_token %}
         <button type="submit" class="btn btn-delete">Confirm Delete</button>
         <a href="{% url 'ride_details' pk=ride.id %}" class="btn btn-edit">Cancel Delete</a>
