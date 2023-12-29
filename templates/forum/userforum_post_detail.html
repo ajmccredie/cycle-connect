@@ -23,7 +23,9 @@
 {% if messages %}
 <div class="message-box">
     {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
         <div class="{{ message.tags }}">{{ message }}</div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endif %}

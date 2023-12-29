@@ -7,11 +7,13 @@
     {% endif %}
 </h1>
 {% if messages %}
-<div class="message-box">
     {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="message-box">
         <div class="{{ message.tags }}">{{ message }}</div>
+    </div>
+    {% endif %}
     {% endfor %}
-</div>
 {% endif %}
 {% if request.user == ride.organiser %}
 {% if not ride.is_cancelled %}
