@@ -525,6 +525,8 @@ Categorisation of the posts on the forum could also be a beneficial feature for 
 
 ## References 
 ### Code
+(Unless explicitly stated, these are sources where I found out how to use particular aspects and commands, in particular relating to Django and getting the most I could from it. I am from an academic background and I would always encourage my learners to tell me where they found out how to do something that was not necessarily covered in class. The methods I found out and applied have been modified and adapted to suit the project needs. Sorry if the list is considered excessive.)
+<br>
 Bootstrap navbar - https://getbootstrap.com/docs/4.0/components/navbar/ - Bootstrap Documentation (6th November).
 <br>
 <br>
